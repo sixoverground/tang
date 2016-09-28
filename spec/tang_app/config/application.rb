@@ -10,8 +10,6 @@ require "sprockets/railtie"
 
 Bundler.require(*Rails.groups)
 
-Dotenv::Railtie.load
-
 require "tang"
 
 module TangApp
