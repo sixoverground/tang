@@ -1,1 +1,1 @@
-web: bundle exec puma -C config/puma.rb
+web: bundle exec puma -C spec/tang_app/config/puma.rb
