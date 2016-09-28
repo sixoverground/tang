@@ -23,5 +23,6 @@ gem 'devise'
 gem 'cancancan'
 
 # gem 'sass-rails'
+gem 'therubyracer'
 gem 'uglifier', '>= 1.3.0'
 # gem 'coffee-rails'
