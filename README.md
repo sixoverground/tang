@@ -1,3 +1,2 @@
-= Tang
-
-This project rocks and uses MIT-LICENSE.
+# tang
+Stripe subscriptions
