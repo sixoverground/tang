@@ -1,3 +1,7 @@
+require 'stripe'
+require 'stripe_event'
+require 'paper_trail'
+
 module Tang
   class Engine < ::Rails::Engine
     isolate_namespace Tang

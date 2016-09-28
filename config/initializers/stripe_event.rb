@@ -1,5 +1,3 @@
-require 'stripe_event'
-
 StripeEvent.event_retriever = lambda do |params|
   return nil if Tang::StripeWebhook.exists?(stripe_id: params[:id])
   Tang::StripeWebhook.create!(stripe_id: params[:id])

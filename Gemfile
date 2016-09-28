@@ -15,7 +15,7 @@ gemspec
 
 ruby '2.3.1'
 
-gem 'rails_12factor', group: :production
+gem 'rails_12factor' #, group: :production
 gem 'puma'
 gem 'pg'
 gem 'devise'
