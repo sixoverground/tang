@@ -27,3 +27,12 @@ Bundler::GemHelper.install_tasks
 # require 'rspec/core/rake_task'
 # RSpec::Core::RakeTask.new(spec: 'app:db:test:prepare')
 # task default: :spec
+
+namespace :assets do
+  desc 'Precompile assets within dummy app'
+  task :precompile do
+    Dir.chdir('spec/tang_app') do
+      system('bundle exec rake assets:precompile')
+    end
+  end
+end

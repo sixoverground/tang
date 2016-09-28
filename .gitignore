@@ -49,3 +49,4 @@ spec/tang_app/db/*.sqlite3-journal
 spec/tang_app/log/*.log
 spec/tang_app/tmp/
 spec/tang_app/.sass-cache
+spec/tang_app/public/assets

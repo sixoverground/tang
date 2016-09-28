@@ -20,3 +20,7 @@ gem 'puma'
 gem 'pg'
 gem 'devise'
 gem 'cancancan'
+
+gem 'sass-rails'
+gem 'uglifier'
+gem 'coffee-rails'
