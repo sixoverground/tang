@@ -35,4 +35,10 @@ namespace :assets do
       system('bundle exec rake assets:precompile')
     end
   end
+  desc 'Clean assets within dummy app'
+  task :clean do
+    Dir.chdir('spec/tang_app') do
+      system('bundle exec rake assets:clean')
+    end
+  end
 end
