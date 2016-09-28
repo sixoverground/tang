@@ -30,5 +30,5 @@ Gem::Specification.new do |s|
   # s.add_development_dependency 'cancancan'
   s.add_development_dependency 'dotenv-rails'
   s.add_development_dependency 'rails_best_practices'
-  s.add_development_dependency 'puma'
+  # s.add_development_dependency 'puma'
 end
