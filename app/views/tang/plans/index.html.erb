@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Plans</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Stripe</th>
+      <th>Amount</th>
+      <th>Currency</th>
+      <th>Interval</th>
+      <th>Interval count</th>
+      <th>Name</th>
+      <th>Statement descriptor</th>
+      <th>Trial period days</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @plans.each do |plan| %>
+      <tr>
+        <td><%= plan.stripe_id %></td>
+        <td><%= plan.amount %></td>
+        <td><%= plan.currency %></td>
+        <td><%= plan.interval %></td>
+        <td><%= plan.interval_count %></td>
+        <td><%= plan.name %></td>
+        <td><%= plan.statement_descriptor %></td>
+        <td><%= plan.trial_period_days %></td>
+        <td><%= link_to 'Show', plan %></td>
+        <td><%= link_to 'Edit', edit_plan_path(plan) %></td>
+        <td><%= link_to 'Destroy', plan, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Plan', new_plan_path %>
