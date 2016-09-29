@@ -24,9 +24,12 @@ load 'rails/tasks/statistics.rake'
 
 Bundler::GemHelper.install_tasks
 
-# require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new(spec: 'app:db:test:prepare')
-task default: :spec
+begin
+  require 'rspec/core/rake_task'
+  RSpec::Core::RakeTask.new(spec: 'app:db:test:prepare')
+  task default: :spec
+rescue LoadError
+end
 
 namespace :assets do
   desc 'Precompile assets within dummy app'
