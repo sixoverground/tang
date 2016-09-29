@@ -21,6 +21,8 @@ require 'rails_helper'
 module Tang
   RSpec.describe PlansController, type: :controller do
 
+    routes { Tang::Engine.routes }
+
     # This should return the minimal set of attributes required to create a valid
     # Plan. As you add validations to Plan, be sure to
     # adjust the attributes here as well.

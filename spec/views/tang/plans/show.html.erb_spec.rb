@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe "plans/show", type: :view do
+RSpec.describe "tang/plans/show", type: :view do
   before(:each) do
-    @plan = assign(:plan, Plan.create!(
+    @plan = assign(:plan, Tang::Plan.create!(
       :stripe_id => "Stripe",
       :amount => 2,
       :currency => "Currency",

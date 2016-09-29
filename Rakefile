@@ -25,8 +25,8 @@ load 'rails/tasks/statistics.rake'
 Bundler::GemHelper.install_tasks
 
 # require 'rspec/core/rake_task'
-# RSpec::Core::RakeTask.new(spec: 'app:db:test:prepare')
-# task default: :spec
+RSpec::Core::RakeTask.new(spec: 'app:db:test:prepare')
+task default: :spec
 
 namespace :assets do
   desc 'Precompile assets within dummy app'
@@ -41,4 +41,13 @@ namespace :assets do
       system('bundle exec rake assets:clean')
     end
   end
+end
+
+namespace :rails do
+  desc 'Run rails console within dummy app'
+  task :console do
+    Dir.chdir('spec/tang_app') do
+      system('rails c')
+    end
+  end 
 end

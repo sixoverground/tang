@@ -28,9 +28,9 @@
         <td><%= plan.name %></td>
         <td><%= plan.statement_descriptor %></td>
         <td><%= plan.trial_period_days %></td>
-        <td><%= link_to 'Show', plan %></td>
-        <td><%= link_to 'Edit', edit_plan_path(plan) %></td>
-        <td><%= link_to 'Destroy', plan, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', tang.plan_path(plan) %></td>
+        <td><%= link_to 'Edit', tang.edit_plan_path(plan) %></td>
+        <td><%= link_to 'Destroy', tang.plan_path(plan), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -38,4 +38,4 @@
 
 <br>
 
-<%= link_to 'New Plan', new_plan_path %>
+<%= link_to 'New Plan', tang.new_plan_path %>

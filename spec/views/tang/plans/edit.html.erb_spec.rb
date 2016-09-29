@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe "plans/edit", type: :view do
-  before(:each) do
-    @plan = assign(:plan, Plan.create!(
+RSpec.describe "tang/plans/edit", type: :view do
+  before(:each) do      
+    @plan = assign(:plan, Tang::Plan.create!(
       :stripe_id => "MyString",
       :amount => 1,
       :currency => "MyString",
@@ -17,7 +17,7 @@ RSpec.describe "plans/edit", type: :view do
   it "renders the edit plan form" do
     render
 
-    assert_select "form[action=?][method=?]", plan_path(@plan), "post" do
+    assert_select "form[action=?][method=?]", tang.plan_path(@plan), "post" do
 
       assert_select "input#plan_stripe_id[name=?]", "plan[stripe_id]"
 
