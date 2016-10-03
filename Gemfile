@@ -31,4 +31,5 @@ group :test do
   gem 'stripe-ruby-mock', '~> 2.3.1', require: 'stripe_mock'
   # gem 'selenium-webdriver'
   gem 'poltergeist'
+  gem "codeclimate-test-reporter", require: nil
 end

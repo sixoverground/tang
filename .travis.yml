@@ -10,3 +10,5 @@ before_install:
   - tar -xjf phantomjs-2.0.0-ubuntu-12.04.tar.bz2
   - sudo rm -rf /usr/local/phantomjs/bin/phantomjs
   - sudo mv phantomjs /usr/local/phantomjs/bin/phantomjs
+env:
+  - STRIPE_PUBLISHABLE_KEY=pk_test_ufmXOx2149BsFX2Hf6i8zTTL
