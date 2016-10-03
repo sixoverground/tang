@@ -24,3 +24,4 @@ gem 'cancancan'
 gem 'jquery-rails'
 gem 'cucumber-rails', require: false, group: :test
 gem 'stripe-ruby-mock', '~> 2.3.1', require: 'stripe_mock'
+gem 'factory_girl_rails'

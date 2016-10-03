@@ -1,4 +1,5 @@
 FactoryGirl.define do
+  # ::Kernel.raise 'factories are getting loaded'
 
   sequence :email do |n|
     "person#{n}@example.com"
