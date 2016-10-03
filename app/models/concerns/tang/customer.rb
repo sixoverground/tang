@@ -20,6 +20,11 @@ module Tang
       self.password = Devise.friendly_token.first(8)
     end
 
+    def update_card_from_stripe(stripe_card)
+      my_card = self.card.present? ? self.card : Card.new(customer: self)
+      my_card.update_from_stripe(stripe_card)
+    end
+
     private
 
     def update_stripe_customer

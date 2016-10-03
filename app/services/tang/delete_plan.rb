@@ -7,7 +7,6 @@ module Tang
       rescue Stripe::StripeError => e
         plan.errors[:base] << e.message
       end
-      
       return plan
     end
   end
