@@ -1,6 +1,6 @@
 *.rbc
 capybara-*.html
-.rspec
+# .rspec
 /log
 /tmp
 /db/*.sqlite3
@@ -40,7 +40,6 @@ bower.json
 
 # Ignore Byebug command history file.
 .byebug_history
-<<<<<<< HEAD
 
 # Plugin
 pkg/

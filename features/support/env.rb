@@ -9,7 +9,10 @@ require File.expand_path("../../../spec/tang_app/config/environment", __FILE__)
 ENV["RAILS_ROOT"] ||= File.dirname(__FILE__) + "../../../spec/tang_app"
 
 require 'cucumber/rails'
+
 require 'factory_girl_rails'
+# require File.expand_path("../../../spec/rails_helper", __FILE__)
+# require 'factory_girl'
 
 # Capybara defaults to CSS3 selectors rather than XPath.
 # If you'd prefer to use XPath, just uncomment this line and adjust any
