@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Stripe:</strong>
+  <%= @coupon.stripe_id %>
+</p>
+
+<p>
+  <strong>Duration:</strong>
+  <%= @coupon.duration %>
+</p>
+
+<p>
+  <strong>Amount off:</strong>
+  <%= @coupon.amount_off %>
+</p>
+
+<p>
+  <strong>Currency:</strong>
+  <%= @coupon.currency %>
+</p>
+
+<p>
+  <strong>Duration in months:</strong>
+  <%= @coupon.duration_in_months %>
+</p>
+
+<p>
+  <strong>Max redemptions:</strong>
+  <%= @coupon.max_redemptions %>
+</p>
+
+<p>
+  <strong>Percent off:</strong>
+  <%= @coupon.percent_off %>
+</p>
+
+<p>
+  <strong>Redeem by:</strong>
+  <%= @coupon.redeem_by %>
+</p>
+
+<%= link_to 'Edit', edit_coupon_path(@coupon) %> |
+<%= link_to 'Back', coupons_path %>

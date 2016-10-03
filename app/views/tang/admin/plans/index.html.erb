@@ -1,0 +1,29 @@
+<%= render 'nav' %>
+
+<h1>Listing Plans</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Plan</th>
+      <th>Cost</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @plans.each do |plan| %>
+      <tr>
+        <td><%= plan.name %></td>
+        <td><%= "#{plan_cost(plan)}" %></td>
+        <td><%= link_to 'Show', tang.admin_plan_path(plan) %></td>
+        <td><%= link_to 'Edit', tang.edit_admin_plan_path(plan) %></td>
+        <td><%= link_to 'Destroy', tang.admin_plan_path(plan), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Plan', tang.new_admin_plan_path %>

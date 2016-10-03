@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.description = "A Stripe subscription gem."
   s.license     = "MIT"
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,db,lib}/**/*", "LICENSE", "Rakefile", "README.md"]
 
   s.test_files = Dir["spec/**/*"]
   
@@ -22,10 +22,15 @@ Gem::Specification.new do |s|
   s.add_dependency 'stripe'
   s.add_dependency 'stripe_event'
   s.add_dependency 'paper_trail'
+  s.add_dependency 'jquery-rails'
+  s.add_dependency 'coffee-rails'
+  s.add_dependency 'sass-rails'
+  s.add_dependency 'therubyracer'
+  s.add_dependency 'uglifier', '>= 1.3.0'
 
-  # s.add_development_dependency "pg"
   s.add_development_dependency 'rspec-rails'
   s.add_development_dependency 'factory_girl_rails'
-  # s.add_development_dependency 'dotenv-rails'
   s.add_development_dependency 'rails_best_practices'
+  s.add_development_dependency 'database_cleaner'
+  s.add_development_dependency 'selenium-webdriver'
 end

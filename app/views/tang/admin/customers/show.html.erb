@@ -1,0 +1,29 @@
+<p>
+  <strong>Email:</strong>
+  <%= @customer.email %>
+</p>
+
+<p>
+  <strong>Stripe:</strong>
+  <%= @customer.stripe_id %>
+</p>
+
+<p>
+  <strong>Created:</strong>
+  <%= created_datetime(@customer.created_at) %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @customer.description %>
+</p>
+
+<% if @customer.account_balance.present? && @customer.account_balance != 0 %>
+  <p>
+    <strong>Account balance:</strong>
+    <%= @customer.account_balance %>
+  </p>
+<% end %>
+
+<%= link_to 'Edit', edit_admin_customer_path(@customer) %> |
+<%= link_to 'Back', admin_customers_path %>

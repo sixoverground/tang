@@ -1,0 +1,31 @@
+<p>
+  <strong>ID:</strong>
+  <%= @plan.stripe_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @plan.name %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= plan_cost(@plan) %>
+</p>
+
+<p>
+  <strong>Trial period days:</strong>
+  <%= @plan.trial_period_days %>
+</p>
+
+<% if @plan.statement_descriptor.present? %>
+  <p>
+    <strong>Statement descriptor:</strong>
+    <%= @plan.statement_descriptor %>
+  </p>
+<% end %>
+
+
+
+<%= link_to 'Edit', tang.edit_admin_plan_path(@plan) %> |
+<%= link_to 'Back', tang.admin_plans_path %>

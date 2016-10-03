@@ -21,8 +21,6 @@ gem 'puma'
 gem 'pg'
 gem 'devise'
 gem 'cancancan'
-
-# gem 'sass-rails'
-gem 'therubyracer'
-gem 'uglifier', '>= 1.3.0'
-# gem 'coffee-rails'
+gem 'jquery-rails'
+gem 'cucumber-rails', require: false, group: :test
+gem 'stripe-ruby-mock', '~> 2.3.1', require: 'stripe_mock'

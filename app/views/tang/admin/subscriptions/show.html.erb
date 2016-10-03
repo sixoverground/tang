@@ -1,0 +1,37 @@
+<p>
+  <strong>Stripe:</strong>
+  <%= @subscription.stripe_id %>
+</p>
+
+<p>
+  <strong>Customer:</strong>
+  <%= @subscription.user.email %>
+</p>
+
+<p>
+  <strong>Plan:</strong>
+  <%= "#{@subscription.plan.name} #{plan_cost(@subscription.plan)}" %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @subscription.quantity %>
+</p>
+
+<p>
+  <strong>Current period:</strong>
+  <% # TODO: calculate subscription period %>
+</p>
+
+<p>
+  <strong>Created:</strong>
+  <%= created_date(@subscription.created_at) %>
+</p>
+
+<p>
+  <strong>Tax percent:</strong>
+  <%= @subscription.tax_percent %>
+</p>
+
+<%= link_to 'Edit', edit_subscription_path(@subscription) %> |
+<%= link_to 'Back', subscriptions_path %>

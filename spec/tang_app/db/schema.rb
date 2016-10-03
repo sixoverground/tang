@@ -11,10 +11,51 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160928173328) do
+ActiveRecord::Schema.define(version: 20161001173557) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "tang_cards", force: :cascade do |t|
+    t.integer  "customer_id"
+    t.string   "stripe_id"
+    t.string   "address_line1"
+    t.string   "address_line1_check"
+    t.string   "address_line2"
+    t.string   "address_city"
+    t.string   "address_country"
+    t.string   "address_state"
+    t.string   "address_zip"
+    t.string   "address_zip_check"
+    t.string   "name"
+    t.string   "brand"
+    t.string   "last4"
+    t.string   "dynamic_last4"
+    t.integer  "exp_month"
+    t.integer  "exp_year"
+    t.string   "cvc_check"
+    t.string   "country"
+    t.string   "tokenization_method"
+    t.string   "funding"
+    t.string   "fingerprint"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "tang_cards", ["customer_id"], name: "index_tang_cards_on_customer_id", using: :btree
+
+  create_table "tang_coupons", force: :cascade do |t|
+    t.string   "stripe_id"
+    t.string   "duration"
+    t.integer  "amount_off"
+    t.string   "currency"
+    t.integer  "duration_in_months"
+    t.integer  "max_redemptions"
+    t.integer  "percent_off"
+    t.datetime "redeem_by"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
 
   create_table "tang_plans", force: :cascade do |t|
     t.string   "stripe_id"
@@ -25,8 +66,10 @@ ActiveRecord::Schema.define(version: 20160928173328) do
     t.string   "name"
     t.string   "statement_descriptor"
     t.integer  "trial_period_days"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.integer  "order"
+    t.boolean  "highlight",            default: false, null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
   end
 
   create_table "tang_stripe_webhooks", force: :cascade do |t|
@@ -35,13 +78,28 @@ ActiveRecord::Schema.define(version: 20160928173328) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "tang_subscriptions", force: :cascade do |t|
+    t.string   "stripe_id"
+    t.integer  "customer_id"
+    t.integer  "plan_id"
+    t.decimal  "application_fee_percent"
+    t.integer  "quantity"
+    t.decimal  "tax_percent"
+    t.datetime "trial_end"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "tang_subscriptions", ["customer_id"], name: "index_tang_subscriptions_on_customer_id", using: :btree
+  add_index "tang_subscriptions", ["plan_id"], name: "index_tang_subscriptions_on_plan_id", using: :btree
+
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",    null: false
+    t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
@@ -50,11 +108,19 @@ ActiveRecord::Schema.define(version: 20160928173328) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.integer  "failed_attempts",        default: 0,  null: false
+    t.integer  "failed_attempts",        default: 0,     null: false
     t.string   "unlock_token"
     t.datetime "locked_at"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.string   "stripe_id"
+    t.integer  "account_balance"
+    t.string   "business_vat_id"
+    t.string   "currency"
+    t.boolean  "delinquent",             default: false, null: false
+    t.string   "description"
+    t.datetime "active_until"
+    t.string   "role"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

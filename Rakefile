@@ -27,7 +27,8 @@ Bundler::GemHelper.install_tasks
 begin
   require 'rspec/core/rake_task'
   RSpec::Core::RakeTask.new(spec: 'app:db:test:prepare')
-  task default: :spec
+  task :cucumber => 'app:cucumber'
+  task default: [:spec, :cucumber]
 rescue LoadError
 end
 

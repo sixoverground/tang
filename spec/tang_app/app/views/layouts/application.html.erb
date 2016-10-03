@@ -3,10 +3,22 @@
 <head>
   <title>Tang</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+  <script type="text/javascript">
+    Stripe.setPublishableKey('<%= ENV["STRIPE_PUBLISHABLE_KEY"] %>');
+  </script>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+
+<p>App</p>
+
+<% if user_signed_in? %>
+  <%= link_to 'Sign out', main_app.destroy_user_session_path, method: :delete %>
+<% else %>
+  <%= link_to 'Sign in', main_app.new_user_session_path %>
+<% end %>
 
 <p class="notice"><%= notice %></p>
 <p class="alert"><%= alert %></p>
