@@ -11,7 +11,7 @@ module Tang
     self.free_plan_name = 'Free Plan'
   end
 
-  def self.setup(&block)
+  def self.setup #(&block)
     yield self
   end
 end

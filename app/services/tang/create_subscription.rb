@@ -38,11 +38,7 @@ module Tang
 
         # Save the payment method
         stripe_card = stripe_customer.sources.retrieve(stripe_customer.default_source)
-        if customer.card.present?
-          card = customer.card
-        else
-          card = Card.new(customer: customer)
-        end
+        card = customer.card.present? ? customer.card : Card.new(customer: customer)
         card.update_from_stripe(stripe_card)
 
       rescue Stripe::StripeError => e
