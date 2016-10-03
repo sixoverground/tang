@@ -5,7 +5,7 @@
 # files.
 
 ENV["RAILS_ENV"] ||= "test"
-require File.expand_path("../../../spec/tang_app/config/environment.rb", __FILE__)
+require File.expand_path("../../../spec/tang_app/config/environment", __FILE__)
 ENV["RAILS_ROOT"] ||= File.dirname(__FILE__) + "../../../spec/tang_app"
 
 require 'cucumber/rails'
