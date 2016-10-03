@@ -1,14 +1,9 @@
 module Tang
   class CreateSubscription
     def self.call(plan, customer, token)
-      subscription = Subscription.new(
-        plan: plan,
-        customer: customer
-      )
+      subscription = Subscription.new(plan: plan, customer: customer)
 
-      if !subscription.valid?
-        return subscription
-      end
+      return subscription if !subscription.valid?
 
       begin
 
@@ -48,27 +43,7 @@ module Tang
         else
           card = Card.new(customer: customer)
         end
-        card.stripe_id = stripe_card.id
-        card.address_city = stripe_card.address_city
-        card.address_country = stripe_card.address_country
-        card.address_line1 = stripe_card.address_line1
-        card.address_line1_check = stripe_card.address_line1_check
-        card.address_line2 = stripe_card.address_line2
-        card.address_state = stripe_card.address_state
-        card.address_zip = stripe_card.address_zip
-        card.address_zip_check = stripe_card.address_zip_check
-        card.brand = stripe_card.brand
-        card.country = stripe_card.country
-        card.cvc_check = stripe_card.cvc_check
-        # card.dynamic_last4 = stripe_card.dynamic_last4
-        card.exp_month = stripe_card.exp_month
-        card.exp_year = stripe_card.exp_year
-        card.fingerprint = stripe_card.fingerprint
-        card.funding = stripe_card.funding
-        card.last4 = stripe_card.last4
-        card.name = stripe_card.name
-        # card.tokenization_method = stripe_card.tokenization_method
-        card.save!
+        card.update_from_stripe(stripe_card)
 
       rescue Stripe::StripeError => e
         subscription.errors[:base] << e.message
