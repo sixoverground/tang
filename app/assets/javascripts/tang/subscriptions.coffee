@@ -47,7 +47,6 @@ stripeResponseHandler = (status, response) ->
     $form.find('.payment-errors').text(response.error.message)
     $form.find('.submit').prop('disabled', false)
   else
-
     if window.testStripeToken?
       token = window.testStripeToken
     else

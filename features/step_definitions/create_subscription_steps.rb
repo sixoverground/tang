@@ -21,8 +21,9 @@ end
 
 When(/^I fill in the payment form with:$/) do |table|
   table.rows_hash.each do |field, value|
-    puts "filling in #{field} with #{value}"
-    value.split('').each { |c| find_field(field).native.send_keys(c) }
+    fill_in field, with: value
+    # Below required for Selenium
+    # value.split('').each { |c| find_field(field).native.send_keys(c) }
   end
 end
 

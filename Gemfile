@@ -29,5 +29,6 @@ group :test do
   gem 'factory_girl_rails'
   gem 'database_cleaner'
   gem 'stripe-ruby-mock', '~> 2.3.1', require: 'stripe_mock'
-  gem 'selenium-webdriver'
+  # gem 'selenium-webdriver'
+  gem 'poltergeist'
 end
