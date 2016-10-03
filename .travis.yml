@@ -12,3 +12,6 @@ before_install:
   - sudo mv phantomjs /usr/local/phantomjs/bin/phantomjs
 env:
   - STRIPE_PUBLISHABLE_KEY=pk_test_ufmXOx2149BsFX2Hf6i8zTTL
+addons:
+  code_climate:
+    repo_token: 70f628f222463ae4c15e93290d92a1260d057d124c394b502779eda72db4948a
