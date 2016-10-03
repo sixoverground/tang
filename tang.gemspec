@@ -28,9 +28,9 @@ Gem::Specification.new do |s|
   s.add_dependency 'therubyracer'
   s.add_dependency 'uglifier', '>= 1.3.0'
 
-  s.add_development_dependency 'rspec-rails'
+  # s.add_development_dependency 'rspec-rails'
   # s.add_development_dependency 'factory_girl_rails'
   s.add_development_dependency 'rails_best_practices'
   # s.add_development_dependency 'database_cleaner'
-  s.add_development_dependency 'selenium-webdriver'
+  # s.add_development_dependency 'selenium-webdriver'
 end

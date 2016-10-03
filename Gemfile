@@ -24,8 +24,10 @@ gem 'cancancan'
 gem 'jquery-rails'
 
 group :test do
+  gem 'rspec-rails'
   gem 'cucumber-rails', require: false
   gem 'factory_girl_rails'
   gem 'database_cleaner'
   gem 'stripe-ruby-mock', '~> 2.3.1', require: 'stripe_mock'
+  gem 'selenium-webdriver'
 end
