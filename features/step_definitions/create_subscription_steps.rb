@@ -28,13 +28,23 @@ When(/^I fill in the payment form with:$/) do |table|
 end
 
 When(/^I click the submit payment button$/) do
+  name = find_field('Cardholder name').value
   number = find_field('Card number').value
+  exp = find_field('Expiration (MM/YY)').value
+  cvc = find_field('CVC').value
+  address_zip = find_field('Zip code').value
 
   if number == '4000 0000 0000 0002'
     StripeMock.prepare_card_error(:card_declined, :new_customer)
   end
 
-  token = StripeMock.create_test_helper.generate_card_token(number: number)
+  token = StripeMock.create_test_helper.generate_card_token(
+    name: name, 
+    number: number,
+    exp: exp,
+    cvc: cvc,
+    address_zip: address_zip
+  )
   page.execute_script "window.testStripeToken = '#{token}';"
 
   click_on "Submit Payment"
