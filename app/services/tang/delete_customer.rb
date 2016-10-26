@@ -7,8 +7,8 @@ module Tang
           c.delete
         rescue Stripe::StripeError => e
           customer.errors[:base] << e.message
-        end 
-      end     
+        end
+      end
       return customer
     end
   end

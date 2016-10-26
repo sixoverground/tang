@@ -11,8 +11,12 @@ module Tang
       before_update :update_stripe_customer
       before_destroy :delete_stripe_customer
 
-      validates :stripe_id, uniqueness: true, allow_nil: true
+      validates :stripe_id, uniqueness: true
       validates :account_balance, numericality: { only_integer: true }, allow_nil: true
+
+      define_method :admin? do
+        self.respond_to?(:role) && self.role == 'admin'
+      end
 
     end
 
@@ -23,6 +27,12 @@ module Tang
     def update_card_from_stripe(stripe_card)
       my_card = self.card.present? ? self.card : Card.new(customer: self)
       my_card.update_from_stripe(stripe_card)
+    end
+
+    def update_subscription_end(stripe_sub)
+      timestamp = stripe_sub.current_period_end.to_s
+      self.active_until = DateTime.strptime(timestamp, '%s')
+      self.save!
     end
 
     private

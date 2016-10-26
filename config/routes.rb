@@ -1,8 +1,4 @@
 Tang::Engine.routes.draw do
-  namespace :account do
-  get 'subscriptions_controller/show'
-  end
-
   mount StripeEvent::Engine, at: '/stripe_event'
 
   namespace :admin do
@@ -12,8 +8,10 @@ Tang::Engine.routes.draw do
     resources :coupons
   end
 
-  namespace :account do 
+  namespace :account do
     resource :subscription
     resource :card, only: [:show, :new, :create]
   end
+
+  get 'unauthorized', to: 'errors#unauthorized'
 end

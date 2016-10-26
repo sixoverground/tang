@@ -1,9 +1,13 @@
 <h1>Change your payment details</h1>
-<p>
-  <%= @card.brand %><br>
-  Card: **** **** **** <%= @card.last4 %><br>
-  Expiry: <%= "#{@card.exp_month}/#{@card.exp_year}" %>
-</p>
+<% if @card.present? %>
+  <p>
+    <%= @card.brand %><br>
+    Card: **** **** **** <%= @card.last4 %><br>
+    Expiry: <%= "#{@card.exp_month}/#{@card.exp_year}" %>
+  </p>
+<% else %>
+  <p>You do not have a card on file.</p>
+<% end %>
 
 <%= link_to 'Use a new card', new_account_card_path %> |
 <%= link_to 'Back', account_subscription_path %>

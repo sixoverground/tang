@@ -29,4 +29,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'uglifier', '~> 2.0' #'~> 1.3'
 
   s.add_development_dependency 'rails_best_practices', '~> 1.17'
+  s.add_development_dependency 'brakeman', '~> 3.3'
 end

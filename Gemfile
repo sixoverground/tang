@@ -16,12 +16,11 @@ gemspec
 ruby '2.3.1'
 
 gem 'dotenv-rails', require: 'dotenv/rails-now'
-gem 'rails_12factor', group: :production
+gem 'jquery-rails'
 gem 'puma'
 gem 'pg'
+gem 'rails_12factor', group: :production
 gem 'devise'
-gem 'cancancan'
-gem 'jquery-rails'
 
 group :test do
   gem 'rspec-rails'
@@ -29,7 +28,6 @@ group :test do
   gem 'factory_girl_rails'
   gem 'database_cleaner'
   gem 'stripe-ruby-mock', '~> 2.3.1', require: 'stripe_mock'
-  # gem 'selenium-webdriver'
   gem 'poltergeist'
   gem "codeclimate-test-reporter", require: nil
 end

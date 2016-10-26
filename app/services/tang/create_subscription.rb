@@ -9,7 +9,6 @@ module Tang
           # Create a new subscription and customer
           stripe_customer = Stripe::Customer.create(source: token, plan: plan.stripe_id, email: customer.email)
           customer.stripe_id = stripe_customer.id
-          customer.save!
           stripe_sub = stripe_customer.subscriptions.first
         else
           # Update the payment method
@@ -25,6 +24,9 @@ module Tang
         # Save the subscription
         subscription.stripe_id = stripe_sub.id
         subscription.save!
+
+        # Save subscription data to customer
+        customer.update_subscription_end(stripe_sub)
 
         # Save the payment method
         stripe_card = stripe_customer.sources.retrieve(stripe_customer.default_source)

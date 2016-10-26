@@ -7,4 +7,8 @@ class User < ActiveRecord::Base
   include Tang::Customer
 
   ROLES = %i[admin]
+
+  def admin?
+    self.role == 'admin'
+  end
 end

@@ -18,6 +18,8 @@ module Tang
     before_update :update_stripe_plan
     before_destroy :delete_stripe_plan
 
+    INTERVALS = ['day', 'week', 'month', 'year']
+
     private
 
     def default_values

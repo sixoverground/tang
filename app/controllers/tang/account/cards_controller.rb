@@ -3,7 +3,7 @@ require_dependency "tang/application_controller"
 module Tang
   class Account::CardsController < Account::ApplicationController
     before_action :set_card, only: [:show]
-    
+
     def show
     end
 
@@ -15,7 +15,7 @@ module Tang
 
     def create
       @card = SaveCard.call(
-        current_customer, 
+        current_customer,
         params[:stripe_token]
       )
 
@@ -30,10 +30,6 @@ module Tang
 
     def set_card
       @card = current_customer.card
-    end
-
-    def card_params
-      params
     end
   end
 end

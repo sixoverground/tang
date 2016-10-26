@@ -53,8 +53,8 @@ GEM
     addressable (2.4.0)
     arel (6.0.3)
     bcrypt (3.1.11)
+    brakeman (3.4.0)
     builder (3.2.2)
-    cancancan (1.15.0)
     capybara (2.9.2)
       addressable
       mime-types (>= 1.16)
@@ -277,7 +277,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  cancancan
+  brakeman (~> 3.3)
   codeclimate-test-reporter
   cucumber-rails
   database_cleaner

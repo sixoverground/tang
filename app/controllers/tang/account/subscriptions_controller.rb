@@ -3,7 +3,7 @@ require_dependency "tang/application_controller"
 module Tang
   class Account::SubscriptionsController < Account::ApplicationController
     before_action :set_subscription, only: [:show, :edit, :update, :destroy]
-    
+
     def show
       @plans = Plan.order(:order)
 
@@ -26,8 +26,8 @@ module Tang
       puts "params: #{params}"
       plan = Plan.find(subscription_create_params[:plan])
       @subscription = CreateSubscription.call(
-        plan, 
-        current_customer, 
+        plan,
+        current_customer,
         params[:stripe_token]
       )
 

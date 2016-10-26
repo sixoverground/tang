@@ -2,6 +2,14 @@ module Tang
   class Card < ActiveRecord::Base
     belongs_to :customer, class_name: Tang.customer_class
 
+    validates :customer, presence: true, uniqueness: true
+    validates :name, presence: true
+    validates :last4, numericality: { only_integer: true, greater_than_or_equal_to: 0 },
+                      length: { is: 4 }
+    validates :exp_month, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 12 }
+    validates :exp_year, numericality: { only_integer: true, greater_than_or_equal_to: Date.today.year - 30.years, less_than_or_equal_to: Date.today.year + 70.years }
+    validates :address_zip, format: { with: /\A\d{5}(-\d{4})?\z/ }
+
     def update_from_stripe(stripe_card)
       self.stripe_id = stripe_card.id
       self.address_city = stripe_card.address_city

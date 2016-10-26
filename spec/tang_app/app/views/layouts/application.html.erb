@@ -15,6 +15,7 @@
 <p>App</p>
 
 <% if user_signed_in? %>
+  <%= current_user.email %>
   <%= link_to 'Sign out', main_app.destroy_user_session_path, method: :delete %>
 <% else %>
   <%= link_to 'Sign in', main_app.new_user_session_path %>

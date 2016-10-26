@@ -10,7 +10,7 @@ module Tang
     validates :application_fee_percent, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
     validates :quantity, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
     validates :tax_percent, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
-  
+
     before_destroy :cancel_stripe_subscription
 
     private

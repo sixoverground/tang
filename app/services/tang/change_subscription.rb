@@ -4,7 +4,7 @@ module Tang
       if !subscription.valid?
         return subscription
       end
-      
+
       begin
         stripe_sub = Stripe::Subscription.retrieve(subscription.stripe_id)
         stripe_sub.plan = plan.stripe_id
