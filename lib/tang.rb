@@ -9,7 +9,7 @@ module Tang
     mattr_accessor :admin_email
 
     self.default_currency = 'usd'
-    self.customer_class = 'User'
+    @@customer_class = 'User'
     self.free_plan_name = 'Free Plan'
     # self.unauthorized_url = '/'
     self.admin_email = 'hello@tangapp.herokuapp.com'
@@ -17,5 +17,9 @@ module Tang
 
   def self.setup #(&block)
     yield self
+  end
+
+  def self.customer_class
+    @@customer_class.constantize
   end
 end

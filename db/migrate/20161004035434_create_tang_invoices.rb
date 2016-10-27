@@ -5,9 +5,9 @@ class CreateTangInvoices < ActiveRecord::Migration
       t.integer :subscription_id, index: true, foreign_key: true
       t.timestamp :period_start
       t.timestamp :period_end
-      t.integer :customer_id, index: true
+      # t.integer :customer_id, index: true
       t.timestamp :date
-      t.integer :charge_id, index: true, foreign_key: true
+      # t.integer :charge_id, index: true, foreign_key: true
       t.integer :total
       t.string :currency
 

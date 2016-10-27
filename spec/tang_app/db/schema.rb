@@ -45,17 +45,18 @@ ActiveRecord::Schema.define(version: 20161004035434) do
   add_index "tang_cards", ["customer_id"], name: "index_tang_cards_on_customer_id", using: :btree
 
   create_table "tang_charges", force: :cascade do |t|
+    t.string   "stripe_id"
     t.integer  "amount"
     t.string   "currency"
     t.string   "description"
     t.string   "receipt_email"
-    t.integer  "customer_id"
     t.string   "statement_descriptor"
+    t.integer  "invoice_id"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
   end
 
-  add_index "tang_charges", ["customer_id"], name: "index_tang_charges_on_customer_id", using: :btree
+  add_index "tang_charges", ["invoice_id"], name: "index_tang_charges_on_invoice_id", using: :btree
 
   create_table "tang_coupons", force: :cascade do |t|
     t.string   "stripe_id"
@@ -75,17 +76,13 @@ ActiveRecord::Schema.define(version: 20161004035434) do
     t.integer  "subscription_id"
     t.datetime "period_start"
     t.datetime "period_end"
-    t.integer  "customer_id"
     t.datetime "date"
-    t.integer  "charge_id"
     t.integer  "total"
     t.string   "currency"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
 
-  add_index "tang_invoices", ["charge_id"], name: "index_tang_invoices_on_charge_id", using: :btree
-  add_index "tang_invoices", ["customer_id"], name: "index_tang_invoices_on_customer_id", using: :btree
   add_index "tang_invoices", ["subscription_id"], name: "index_tang_invoices_on_subscription_id", using: :btree
 
   create_table "tang_plans", force: :cascade do |t|

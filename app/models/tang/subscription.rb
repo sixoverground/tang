@@ -2,8 +2,9 @@ module Tang
   class Subscription < ActiveRecord::Base
     has_paper_trail
 
-    belongs_to :customer, class_name: Tang.customer_class
+    belongs_to :customer, class_name: Tang.customer_class.to_s
     belongs_to :plan
+    has_many :invoices
 
     validates :customer, uniqueness: true
     validates :stripe_id, uniqueness: true

@@ -1,6 +1,6 @@
 module Tang
   class Card < ActiveRecord::Base
-    belongs_to :customer, class_name: Tang.customer_class
+    belongs_to :customer, class_name: Tang.customer_class.to_s
 
     validates :customer, presence: true, uniqueness: true
     validates :name, presence: true

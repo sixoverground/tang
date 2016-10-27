@@ -27,8 +27,8 @@ StripeEvent.configure do |events|
 
   # Subscription lifecycle
 
-  events.subscribe 'invoice.created' do
-    invoice = event.data.object
+  events.subscribe 'invoice.created' do |event|
+    invoice = CreateInvoice.call(event)
   end
 
   # events.subscribe 'charge.succeeded' do |event|
@@ -38,7 +38,7 @@ StripeEvent.configure do |events|
   # end
 
   events.subscribe('invoice.payment_succeeded') do |event|
-    invoice = event.data.object
+    charge = PayInvoice.call(event)
   end
 
   # Subscription lifecycle errors  
