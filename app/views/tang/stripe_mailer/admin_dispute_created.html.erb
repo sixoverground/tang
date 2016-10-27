@@ -1,5 +1,5 @@
 <html>
 <body>
-  <p>Dispute opened on <%= link_to "charge #{@sale.guid}", sale_url(@sale) %></p>
+  <p>Dispute opened on <%= link_to "charge #{@charge.stripe_id}", account_charge_url(@charge) %></p>
 </body>
 </html>

@@ -39,9 +39,11 @@ StripeEvent.configure do |events|
 
   events.subscribe('invoice.payment_succeeded') do |event|
     charge = PayInvoice.call(event)
+    StripeMailer.receipt(charge).deliver
+    StripeMailer.admin_charge_succeeded(charge).deliver
   end
 
-  # Subscription lifecycle errors  
+  # Subscription lifecycle errors
 
   events.subscribe('invoice.payment_failed') do |event|
     invoice = event.data.object

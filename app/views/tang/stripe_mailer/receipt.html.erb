@@ -2,7 +2,7 @@
   <body>
     <h1>Receipt</h1>
     <p>
-      You purchased <% # TODO: Plan name %> for <% # TODO: Plan cost %> on <%= @charge.created_at %>.
+      You purchased <% @charge.invoice.subscription.plan.name %> for <% number_to_currency(@charge.amount) %> on <%= @charge.created_at %>.
     </p>
     <p>
       Thank you for your purchase!
