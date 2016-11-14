@@ -7,6 +7,7 @@ module Tang
 
       begin
         stripe_sub = Stripe::Subscription.retrieve(subscription.stripe_id)
+        puts "stripe_sub: #{stripe_sub}"
         stripe_sub.plan = plan.stripe_id
         stripe_sub.save
         subscription.plan = plan

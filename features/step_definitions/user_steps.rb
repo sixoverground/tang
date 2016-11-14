@@ -41,12 +41,12 @@ def create_admin
 end
 
 def delete_customer
-  @customer ||= Tang.customer_class.constantize.where(email: @customer_attributes[:email]).first
+  @customer ||= Tang.customer_class.where(email: @customer_attributes[:email]).first
   @customer.destroy unless @customer.nil?
 end
 
 def delete_admin
-  @admin ||= Tang.customer_class.constantize.where(email: @admin_attributes[:email]).first
+  @admin ||= Tang.customer_class.where(email: @admin_attributes[:email]).first
   @admin.destroy unless @admin.nil?
 end
 
@@ -70,6 +70,10 @@ end
 #   find_admin
 # end
 
+def sign_out
+  visit '/users/sign_out'
+end
+
 def sign_in_customer
   visit '/users/sign_in'
   fill_in 'user_email', with: @customer_attributes[:email]
@@ -85,15 +89,17 @@ def sign_in_admin
 end
 
 Given /^I am not logged in$/ do
-  visit '/users/sign_out'
+  sign_out
 end
 
 Given /^I am logged in as a customer$/ do
+  sign_out
   create_customer
   sign_in_customer
 end
 
 Given /^I am logged in as an admin$/ do
+  sign_out
   create_admin
   sign_in_admin
 end

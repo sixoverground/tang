@@ -24,7 +24,7 @@ module Tang
 
     def create
       puts "params: #{params}"
-      plan = Plan.find(subscription_create_params[:plan])
+      plan = Plan.find(subscription_params[:plan])
       @subscription = CreateSubscription.call(
         plan,
         current_customer,
@@ -39,7 +39,8 @@ module Tang
     end
 
     def update
-      plan = Plan.find(subscription_update_params[:plan])
+      puts "params: #{params}"
+      plan = Plan.find(subscription_params[:plan])
       @subscription = ChangeSubscription.call(
         @subscription,
         plan
@@ -47,7 +48,12 @@ module Tang
       if @subscription.errors.blank?
         redirect_to account_subscription_path, notice: 'Subscription was successfully updated.'
       else
-        render :edit
+        @subscription.errors.full_messages.each do |message|
+          puts "SUBSCRIPTION ERROR: #{message}"
+        end
+        @plans = Plan.order(:order)
+        @next_plan = @plans.where("tang_plans.order > ?", @subscription.plan.order).first
+        render :show
       end
     end
 
@@ -62,12 +68,12 @@ module Tang
       @subscription = current_customer.subscription
     end
 
-    def subscription_create_params
+    def subscription_params
       params.require(:subscription).permit(:plan)
     end
 
-    def subscription_update_params
-      params.permit(:plan)
-    end
+    # def subscription_update_params
+    #   params.permit(:plan)
+    # end
   end
 end

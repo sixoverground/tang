@@ -1,6 +1,7 @@
-<h1>Editing Customer</h1>
+<%= render 'nav' %>
 
-<%= render 'form', customer: @customer, url: admin_customer_path(@customer) %>
+<h1>Edit customer details</h1>
 
-<%= link_to 'Show', admin_customer_path(@customer) %> |
-<%= link_to 'Back', admin_customers_path %>
+<%= render 'form', customer: @customer, url: tang.admin_customer_path(@customer) %>
+
+<%= link_to 'Cancel', tang.admin_customer_path(@customer) %>

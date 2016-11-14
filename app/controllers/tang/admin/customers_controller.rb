@@ -6,7 +6,7 @@ module Tang
 
     # GET /customers
     def index
-      @customers = User.order(:email)
+      @customers = Tang.customer_class.where.not(stripe_id: nil).order(:email)
     end
 
     # GET /customers/1
@@ -32,15 +32,32 @@ module Tang
       redirect_to admin_customers_url, notice: 'Customer was successfully destroyed.'
     end
 
+    def coupon
+      @customer = Tang.customer_class.find(params[:customer_id])
+    end
+
+    def apply_coupon
+      @customer = Tang.customer_class.find(params[:customer_id])
+      @coupon = Coupon.find(params[Tang.customer_class.to_s.downcase][:coupon_id])
+      ApplyCustomerDiscount.call(@customer, @coupon)
+      redirect_to admin_customer_url(@customer), notice: 'Coupon was successfully applied.'
+    end
+
+    def remove_coupon
+      @customer = Tang.customer_class.find(params[:customer_id])
+      RemoveCustomerDiscount.call(@customer)
+      redirect_to admin_customer_url(@customer), notice: 'Coupon was successfully removed.'
+    end
+
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_customer
-        @customer = User.find(params[:id])
+        @customer = Tang.customer_class.find(params[:id])
       end
 
       # Only allow a trusted parameter "white list" through.
       def customer_params
-        params.require(:user).permit(:email, :account_balance, :business_vat_id, :description)
+        params.require(Tang.customer_class.to_s.downcase).permit(:email, :account_balance)
       end
   end
 end

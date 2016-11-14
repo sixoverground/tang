@@ -4,4 +4,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action :set_paper_trail_whodunnit
+
+  def ensure_plan!(plan)
+    unless current_user.subscribed_to? plan
+      redirect_to '/', alert: 'You do not have access to that.'
+    end
+  end
 end

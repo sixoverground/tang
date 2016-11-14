@@ -20,6 +20,21 @@ module Tang
 
     INTERVALS = ['day', 'week', 'month', 'year']
 
+    def period_days_from(date)
+      if interval == 'week'
+        return date + interval_count.weeks
+      elsif interval == 'month'
+        return date + interval_count.months
+      elsif interval == 'year'
+        return date + interval_count.years
+      end 
+      return date + interval_count.days
+    end
+
+    def interval_count
+      self[:interval_count] || 1
+    end
+
     private
 
     def default_values

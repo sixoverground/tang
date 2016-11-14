@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161004035434) do
+ActiveRecord::Schema.define(version: 20161111165754) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 20161004035434) do
     t.integer  "max_redemptions"
     t.integer  "percent_off"
     t.datetime "redeem_by"
+    t.integer  "redemptions"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
   end
@@ -116,6 +117,7 @@ ActiveRecord::Schema.define(version: 20161004035434) do
     t.datetime "trial_end"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.integer  "coupon_id"
   end
 
   add_index "tang_subscriptions", ["customer_id"], name: "index_tang_subscriptions_on_customer_id", using: :btree
@@ -149,6 +151,7 @@ ActiveRecord::Schema.define(version: 20161004035434) do
     t.string   "description"
     t.datetime "active_until"
     t.string   "role"
+    t.integer  "coupon_id"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

@@ -5,11 +5,11 @@
   <% if @next_plan.present? %>
     <h3>Upgrade to the <%= @next_plan.name %></h3>
     <h4><%= plan_cost(@next_plan) %></h4>
-    <% if current_customer.card.present? %>
-      <%= link_to 'Upgrade', account_subscription_path(plan: @next_plan), method: :patch %>
-    <% else %>
-      <%= link_to 'Upgrade', edit_account_subscription_path(plan: @next_plan) %>
-    <% end %>
+    <% #if current_customer.card.present? %>
+      <%= link_to 'Upgrade', account_subscription_path(subscription: { plan: @next_plan }), method: :patch %>
+    <% #else %>
+      <%#= link_to 'Upgrade', edit_account_subscription_path(plan: @next_plan) %>
+    <% #end %>
   <% end %>
 
   <h2>Current Plan</h2>
@@ -34,13 +34,13 @@
         <h4><%= plan_cost(plan) %></h4>
         <% if plan.order < @subscription.plan.order %>
           <% if current_customer.card.present? %>
-            <%= link_to 'Downgrade', account_subscription_path(plan: plan), method: :patch %>
+            <%= link_to 'Downgrade', account_subscription_path(subscription: { plan: plan }), method: :patch %>
           <% else %>
             <%= link_to 'Downgrade', edit_account_subscription_path(plan: plan) %>
           <% end %>
         <% elsif plan.order > @subscription.plan.order %>
           <% if current_customer.card.present? %>
-            <%= link_to 'Upgrade', account_subscription_path(plan: plan), method: :patch %>
+            <%= link_to 'Upgrade', account_subscription_path(subscription: { plan: plan }), method: :patch %>
           <% else %>
             <%= link_to 'Upgrade', edit_account_subscription_path(plan: plan) %>
           <% end %>
@@ -57,7 +57,7 @@
     <h3>Upgrade to the <%= @next_plan.name %></h3>
     <h4><%= plan_cost(@next_plan) %></h4>
     <% if current_customer.card.present? %>
-      <%= link_to 'Upgrade', account_subscription_path(plan: @next_plan), method: :post %>
+      <%= link_to 'Upgrade', account_subscription_path(subscription: { plan: @next_plan }), method: :post %>
     <% else %>
       <%= link_to 'Upgrade', new_account_subscription_path(plan: @next_plan) %>
     <% end %>
@@ -84,7 +84,7 @@
         <h3><%= plan.name %></h3>
         <h4><%= plan_cost(plan) %></h4>
         <% if current_customer.card.present? %>
-          <%= link_to 'Upgrade', account_subscription_path(plan: plan), method: :post %>
+          <%= link_to 'Upgrade', account_subscription_path(subscription: { plan: plan }), method: :post %>
         <% else %>
           <%= link_to 'Upgrade', new_account_subscription_path(plan: plan) %>
         <% end %>

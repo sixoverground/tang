@@ -1,6 +1,7 @@
+<%= render 'nav' %>
+
 <h1>Editing Subscription</h1>
 
-<%= render 'form_edit', subscription: @subscription, url: admin_subscription_path(@subscription) %>
+<%= render 'form', subscription: @subscription, url: tang.admin_subscription_path(@subscription) %>
 
-<%= link_to 'Show', admin_subscription_path(@subscription) %> |
-<%= link_to 'Back', admin_subscriptions_path %>
+<%= link_to 'Cancel', tang.admin_subscription_path(@subscription) %>

@@ -1,0 +1,28 @@
+<%= render 'nav' %>
+
+<h1>Change coupon</h1>
+
+<%= form_for(@customer, url: tang.admin_customer_coupon_path(@customer), method: :put) do |f| %>
+  <% if @customer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@customer.errors.count, "error") %> prohibited this customer from being saved:</h2>
+
+      <ul>
+      <% @customer.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :coupon_id %><br>
+    <%= f.collection_select :coupon_id, Tang::Coupon.all, :id, :stripe_id, prompt: true %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<%= link_to 'Cancel', tang.admin_customer_path(@customer) %>

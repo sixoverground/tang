@@ -17,20 +17,8 @@ module Tang
         expect(:get => "/admin/coupons/1").to route_to("tang/admin/coupons#show", :id => "1")
       end
 
-      it "routes to #edit" do
-        expect(:get => "/admin/coupons/1/edit").to route_to("tang/admin/coupons#edit", :id => "1")
-      end
-
       it "routes to #create" do
         expect(:post => "/admin/coupons").to route_to("tang/admin/coupons#create")
-      end
-
-      it "routes to #update via PUT" do
-        expect(:put => "/admin/coupons/1").to route_to("tang/admin/coupons#update", :id => "1")
-      end
-
-      it "routes to #update via PATCH" do
-        expect(:patch => "/admin/coupons/1").to route_to("tang/admin/coupons#update", :id => "1")
       end
 
       it "routes to #destroy" do

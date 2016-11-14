@@ -13,6 +13,11 @@ FactoryGirl.define do
     amount 2000
     currency 'usd'
     interval 'month'
+
+    factory :premium_plan do
+      name 'Amazing Diamond Plan'
+      amount 5000
+    end
   end
 
   factory :customer, class: 'User' do

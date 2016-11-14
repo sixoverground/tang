@@ -41,7 +41,6 @@
       <%= f.label :interval_count %><br>
       <%= f.number_field :interval_count, min: 1, step: 1 %>
     </div>
-
     <div class="field">
       <%= f.label :trial_period_days %><br>
       <%= f.number_field :trial_period_days, min: 1, step: 1 %>
@@ -52,6 +51,13 @@
     <%= f.label :statement_descriptor %><br>
     <%= f.text_field :statement_descriptor, maxlength: 22 %>
   </div>
+
+  <% if !plan.new_record? %>
+    <div class="field">
+      <%= f.label :trial_period_days %><br>
+      <%= f.number_field :trial_period_days, min: 1, step: 1 %>
+    </div>
+  <% end %>
 
   <div class="actions">
     <%= f.submit %>

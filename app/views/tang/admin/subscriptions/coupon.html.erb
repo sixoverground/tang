@@ -1,0 +1,28 @@
+<%= render 'nav' %>
+
+<h1>Change coupon</h1>
+
+<%= form_for(@subscription, url: tang.admin_subscription_coupon_path(@subscription), method: :put) do |f| %>
+  <% if @subscription.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@subscription.errors.count, "error") %> prohibited this subscription from being saved:</h2>
+
+      <ul>
+      <% @subscription.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :coupon_id %><br>
+    <%= f.collection_select :coupon_id, Tang::Coupon.all, :id, :stripe_id, prompt: true %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<%= link_to 'Cancel', tang.admin_subscription_path(@subscription) %>

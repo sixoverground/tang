@@ -12,37 +12,40 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :stripe_id %><br>
-    <%= f.text_field :stripe_id %>
+    <%= f.label :percent_off %><br>
+    <%= f.number_field :percent_off %>
   </div>
   <div class="field">
-    <%= f.label :duration %><br>
-    <%= f.text_field :duration %>
+    <%= f.label :currency %><br>
+    <%= f.select :currency, options_for_select(['usd'], coupon.currency) %>
   </div>
   <div class="field">
     <%= f.label :amount_off %><br>
     <%= f.number_field :amount_off %>
   </div>
+
   <div class="field">
-    <%= f.label :currency %><br>
-    <%= f.text_field :currency %>
+    <%= f.label :duration %><br>
+    <%= f.select :duration, options_for_select(Tang::Coupon::DURATIONS, coupon.duration) %>
   </div>
   <div class="field">
     <%= f.label :duration_in_months %><br>
     <%= f.number_field :duration_in_months %>
+  </div>
+
+  <div class="field">
+    <%= f.label :stripe_id, 'ID (Code)' %><br>
+    <%= f.text_field :stripe_id %>
   </div>
   <div class="field">
     <%= f.label :max_redemptions %><br>
     <%= f.number_field :max_redemptions %>
   </div>
   <div class="field">
-    <%= f.label :percent_off %><br>
-    <%= f.number_field :percent_off %>
-  </div>
-  <div class="field">
     <%= f.label :redeem_by %><br>
-    <%= f.datetime_select :redeem_by %>
+    <%= f.date_select :redeem_by, { include_blank: true, default: nil } %>
   </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>

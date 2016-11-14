@@ -1,5 +1,7 @@
-<h1>New Coupon</h1>
+<%= render 'nav' %>
 
-<%= render 'form', coupon: @coupon, url: admin_coupons_path %>
+<h1>Create new coupon</h1>
 
-<%= link_to 'Back', admin_coupons_path %>
+<%= render 'form', coupon: @coupon, url: tang.admin_coupons_path %>
+
+<%= link_to 'Cancel', tang.admin_coupons_path %>

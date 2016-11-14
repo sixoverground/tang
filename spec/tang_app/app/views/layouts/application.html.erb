@@ -12,14 +12,26 @@
 </head>
 <body>
 
-<p>App</p>
+<nav>
+  <% if user_signed_in? %>
+    <%= current_user.email %>
+    <%= link_to 'Sign out', main_app.destroy_user_session_path, method: :delete %>
+  <% else %>
+    <%= link_to 'Sign in', main_app.new_user_session_path %>
+  <% end %>
+</nav>
 
-<% if user_signed_in? %>
-  <%= current_user.email %>
-  <%= link_to 'Sign out', main_app.destroy_user_session_path, method: :delete %>
-<% else %>
-  <%= link_to 'Sign in', main_app.new_user_session_path %>
-<% end %>
+<nav>
+  <ul>
+    <li><%= link_to 'Home', main_app.root_path %></li>
+    <% if user_signed_in? %>
+      <% if current_user.admin? %>
+        <li><%= link_to 'Admin dashboard', tang.admin_dashboard_path %></li>
+      <% end %>
+      <li><%= link_to 'Account', tang.account_subscription_path %></li>
+    <% end %>
+  </ul>
+</nav>
 
 <p class="notice"><%= notice %></p>
 <p class="alert"><%= alert %></p>

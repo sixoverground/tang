@@ -23,7 +23,13 @@ module Tang
 
         # Save the subscription
         subscription.stripe_id = stripe_sub.id
-        subscription.save!
+
+        if stripe_sub.trial_end.present?
+          timestamp = stripe_sub.trial_end.to_s
+          subscription.trial_end = DateTime.strptime(timestamp, '%s')
+        end
+
+        sub_ok = subscription.save!
 
         # Save subscription data to customer
         customer.update_subscription_end(stripe_sub)

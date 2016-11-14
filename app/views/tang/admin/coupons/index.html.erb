@@ -1,41 +1,34 @@
 <%= render 'nav' %>
 
-<h1>Listing Coupons</h1>
+<h1>Coupons</h1>
+
+<%= link_to 'New', tang.new_admin_coupon_path %>
 
 <table>
   <thead>
     <tr>
-      <th>Stripe</th>
-      <th>Duration</th>
-      <th>Amount off</th>
-      <th>Currency</th>
-      <th>Duration in months</th>
-      <th>Max redemptions</th>
-      <th>Percent off</th>
-      <th>Redeem by</th>
-      <th colspan="3"></th>
+      <th>Coupon</th>
+      <th>Terms</th>
+      <th>Redemptions</th>
+      <th>Expires</th>
     </tr>
   </thead>
 
   <tbody>
     <% @coupons.each do |coupon| %>
       <tr>
-        <td><%= coupon.stripe_id %></td>
-        <td><%= coupon.duration %></td>
-        <td><%= coupon.amount_off %></td>
-        <td><%= coupon.currency %></td>
-        <td><%= coupon.duration_in_months %></td>
-        <td><%= coupon.max_redemptions %></td>
-        <td><%= coupon.percent_off %></td>
-        <td><%= coupon.redeem_by %></td>
-        <td><%= link_to 'Show', admin_coupon_path(coupon) %></td>
-        <td><%= link_to 'Edit', edit_admin_coupon_path(coupon) %></td>
-        <td><%= link_to 'Destroy', admin_coupon_path(coupon), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to coupon.stripe_id, tang.admin_coupon_path(coupon) %></td>
+        <td>
+          <%= "#{coupon_off(coupon)} #{coupon.formatted_duration}" %>
+        </td>
+        <td>
+          <% if coupon.max_redemptions.present? %>
+            <!-- discounts -->/<%= coupon.max_redemptions %>
+          <% end %>
+        </td>
+        <td><%= coupon.redeem_by.strftime('%Y/%m/%d %H:%m') if coupon.redeem_by.present? %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Coupon', new_admin_coupon_path %>

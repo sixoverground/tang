@@ -7,11 +7,13 @@ module Tang
     included do
       has_one :card, class_name: 'Tang::Card', foreign_key: 'customer_id'
       has_one :subscription, class_name: 'Tang::Subscription', foreign_key: 'customer_id'
+      belongs_to :coupon, class_name: 'Tang::Coupon'
 
+      before_save :nil_if_blank
       before_update :update_stripe_customer
       before_destroy :delete_stripe_customer
 
-      validates :stripe_id, uniqueness: true
+      validates :stripe_id, uniqueness: true, allow_nil: true
       validates :account_balance, numericality: { only_integer: true }, allow_nil: true
 
       define_method :admin? do
@@ -35,7 +37,23 @@ module Tang
       self.save!
     end
 
+    def subscribed_to?(stripe_id)
+      if self.subscription.present? && self.subscription.plan.present? 
+        return true if self.subscription.plan.stripe_id == stripe_id
+        if Tang.plan_inheritance
+          plan = Plan.find_by(stripe_id: stripe_id)
+          return true if self.subscription.plan.order >= plan.order  
+        end        
+      end
+
+      return false
+    end
+
     private
+
+    def nil_if_blank
+      self.description = nil if self.description.blank?
+    end
 
     def update_stripe_customer
       UpdateCustomer.call(self)

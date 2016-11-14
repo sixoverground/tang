@@ -1,31 +1,40 @@
-<p>
-  <strong>ID:</strong>
-  <%= @plan.stripe_id %>
-</p>
+<%= render 'nav' %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @plan.name %>
-</p>
+<h1><%= @plan.name %></h1>
+<h2><%= plan_cost(@plan) %></h2>
 
-<p>
-  <strong>Price:</strong>
-  <%= plan_cost(@plan) %>
-</p>
+<h3>Plan details</h3>
 
-<p>
-  <strong>Trial period days:</strong>
-  <%= @plan.trial_period_days %>
-</p>
+<dl>
+  <dt>ID:</dt>
+  <dd><%= @plan.stripe_id %></dd>
 
-<% if @plan.statement_descriptor.present? %>
-  <p>
-    <strong>Statement descriptor:</strong>
-    <%= @plan.statement_descriptor %>
-  </p>
-<% end %>
+  <dt>Name:</dt>
+  <dd><%= @plan.name %></dd>
+
+  <dt>Price:</dt>
+  <dd><%= "#{number_to_currency(@plan.amount / 100)} #{@plan.currency.upcase}/#{@plan.interval}" %></dd>
+
+  <dt>Trial period:</dt>
+  <% if @plan.trial_period_days.present? %>
+    <dd><%= @plan.trial_period_days %></dd>
+  <% else %>
+    <dd>No trial</dd>
+  <% end %>
+
+  <% if @plan.statement_descriptor.present? %>
+    <dt>Statement descriptor:</dt>
+    <dd><%= @plan.statement_descriptor %></dd>
+  <% end %>
+</dl>
+
+<h3>Active subscriptions</h3>
+<ul>
+  <% @plan.subscriptions.each do |subscription| %>
+    <li><%= link_to subscription.customer.email, tang.admin_subscription_path(subscription) %></li>
+  <% end %>
+</ul>
 
 
-
-<%= link_to 'Edit', tang.edit_admin_plan_path(@plan) %> |
-<%= link_to 'Back', tang.admin_plans_path %>
+<%= link_to 'Edit Details', tang.edit_admin_plan_path(@plan) %> |
+<%= link_to 'Delete Plan', tang.admin_plan_path(@plan), method: :delete, data: { confirm: 'Are you sure?' } %>

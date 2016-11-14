@@ -1,44 +1,57 @@
-<p id="notice"><%= notice %></p>
+<%= render 'nav' %>
 
-<p>
-  <strong>Stripe:</strong>
-  <%= @coupon.stripe_id %>
-</p>
+<h1><%= @coupon.stripe_id %></h1>
+<h2><%= "#{@coupon.percent_off}\% off #{@coupon.duration}" %></h2>
 
-<p>
-  <strong>Duration:</strong>
-  <%= @coupon.duration %>
-</p>
+<h3>Coupon details</h3>
 
-<p>
-  <strong>Amount off:</strong>
-  <%= @coupon.amount_off %>
-</p>
+<dl>
+  <dt>ID:</dt>
+  <dd><%= @coupon.stripe_id %></dd>
 
-<p>
-  <strong>Currency:</strong>
-  <%= @coupon.currency %>
-</p>
+  <% if @coupon.percent_off.present? %>
+    <dt>Percent off:</dt>
+    <dd><%= "#{@coupon.percent_off}\% off" %></dd>
+  <% end %>
 
-<p>
-  <strong>Duration in months:</strong>
-  <%= @coupon.duration_in_months %>
-</p>
+  <% if @coupon.amount_off.present? %>
+    <dt>Amount off:</dt>
+    <dd><%= "#{number_to_currency(@coupon.amount_off)} #{@coupon.currency.upcase} off" %></dd>
+  <% end %>
 
-<p>
-  <strong>Max redemptions:</strong>
-  <%= @coupon.max_redemptions %>
-</p>
+  <dt>Duration:</dt>
+  <% if @coupon.duration == 'once' %>
+    <dd>once</dd>
+  <% elsif @coupon.duration == 'repeating' %>
+    <dd><%= "#{@coupon.duration_in_months} months" %></dd>
+  <% elsif @coupon.duration == 'forever' %>
+    <dd>forever</dd>
+  <% end %>
 
-<p>
-  <strong>Percent off:</strong>
-  <%= @coupon.percent_off %>
-</p>
+  <% if @coupon.max_redemptions.present? %>
+    <dt>Max redemptions:</dt>
+    <dd><%= @coupon.max_redemptions %> times</dd>
+  <% end %>
 
-<p>
-  <strong>Redeem by:</strong>
-  <%= @coupon.redeem_by %>
-</p>
+  <% if @coupon.redeem_by.present? %>
+    <dt>Redeem by:</dt>
+    <dd><%= @coupon.redeem_by.strftime('%Y/%m/%d %H:%m') %></dd>
+  <% end %>
 
-<%= link_to 'Edit', edit_coupon_path(@coupon) %> |
-<%= link_to 'Back', coupons_path %>
+  <dt>Valid:</dt>
+  <dd><%= @coupon.coupon_valid? %></dd>
+</dl>
+
+<h3>Active redemptions</h3>
+<dl>
+  <% if @coupon.active_redemptions.any? %>
+    <% @coupon.active_redemptions.each do |customer| %>
+      <dd><%= link_to customer.email, admin_customer_path(customer) %></dd>
+    <% end %>
+  <% else %>
+    <dd>No active redemptions</dd>
+  <% end %>
+</dl>
+
+
+<%= link_to 'Delete Coupon', tang.admin_coupon_path(@coupon), method: :delete, data: { confirm: 'Are you sure?' } %>

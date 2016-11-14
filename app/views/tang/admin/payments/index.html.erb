@@ -1,0 +1,31 @@
+<%= render 'nav' %>
+
+<h1>Payments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Amount</th>
+      <th>ID</th>
+      <th>Customer</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @payments.each do |payment| %>
+      <tr>
+        <td>
+          <%= link_to tang.admin_payment_path(payment) do %>
+            <%= number_to_currency(payment.amount / 100) %> 
+            <%= payment.currency.upcase %>
+          <% end %>
+        </td>
+        <td><%= payment.stripe_id %></td>
+        <td><%= payment.invoice.subscription.customer.email %></td>
+        <td><%= payment.created_at.strftime('%Y/%m/%d %H:%M:%S') %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-  mount Tang::Engine => "/tang"
+  get :gold, to: 'gold#index'
   root 'home#index'
+  mount Tang::Engine => "/"
 end

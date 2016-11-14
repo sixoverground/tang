@@ -1,6 +1,6 @@
 <%= render 'nav' %>
 
-<h1>Listing Customers</h1>
+<h1>Customers</h1>
 
 <table>
   <thead>
@@ -8,7 +8,6 @@
       <th>Customer</th>
       <th>Card</th>
       <th>Created</th>
-      <th colspan="3"></th>
     </tr>
   </thead>
 
@@ -16,14 +15,13 @@
     <% @customers.each do |customer| %>
       <tr>
         <td>
-          <%= customer.email %>
-          <%= "- #{customer.stripe_id}" if customer.stripe_id.present? %>
+          <%= link_to tang.admin_customer_path(customer) do %>
+            <%= customer.email %>
+            <%= "- #{customer.stripe_id}" if customer.stripe_id.present? %>
+          <% end %>
         </td>
-        <td><%= customer.card.name if customer.card.present? %></td>
-        <td><%= created_datetime(customer.created_at) %></td>
-        <td><%= link_to 'Show', admin_customer_path(customer) %></td>
-        <td><%= link_to 'Edit', edit_admin_customer_path(customer) %></td>
-        <td><%= link_to 'Destroy', admin_customer_path(customer), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= "#{customer.card.brand} – #{customer.card.last4} – #{customer.card.exp_month}/#{customer.card.exp_year}" if customer.card.present? %></td>
+        <td><%= customer.created_at.strftime('%Y/%m/%d %H:%m:%S') %></td>
       </tr>
     <% end %>
   </tbody>

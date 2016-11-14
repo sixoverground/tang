@@ -1,29 +1,87 @@
-<p>
-  <strong>Email:</strong>
-  <%= @customer.email %>
-</p>
+<%= render 'nav' %>
 
-<p>
-  <strong>Stripe:</strong>
-  <%= @customer.stripe_id %>
-</p>
+<h1><%= @customer.email %></h1>
+<h2><%= @customer.stripe_id %></h2>
 
-<p>
-  <strong>Created:</strong>
-  <%= created_datetime(@customer.created_at) %>
-</p>
+<h3>Customer details</h3>
+<dl>
 
-<p>
-  <strong>Description:</strong>
-  <%= @customer.description %>
-</p>
+  <dt>ID:</dt>
+  <dd><%= @customer.stripe_id %></dd>
 
-<% if @customer.account_balance.present? && @customer.account_balance != 0 %>
-  <p>
-    <strong>Account balance:</strong>
-    <%= @customer.account_balance %>
-  </p>
+  <dt>Created:</dt>
+  <dd><%= created_datetime(@customer.created_at) %></dd>
+
+  <dt>Email:</dt>
+  <dd><%= @customer.email %></dd>
+
+  <% if @customer.account_balance.present? && @customer.account_balance != 0 %>
+    <% if @customer.account_balance > 0 %>
+      <dt>Unattempted charges:</dt>
+      <dd><%= number_to_currency(@customer.account_balance.to_f / 100) %></dd>
+    <% elsif @customer.account_balance < 0 %>
+      <dt>Credit:</dt>
+      <dd><%= number_to_currency(@customer.account_balance.to_f / -100) %></dd>
+    <% end %>
+  <% end %>
+
+</dl>
+
+<h3>Card</h3>
+<dl>
+  <% if @customer.card.present? %>
+    <dt>ID:</dt>
+    <dd><%= @customer.card.stripe_id %></dd>
+
+    <dt>Name:</dt>
+    <dd><%= @customer.card.name %></dd>
+
+    <dt>Number:</dt>
+    <dd><%= @customer.card.last4 %></dd>
+
+    <dt>Fingerprint:</dt>
+    <dd><%= @customer.card.fingerprint %></dd>
+
+    <dt>Expires:</dt>
+    <dd><%= "#{@customer.card.exp_month}/#{@customer.card.exp_year}" %></dd>
+
+    <dt>Type:</dt>
+    <dd><%= @customer.card.brand %></dd>
+
+    <dt>Origin:</dt>
+    <dd><%= @customer.card.country %></dd>
+
+    <dt>CVC check:</dt>
+    <dd><%= @customer.card.cvc_check %></dd>
+  <% else %>
+    <dd>No card</dd>
+  <% end %>
+</dl>
+
+<h3>Active subscription</h3>
+<dl>
+  <% if @customer.subscription.present? %>
+    <dd><%= link_to "#{@customer.subscription.plan.name} (#{plan_cost(@customer.subscription.plan)})", tang.admin_subscription_path(@customer.subscription) %></dd>
+  <% else %>
+    <dd>No active subscription</dd>
+  <% end %>
+</dl>
+
+<h3>Discount</h3>
+<% if @customer.coupon.present? %>
+  <%= link_to 'Change Coupon', tang.admin_customer_coupon_path(@customer) %> |
+  <%= link_to 'Remove Coupon', tang.admin_customer_coupon_path(@customer), method: :delete, data: { confirm: 'Are you sure?' } %>
+<% else %>
+  <%= link_to 'Add Coupon', tang.admin_customer_coupon_path(@customer) %>
 <% end %>
+<dl>
+  <% if @customer.coupon.present? %>
+    <dt>Coupon:</dt>
+    <dd><%= "#{@customer.coupon.stripe_id} — #{coupon_off(@customer.coupon)} #{@customer.coupon.formatted_duration}" %></dd>
+  <% else %>
+    <dd>No active coupon</dd>
+  <% end %>
+</dl>
 
-<%= link_to 'Edit', edit_admin_customer_path(@customer) %> |
-<%= link_to 'Back', admin_customers_path %>
+<%= link_to 'Edit', tang.edit_admin_customer_path(@customer) %> |
+<%= link_to 'Delete Customer', tang.admin_customer_path(@customer), method: :delete, data: { confirm: 'Are you sure?' } %>

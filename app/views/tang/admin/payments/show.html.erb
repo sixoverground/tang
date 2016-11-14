@@ -1,0 +1,27 @@
+<%= render 'nav' %>
+
+<h1><%= number_to_currency(@payment.amount / 100) %> <%= @payment.currency.upcase %></h1>
+<h2><%= @payment.stripe_id %></h2>
+
+<h3>Payment details</h3>
+
+<dl>
+  <dt>ID:</dt>
+  <dd><%= @payment.stripe_id %></dd>
+
+  <dt>Amount:</dt>
+  <dd><%= number_to_currency(@payment.amount / 100) %> <%= @payment.currency.upcase %></dd>
+
+  <dt>Date:</dt>
+  <dd><%= @payment.created_at.strftime('%Y/%m/%d %H:%M:%S') %></dd>
+</dl>
+
+<h3>Connections</h3>
+
+<dl>
+  <dt>Customer:</dt>
+  <dd><%= link_to "#{@payment.customer.stripe_id} — #{@payment.customer.email}", tang.admin_customer_path(@payment.customer) %></dd>
+
+  <dt>Invoice:</dt>
+  <dd><%= link_to @payment.invoice.stripe_id, tang.admin_invoice_path(@payment.invoice) %></dd>
+</dl>

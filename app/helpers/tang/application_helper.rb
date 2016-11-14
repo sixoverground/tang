@@ -16,5 +16,13 @@ module Tang
     def current_customer
       @current_customer
     end
+
+    def coupon_off(coupon)
+      if coupon.percent_off.present?
+        "#{coupon.percent_off}\% off"
+      elsif coupon.amount_off.present?
+        "#{number_to_currency(coupon.amount_off)} off"
+      end
+    end
   end
 end

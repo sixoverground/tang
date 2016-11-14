@@ -1,0 +1,22 @@
+<%= render 'nav' %>
+
+<h1>Invoice</h1>
+<h2><%= @invoice.stripe_id %></h2>
+
+<h3>Invoice details</h3>
+<dl>
+  <dt>ID:</dt>
+  <dd><%= @invoice.stripe_id %></dd>
+
+  <dt>Date:</dt>
+  <dd><%= @invoice.created_at.strftime('%Y/%m/%d %H:%M') %></dd>
+
+  <dt>Period:</dt>
+  <dd><%= @invoice.period_start.strftime('%Y/%m/%d %H:%M') %> to <%= @invoice.period_end.strftime('%Y/%m/%d %H:%M') %></dd>
+
+  <dt>Customer:</dt>
+  <dd><%= link_to @invoice.customer.stripe_id, tang.admin_customer_path(@invoice.customer) %></dd>
+
+  <dt>Subscription:</dt>
+  <dd><%= link_to @invoice.subscription.stripe_id, tang.admin_subscription_path(@invoice.subscription) %></dd>
+</dl>

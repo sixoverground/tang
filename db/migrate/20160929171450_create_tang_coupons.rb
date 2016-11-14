@@ -9,6 +9,7 @@ class CreateTangCoupons < ActiveRecord::Migration
       t.integer :max_redemptions
       t.integer :percent_off
       t.timestamp :redeem_by
+      t.integer :redemptions
 
       t.timestamps null: false
     end

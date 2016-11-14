@@ -14,6 +14,7 @@ StripeEvent.configure do |events|
 
   events.subscribe 'charge.dispute.created' do |event|
     dispute = event.data.object
+    # TODO: create actual dispute model
     StripeMailer.admin_dispute_created(dispute).deliver
   end
 
