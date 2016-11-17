@@ -1,0 +1,30 @@
+<span class="payment-errors"></span>
+
+<div class="payment-row">
+  <label>
+    <span>Cardholder name</span>
+    <input type="text" data-stripe="name" autocomplete="cc-name" placeholder="Full Name" required class="form-control">
+  </label>
+
+  <label>
+    <span>Card number</span>
+    <input type="tel" size="20" data-stripe="number" autocomplete="cc-number" placeholder="•••• •••• •••• ••••" required class="form-control">
+  </label>
+</div>
+
+<div class="payment-row">
+  <label>
+    <span>Expiration (MM/YY)</span>
+    <input type="tel" size="5" data-stripe="exp" autocomplete="cc-exp" placeholder="•• / ••" required class="form-control">
+  </label>
+
+  <label>
+    <span>CVC</span>
+    <input type="tel" size="4" data-stripe="cvc" autocomplete="off" placeholder="•••" required class="form-control">
+  </label>
+
+  <label>
+    <span>Zip code</span>
+    <input type="tel" data-stripe="address_zip" autocomplete="postal-code" placeholder="•••••" required class="form-control">
+  </label>
+</div>

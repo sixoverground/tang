@@ -1,4 +1,7 @@
+# Given
+
 Given(/^there is a plan available$/) do
+  Tang::Plan.destroy_all
   @stripe_plan ||= StripeMock.create_test_helper.create_plan
   @plan ||= FactoryGirl.create(:plan, stripe_id: @stripe_plan.id)
 end
@@ -9,27 +12,29 @@ Given(/^there is a trial plan available$/) do
   @plan ||= FactoryGirl.create(:plan, stripe_id: @stripe_plan.id, trial_period_days: 30)
 end
 
-Given(/^there are (\d+) plans available$/) do |arg1|
+Given(/^I am subscribed to one of (\d+) plans$/) do |arg1|
   Tang::Plan.destroy_all
   @stripe_plan ||= StripeMock.create_test_helper.create_plan(id: 'gold')
   @plan ||= FactoryGirl.create(:plan, stripe_id: @stripe_plan.id, order: 1)
   @stripe_premium_plan ||= StripeMock.create_test_helper.create_plan(id: 'diamond')
   @premium_plan ||= FactoryGirl.create(:premium_plan, stripe_id: @stripe_premium_plan.id, order: 2)
+
+  token = StripeMock.create_test_helper.generate_card_token(address_zip: '90210')
+  @subscription = Tang::CreateSubscription.call(@plan, @customer, token)
 end
 
 Given(/^I am subscribed to a plan$/) do
-  # token = StripeMock.create_test_helper.generate_card_token
+  Tang::Plan.destroy_all
+  @stripe_plan ||= StripeMock.create_test_helper.create_plan
+  @plan ||= FactoryGirl.create(:plan, stripe_id: @stripe_plan.id)
 
   token = StripeMock.create_test_helper.generate_card_token(address_zip: '90210')
-  # Tang::SaveCard.call(@customer, token)
   @subscription = Tang::CreateSubscription.call(@plan, @customer, token)
-
-  # @subscription ||= FactoryGirl.create(:subscription, plan: @plan, customer: @customer)
-  puts "SUB: #{@subscription.id}"
-  # @customer.reload
 end
 
-When(/^I select the plan from the subscription page$/) do
+# When
+
+When(/^I upgrade my subscription$/) do
   visit tang.account_subscription_path
   first(:link, 'Upgrade').click
 end
@@ -63,10 +68,12 @@ When(/^I complete the payment form with:$/) do |table|
   sleep 4
 end
 
-When(/^I upgrade to a new plan$/) do
+When(/^I cancel my subscription$/) do
   visit tang.account_subscription_path
-  first(:link, 'Upgrade').click
+  first(:link, 'Cancel Plan').click
 end
+
+# Then
 
 Then(/^I should see a subscription created success message$/) do
   expect(page).to have_content "Subscription was successfully created."
@@ -89,6 +96,17 @@ Then(/^I should receive a free trial period$/) do
   expect(@customer.subscription.trial_end).to eq(trial_end)
 end
 
+Then(/^I should see a subscription changed success message$/) do
+  expect(page).to have_content "Subscription was successfully changed."
+end
+
+Then(/^I should see a subscription cancelled success message$/) do
+  expect(page).to have_content "Subscription was successfully cancelled."
+end
+
+Then(/^I should see my free subscription$/) do
+  expect(page).to have_content "You're currently on the Free Plan."
+end
 
 
 

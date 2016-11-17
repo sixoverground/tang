@@ -1,87 +1,150 @@
-<%= render 'nav' %>
+<%= render 'header' %>
 
 <h1><%= @customer.email %></h1>
 <h2><%= @customer.stripe_id %></h2>
 
-<h3>Customer details</h3>
-<dl>
+<hr>
 
-  <dt>ID:</dt>
-  <dd><%= @customer.stripe_id %></dd>
+<div class="clearfix">
+  <h3 class="float-md-left">Customer details</h3>
+  <ul class="nav nav-inline float-md-right">
+    <li class="nav-item"><%= link_to 'Update Customer Details', tang.edit_admin_customer_path(@customer), class: 'nav-link' %></li>
+  </ul>
+</div>
+<div class="card card-block">
+  <dl class="card-text">
+    <dt>ID:</dt>
+    <dd><%= @customer.stripe_id %></dd>
 
-  <dt>Created:</dt>
-  <dd><%= created_datetime(@customer.created_at) %></dd>
+    <dt>Created:</dt>
+    <dd><%= created_datetime(@customer.created_at) %></dd>
 
-  <dt>Email:</dt>
-  <dd><%= @customer.email %></dd>
+    <dt>Email:</dt>
+    <dd><%= @customer.email %></dd>
 
-  <% if @customer.account_balance.present? && @customer.account_balance != 0 %>
-    <% if @customer.account_balance > 0 %>
-      <dt>Unattempted charges:</dt>
-      <dd><%= number_to_currency(@customer.account_balance.to_f / 100) %></dd>
-    <% elsif @customer.account_balance < 0 %>
-      <dt>Credit:</dt>
-      <dd><%= number_to_currency(@customer.account_balance.to_f / -100) %></dd>
+    <% if @customer.account_balance.present? && @customer.account_balance != 0 %>
+      <% if @customer.account_balance > 0 %>
+        <dt>Unattempted charges:</dt>
+        <dd><%= number_to_currency(@customer.account_balance.to_f / 100) %></dd>
+      <% elsif @customer.account_balance < 0 %>
+        <dt>Credit:</dt>
+        <dd><%= number_to_currency(@customer.account_balance.to_f / -100) %></dd>
+      <% end %>
     <% end %>
-  <% end %>
-
-</dl>
+  </dl>
+</div>
 
 <h3>Card</h3>
-<dl>
-  <% if @customer.card.present? %>
-    <dt>ID:</dt>
-    <dd><%= @customer.card.stripe_id %></dd>
+<div class="card card-block">
+  <dl class="card-text">
+    <% if @customer.card.present? %>
+      <dt>ID:</dt>
+      <dd><%= @customer.card.stripe_id %></dd>
 
-    <dt>Name:</dt>
-    <dd><%= @customer.card.name %></dd>
+      <dt>Name:</dt>
+      <dd><%= @customer.card.name %></dd>
 
-    <dt>Number:</dt>
-    <dd><%= @customer.card.last4 %></dd>
+      <dt>Number:</dt>
+      <dd><%= @customer.card.last4 %></dd>
 
-    <dt>Fingerprint:</dt>
-    <dd><%= @customer.card.fingerprint %></dd>
+      <dt>Fingerprint:</dt>
+      <dd><%= @customer.card.fingerprint %></dd>
 
-    <dt>Expires:</dt>
-    <dd><%= "#{@customer.card.exp_month}/#{@customer.card.exp_year}" %></dd>
+      <dt>Expires:</dt>
+      <dd><%= "#{@customer.card.exp_month}/#{@customer.card.exp_year}" %></dd>
 
-    <dt>Type:</dt>
-    <dd><%= @customer.card.brand %></dd>
+      <dt>Type:</dt>
+      <dd><%= @customer.card.brand %></dd>
 
-    <dt>Origin:</dt>
-    <dd><%= @customer.card.country %></dd>
+      <dt>Origin:</dt>
+      <dd><%= @customer.card.country %></dd>
 
-    <dt>CVC check:</dt>
-    <dd><%= @customer.card.cvc_check %></dd>
-  <% else %>
-    <dd>No card</dd>
-  <% end %>
-</dl>
+      <dt>CVC check:</dt>
+      <dd><%= @customer.card.cvc_check %></dd>
+    <% else %>
+      <dd>No card</dd>
+    <% end %>
+  </dl>
+</div>
+
+<h3>Payments</h3>
+<div class="card">
+  <table class="table table-responsive card-text">
+    <tbody>
+      <% @customer.charges.each do |charge| %>
+        <tr>
+          <td><%= link_to "#{number_to_currency(charge.amount / 100)} #{charge.currency.upcase}", admin_payment_path(charge) %></td>
+          <td><%= charge.stripe_id %></td>
+          <td><%= charge.customer.email %></td>
+          <td><%= charge.created_at.strftime('%Y/%m/%d %H:%M:%S') %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 <h3>Active subscription</h3>
-<dl>
-  <% if @customer.subscription.present? %>
-    <dd><%= link_to "#{@customer.subscription.plan.name} (#{plan_cost(@customer.subscription.plan)})", tang.admin_subscription_path(@customer.subscription) %></dd>
-  <% else %>
-    <dd>No active subscription</dd>
-  <% end %>
-</dl>
+<div class="card">
+  <table class="table table-responsive card-text">
+    <tbody>
+      <tr>
+        <% if @customer.subscription.present? %>
+          <td><%= link_to "#{@customer.subscription.plan.name} (#{plan_cost(@customer.subscription.plan)})", tang.admin_subscription_path(@customer.subscription) %></td>
+        <% else %>
+          <td>No active subscription</td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-<h3>Discount</h3>
-<% if @customer.coupon.present? %>
-  <%= link_to 'Change Coupon', tang.admin_customer_coupon_path(@customer) %> |
-  <%= link_to 'Remove Coupon', tang.admin_customer_coupon_path(@customer), method: :delete, data: { confirm: 'Are you sure?' } %>
-<% else %>
-  <%= link_to 'Add Coupon', tang.admin_customer_coupon_path(@customer) %>
-<% end %>
-<dl>
-  <% if @customer.coupon.present? %>
-    <dt>Coupon:</dt>
-    <dd><%= "#{@customer.coupon.stripe_id} — #{coupon_off(@customer.coupon)} #{@customer.coupon.formatted_duration}" %></dd>
-  <% else %>
-    <dd>No active coupon</dd>
-  <% end %>
-</dl>
+<h3>Invoices</h3>
+<div class="card">
+  <table class="table table-responsive card-text">
+    <tbody>
+      <% @customer.invoices.each do |invoice| %>
+        <tr>
+          <td><%= link_to number_to_currency(invoice.total / 100), admin_invoice_path(invoice) %></td>
+          <td><%= invoice.customer.stripe_id %></td>
+          <td>Billed from <%= invoice.subscription.stripe_id %></td>
+          <td><%= invoice.stripe_id %></td>
+          <td><%= invoice.created_at.strftime('%Y/%m/%d %H:%M') %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
-<%= link_to 'Edit', tang.edit_admin_customer_path(@customer) %> |
-<%= link_to 'Delete Customer', tang.admin_customer_path(@customer), method: :delete, data: { confirm: 'Are you sure?' } %>
+<div class="clearfix">
+  <h3 class="float-md-left">Discount</h3>
+  <ul class="nav nav-inline float-md-right">
+    <% if @customer.coupon.present? %>
+      <li class="nav-item">
+        <%= link_to 'Change Coupon', tang.admin_customer_coupon_path(@customer), class: 'nav-link' %>  
+      </li>
+      <li class="nav-item">
+        <%= link_to 'Remove Coupon', tang.admin_customer_coupon_path(@customer), method: :delete, data: { confirm: 'Are you sure?' }, class: 'nav-link' %>  
+      </li>
+    <% else %>
+      <li class="nav-item">
+        <%= link_to 'Add Coupon', tang.admin_customer_coupon_path(@customer), class: 'nav-link' %>  
+      </li>
+    <% end %>
+  </ul>
+</div>
+<div class="card card-block">
+  <dl class="card-text">
+    <% if @customer.coupon.present? %>
+      <dt>Coupon:</dt>
+      <dd><%= "#{@customer.coupon.stripe_id} — #{coupon_off(@customer.coupon)} #{@customer.coupon.formatted_duration}" %></dd>
+    <% else %>
+      <dd>No active coupon</dd>
+    <% end %>
+  </dl>
+</div>
+
+<hr>
+
+<p><%= link_to 'Delete Customer', tang.admin_customer_path(@customer), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger float-md-right' %></p>
+
+<%= render 'footer' %>

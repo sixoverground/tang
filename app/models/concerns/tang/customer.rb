@@ -8,6 +8,8 @@ module Tang
       has_one :card, class_name: 'Tang::Card', foreign_key: 'customer_id'
       has_one :subscription, class_name: 'Tang::Subscription', foreign_key: 'customer_id'
       belongs_to :coupon, class_name: 'Tang::Coupon'
+      has_many :invoices, class_name: 'Tang::Invoice', foreign_key: 'customer_id'
+      has_many :charges, through: :invoices, class_name: 'Tang::Charge'
 
       before_save :nil_if_blank
       before_update :update_stripe_customer

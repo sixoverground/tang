@@ -8,7 +8,7 @@ Feature: Subscribe a customer to a plan
   Scenario: A customer subscribes to a plan
     Given there is a plan available
     And I am logged in as a customer
-    When I select the plan from the subscription page
+    When I upgrade my subscription
     And I complete the payment form with:
       | Cardholder name    | John               |
       | Card number        | "4242424242424242" |

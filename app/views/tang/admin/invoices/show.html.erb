@@ -1,22 +1,97 @@
-<%= render 'nav' %>
+<%= render 'header' %>
 
 <h1>Invoice</h1>
 <h2><%= @invoice.stripe_id %></h2>
+<hr>
 
 <h3>Invoice details</h3>
-<dl>
-  <dt>ID:</dt>
-  <dd><%= @invoice.stripe_id %></dd>
+<div class="card card-block">
+  <dl class="card-text">
+    <dt>ID:</dt>
+    <dd><%= @invoice.stripe_id %></dd>
 
-  <dt>Date:</dt>
-  <dd><%= @invoice.created_at.strftime('%Y/%m/%d %H:%M') %></dd>
+    <dt>Date:</dt>
+    <dd><%= @invoice.created_at.strftime('%Y/%m/%d %H:%M') %></dd>
 
-  <dt>Period:</dt>
-  <dd><%= @invoice.period_start.strftime('%Y/%m/%d %H:%M') %> to <%= @invoice.period_end.strftime('%Y/%m/%d %H:%M') %></dd>
+    <dt>Period:</dt>
+    <dd><%= @invoice.period_start.strftime('%Y/%m/%d %H:%M') %> to <%= @invoice.period_end.strftime('%Y/%m/%d %H:%M') %></dd>
 
-  <dt>Customer:</dt>
-  <dd><%= link_to @invoice.customer.stripe_id, tang.admin_customer_path(@invoice.customer) %></dd>
+    <dt>Customer:</dt>
+    <dd><%= link_to @invoice.customer.stripe_id, tang.admin_customer_path(@invoice.customer) %></dd>
 
-  <dt>Subscription:</dt>
-  <dd><%= link_to @invoice.subscription.stripe_id, tang.admin_subscription_path(@invoice.subscription) %></dd>
-</dl>
+    <dt>Subscription:</dt>
+    <dd><%= link_to @invoice.subscription.stripe_id, tang.admin_subscription_path(@invoice.subscription) %></dd>
+  </dl>
+</div>
+
+<h3>Summary</h3>
+<div class="card">
+  <table class="table card-text">
+    <tbody>
+      <tr>
+        <td>Subtotal:</td>
+        <th><%= number_to_currency(@invoice.subtotal / 100) %></th>
+      </tr>
+      <% if @invoice.coupon.present? %>
+        <tr>
+          <td><%= "#{@invoice.coupon.stripe_id} (#{coupon_off(@invoice.coupon)})" %></td>
+          <th><%= discount(@invoice.subtotal, @invoice.coupon) %></th>
+        </tr>
+      <% end %>
+      <tr>
+        <td>Total:</td>
+        <th><%= number_to_currency(@invoice.total / 100) %></th>
+      </tr>
+      <% if @invoice.charge.present? %>
+        <tr>
+          <th>Amount paid:</th>
+          <th><%= number_to_currency(@invoice.charge.amount / 100) %></th>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<h3>Invoice line items</h3>
+<div class="card">
+  <table class="table table-responsive card-text">
+    <thead>
+      <tr>
+        <th>Amount</th>
+        <th>Description</th>
+        <th>Period</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @invoice.invoice_items.each do |invoice_item| %>
+        <tr>
+          <td><%= number_to_currency(invoice_item.amount / 100) %></td>
+          <% if invoice_item.subscription.present? %>
+            <td><%= invoice_item.description %></td>
+          <% else %>
+            <td>Subscription to <%= invoice_item.plan.name %> (<%= plan_cost(invoice_item.plan) %>)</td>
+          <% end %>
+          <td><%= invoice_item.period_start.strftime('%Y/%m/%d %H:%M') %> to <%= invoice_item.period_end.strftime('%Y/%m/%d %H:%M') %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<h3>Status</h3>
+<div class="card card-block">
+  <dl class="card-text">
+    <dt>Status:</dt>
+    <dd><%= @invoice.status %></dd>
+
+    <dt>Payment:</dt>
+    <dd>
+      <% if @invoice.charge.present? %>
+        <%= link_to @invoice.charge.stripe_id, admin_payment_path(@invoice.charge) %>
+      <% end %>
+    </dd>
+  </dl>
+</div>
+
+<%= render 'footer' %>
+

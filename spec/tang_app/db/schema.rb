@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161111165754) do
+ActiveRecord::Schema.define(version: 20161114181651) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,18 +72,46 @@ ActiveRecord::Schema.define(version: 20161111165754) do
     t.datetime "updated_at",         null: false
   end
 
+  create_table "tang_invoice_items", force: :cascade do |t|
+    t.string   "stripe_id"
+    t.integer  "amount"
+    t.string   "currency"
+    t.integer  "invoice_id"
+    t.datetime "period_start"
+    t.datetime "period_end"
+    t.integer  "plan_id"
+    t.boolean  "proration",       default: false, null: false
+    t.integer  "quantity"
+    t.integer  "subscription_id"
+    t.string   "description"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
+  add_index "tang_invoice_items", ["invoice_id"], name: "index_tang_invoice_items_on_invoice_id", using: :btree
+  add_index "tang_invoice_items", ["plan_id"], name: "index_tang_invoice_items_on_plan_id", using: :btree
+  add_index "tang_invoice_items", ["subscription_id"], name: "index_tang_invoice_items_on_subscription_id", using: :btree
+
   create_table "tang_invoices", force: :cascade do |t|
     t.string   "stripe_id"
     t.integer  "subscription_id"
     t.datetime "period_start"
     t.datetime "period_end"
+    t.integer  "customer_id"
     t.datetime "date"
-    t.integer  "total"
     t.string   "currency"
+    t.integer  "subtotal"
+    t.integer  "coupon_id"
+    t.integer  "tax_percent"
+    t.integer  "tax"
+    t.integer  "total"
+    t.integer  "amount_due"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
 
+  add_index "tang_invoices", ["coupon_id"], name: "index_tang_invoices_on_coupon_id", using: :btree
+  add_index "tang_invoices", ["customer_id"], name: "index_tang_invoices_on_customer_id", using: :btree
   add_index "tang_invoices", ["subscription_id"], name: "index_tang_invoices_on_subscription_id", using: :btree
 
   create_table "tang_plans", force: :cascade do |t|
@@ -115,11 +143,12 @@ ActiveRecord::Schema.define(version: 20161111165754) do
     t.integer  "quantity"
     t.decimal  "tax_percent"
     t.datetime "trial_end"
+    t.integer  "coupon_id"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.integer  "coupon_id"
   end
 
+  add_index "tang_subscriptions", ["coupon_id"], name: "index_tang_subscriptions_on_coupon_id", using: :btree
   add_index "tang_subscriptions", ["customer_id"], name: "index_tang_subscriptions_on_customer_id", using: :btree
   add_index "tang_subscriptions", ["plan_id"], name: "index_tang_subscriptions_on_plan_id", using: :btree
 
@@ -150,8 +179,8 @@ ActiveRecord::Schema.define(version: 20161111165754) do
     t.boolean  "delinquent",             default: false, null: false
     t.string   "description"
     t.datetime "active_until"
-    t.string   "role"
     t.integer  "coupon_id"
+    t.string   "role"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

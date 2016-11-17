@@ -1,7 +1,7 @@
-<%= render 'nav' %>
+<%= render 'header' %>
 
 <h1>Edit Plan</h1>
 
 <%= render 'form', plan: @plan, url: tang.admin_plan_path(@plan) %>
 
-<%= link_to 'Cancel', tang.admin_plan_path(@plan) %>
+<%= render 'footer' %>

@@ -45,7 +45,7 @@ Then(/^I should see the following plan:$/) do |table|
   end
 end
 
-Then(/^I should see a subscription update success message$/) do
+Then(/^I should see a subscription updated success message$/) do
   expect(page).to have_content "Subscription was successfully updated."
 end
 

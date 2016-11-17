@@ -1,7 +1,7 @@
-<%= render 'nav' %>
+<%= render 'header' %>
 
 <h1>Edit customer details</h1>
 
 <%= render 'form', customer: @customer, url: tang.admin_customer_path(@customer) %>
 
-<%= link_to 'Cancel', tang.admin_customer_path(@customer) %>
+<%= render 'footer' %>

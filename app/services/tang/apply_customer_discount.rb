@@ -1,15 +1,18 @@
 module Tang
   class ApplyCustomerDiscount
     def self.call(customer, coupon)
-      begin
-        cu = Stripe::Customer.retrieve(customer.stripe_id)
-        cu.coupon = coupon.stripe_id
-        cu.save
-      rescue Stripe::StripeError => e
-        customer.errors[:base] << e.message
+      if customer.stripe_id.present?
+        begin
+          cu = Stripe::Customer.retrieve(customer.stripe_id)
+          cu.coupon = coupon.stripe_id
+          cu.save
+        rescue Stripe::StripeError => e
+          customer.errors[:base] << e.message
+        end
       end
 
       customer.update(coupon: coupon)
+      puts "APPLY CUSTOMER COUPON: #{customer.coupon.stripe_id}"
 
       return customer
     end

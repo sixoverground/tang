@@ -1,0 +1,51 @@
+<h1>Receipt</h1>
+<p><%= number_to_currency(@receipt.amount / 100) %> at <%= Tang.company_name %></p>
+<hr>
+<% # TODO: This should be saved to the actual charge %>
+<p><%= @receipt.customer.card.brand %> <%= @receipt.customer.card.last4 %></p>
+<p><%= @receipt.created_at.strftime('%B %d, %Y') %></p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th>Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @receipt.invoice.invoice_items.each do |invoice_item| %>
+      <tr>
+        <% if invoice_item.subscription.present? %>
+          <td><%= invoice_item.description %></td>
+        <% else %>
+          <td>Subscription to <%= invoice_item.plan.name %></td>
+        <% end %>
+        <td><%= number_to_currency(invoice_item.amount / 100) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th>Subtotal</th>
+      <td><%= number_to_currency(@receipt.invoice.subtotal / 100) %></td>
+    </tr>
+    <% if @receipt.invoice.coupon.present? %>
+      <tr>
+        <th>Coupons</th>
+        <td><%= discount(@receipt.invoice.subtotal, @receipt.invoice.coupon) %></td>
+      </tr>
+      <tr>
+        <th>&nbsp;</th>
+        <td><%= "#{@receipt.invoice.coupon.stripe_id} (#{coupon_off(@receipt.invoice.coupon)})" %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <th>Total</th>
+      <td><%= number_to_currency(@receipt.invoice.total / 100) %></td>
+    </tr>
+    <tr>
+      <th>Paid</th>
+      <th><%= number_to_currency(@receipt.amount / 100) %></th>
+    </tr>
+  </tfoot>
+</table>

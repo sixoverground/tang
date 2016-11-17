@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Tang</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
@@ -12,31 +13,55 @@
 </head>
 <body>
 
-<nav>
-  <% if user_signed_in? %>
-    <%= current_user.email %>
-    <%= link_to 'Sign out', main_app.destroy_user_session_path, method: :delete %>
-  <% else %>
-    <%= link_to 'Sign in', main_app.new_user_session_path %>
-  <% end %>
-</nav>
+<nav class="navbar navbar-fixed-top navbar-light bg-faded">
+  <div class="container">
+    <%= link_to 'Tang', main_app.root_path, class: 'navbar-brand' %>
+    <ul class="nav navbar-nav">
+      <% if user_signed_in? %>
+        <li class="nav-item dropdown float-xs-right">
+          <%= link_to current_user.email, main_app.root_path, class: 'nav-link dropdown-toggle', data: { toggle: 'dropdown' } %>
+          <div class="dropdown-menu">
 
-<nav>
-  <ul>
-    <li><%= link_to 'Home', main_app.root_path %></li>
-    <% if user_signed_in? %>
-      <% if current_user.admin? %>
-        <li><%= link_to 'Admin dashboard', tang.admin_dashboard_path %></li>
+            <% if current_user.admin? %>
+              <%= link_to 'Admin dashboard', tang.admin_dashboard_path, class: 'dropdown-item' %>
+            <% end %>
+            <%= link_to 'Account', tang.account_subscription_path, class: 'dropdown-item' %>
+
+            <%= link_to 'Sign out', main_app.destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
+          </div>
+        </li>
+      <% else %>
+        <li class="nav-item float-xs-right">
+          <%= link_to 'Sign in', main_app.new_user_session_path, class: 'nav-link' %>  
+        </li>
       <% end %>
-      <li><%= link_to 'Account', tang.account_subscription_path %></li>
-    <% end %>
-  </ul>
+    </ul>
+  </div>
 </nav>
 
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
-       
-<%= yield %>
+<div class="container pt-1 mt-3">
+
+  <% if flash[:notice] %>
+    <div class="alert alert-info alert-dismissible fade in">
+      <button type="button" class="close" data-dismiss="alert">
+        <span>&times;</span>
+      </button>
+      <%= flash[:notice] %>  
+    </div>
+  <% end %>
+
+  <% if flash[:alert] %>
+    <div class="alert alert-danger alert-dismissible fade in">
+      <button type="button" class="close" data-dismiss="alert">
+        <span>&times;</span>
+      </button>
+      <%= flash[:alert] %>  
+    </div>
+  <% end %>
+
+  <%= yield %>
+
+</div>
 
 </body>
 </html>

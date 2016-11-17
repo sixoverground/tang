@@ -22,7 +22,8 @@ Tang::Engine.routes.draw do
   namespace :account do
     resource :subscription
     resource :card, only: [:show, :new, :create]
-    resources :charges, only: [:index, :show]
+    resource :coupon, only: [:create]
+    resources :receipts, only: [:show]
   end
 
   # get 'unauthorized', to: 'errors#unauthorized'

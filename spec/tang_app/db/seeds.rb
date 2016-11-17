@@ -25,3 +25,9 @@ diamond = Tang::Plan.create(
   interval: 'month',
   order: 2
 )
+
+coupon = Tang::Coupon.create(
+  stripe_id: 'half-off',
+  duration: 'once',
+  percent_off: 50
+)

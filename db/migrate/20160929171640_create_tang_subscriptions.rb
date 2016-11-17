@@ -10,6 +10,8 @@ class CreateTangSubscriptions < ActiveRecord::Migration
       t.decimal :tax_percent
       t.timestamp :trial_end
 
+      t.integer :coupon_id, index: true, foreign_key: true
+
       t.timestamps null: false
     end
   end

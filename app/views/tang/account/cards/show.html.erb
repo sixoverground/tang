@@ -1,13 +1,18 @@
 <h1>Change your payment details</h1>
+
+<div class="card card-block">
 <% if @card.present? %>
-  <p>
+  <p class="card-text">
     <%= @card.brand %><br>
     Card: **** **** **** <%= @card.last4 %><br>
     Expiry: <%= "#{@card.exp_month}/#{@card.exp_year}" %>
   </p>
 <% else %>
-  <p>You do not have a card on file.</p>
+  <p class="card-text">You do not have a card on file.</p>
 <% end %>
+</div>
 
-<%= link_to 'Use a new card', new_account_card_path %> |
-<%= link_to 'Back', account_subscription_path %>
+<p><%= link_to 'Use a new card', new_account_card_path %></p>
+
+
+<%= link_to 'Cancel', account_subscription_path, class: 'btn btn-secondary' %>

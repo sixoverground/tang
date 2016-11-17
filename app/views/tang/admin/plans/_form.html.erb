@@ -12,54 +12,53 @@
   <% end %>
 
   <% if plan.new_record? %>
-    <div class="field">
-      <%= f.label :stripe_id %><br>
-      <%= f.text_field :stripe_id, required: true %>
+    <div class="form-group">
+      <%= f.label :stripe_id %>
+      <%= f.text_field :stripe_id, required: true, class: 'form-control' %>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name, required: true %>
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, required: true, class: 'form-control' %>
   </div>
 
   <% if plan.new_record? %>
-    <div class="field">
-      <%= f.label :currency %><br>
-      <%= f.select :currency, options_for_select(['usd'], plan.currency) %>
+    <div class="form-group">
+      <%= f.label :currency %>
+      <%= f.select :currency, options_for_select(['usd'], plan.currency), {}, { class: 'form-control' } %>
     </div>
-    <div class="field">
-      <%= f.label :amount %><br>
-      <%= f.number_field :amount, required: true, min: 0, step: 1 %>
+    <div class="form-group">
+      <%= f.label :amount %>
+      <%= f.number_field :amount, required: true, min: 0, step: 1, class: 'form-control' %>
     </div>
 
-    <div class="field">
-      <%= f.label :interval %><br>
-      <%= f.select :interval, options_for_select(Tang::Plan::INTERVALS, plan.interval), { prompt: true }, { required: true } %>
+    <div class="form-group">
+      <%= f.label :interval %>
+      <%= f.select :interval, options_for_select(Tang::Plan::INTERVALS, plan.interval), { prompt: true }, { required: true, class: 'form-control' } %>
     </div>
-    <div class="field">
-      <%= f.label :interval_count %><br>
-      <%= f.number_field :interval_count, min: 1, step: 1 %>
+    <div class="form-group">
+      <%= f.label :interval_count %>
+      <%= f.number_field :interval_count, min: 1, step: 1, class: 'form-control' %>
     </div>
-    <div class="field">
-      <%= f.label :trial_period_days %><br>
-      <%= f.number_field :trial_period_days, min: 1, step: 1 %>
+    <div class="form-group">
+      <%= f.label :trial_period_days %>
+      <%= f.number_field :trial_period_days, min: 1, step: 1, class: 'form-control' %>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :statement_descriptor %><br>
-    <%= f.text_field :statement_descriptor, maxlength: 22 %>
+  <div class="form-group">
+    <%= f.label :statement_descriptor %>
+    <%= f.text_field :statement_descriptor, maxlength: 22, class: 'form-control' %>
   </div>
 
   <% if !plan.new_record? %>
-    <div class="field">
-      <%= f.label :trial_period_days %><br>
-      <%= f.number_field :trial_period_days, min: 1, step: 1 %>
+    <div class="form-group">
+      <%= f.label :trial_period_days %>
+      <%= f.number_field :trial_period_days, min: 1, step: 1, class: 'form-control' %>
     </div>
   <% end %>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <%= link_to 'Cancel', url, class: 'btn btn-secondary' %>
+  <%= f.submit class: 'btn btn-primary' %>
 <% end %>

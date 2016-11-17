@@ -6,7 +6,6 @@ class CreateTangCharges < ActiveRecord::Migration
       t.string :currency
       t.string :description
       t.string :receipt_email
-      # t.integer :customer_id, index: true
       t.string :statement_descriptor
       t.integer :invoice_id, index: true, foreign_key: true
 

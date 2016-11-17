@@ -1,57 +1,65 @@
-<%= render 'nav' %>
+<%= render 'header' %>
 
 <h1><%= @coupon.stripe_id %></h1>
 <h2><%= "#{@coupon.percent_off}\% off #{@coupon.duration}" %></h2>
+<hr>
 
 <h3>Coupon details</h3>
+<div class="card card-block">
+  <dl class="card-text">
+    <dt>ID:</dt>
+    <dd><%= @coupon.stripe_id %></dd>
 
-<dl>
-  <dt>ID:</dt>
-  <dd><%= @coupon.stripe_id %></dd>
+    <% if @coupon.percent_off.present? %>
+      <dt>Percent off:</dt>
+      <dd><%= "#{@coupon.percent_off}\% off" %></dd>
+    <% end %>
 
-  <% if @coupon.percent_off.present? %>
-    <dt>Percent off:</dt>
-    <dd><%= "#{@coupon.percent_off}\% off" %></dd>
-  <% end %>
+    <% if @coupon.amount_off.present? %>
+      <dt>Amount off:</dt>
+      <dd><%= "#{number_to_currency(@coupon.amount_off)} #{@coupon.currency.upcase} off" %></dd>
+    <% end %>
 
-  <% if @coupon.amount_off.present? %>
-    <dt>Amount off:</dt>
-    <dd><%= "#{number_to_currency(@coupon.amount_off)} #{@coupon.currency.upcase} off" %></dd>
-  <% end %>
+    <dt>Duration:</dt>
+    <% if @coupon.duration == 'once' %>
+      <dd>once</dd>
+    <% elsif @coupon.duration == 'repeating' %>
+      <dd><%= "#{@coupon.duration_in_months} months" %></dd>
+    <% elsif @coupon.duration == 'forever' %>
+      <dd>forever</dd>
+    <% end %>
 
-  <dt>Duration:</dt>
-  <% if @coupon.duration == 'once' %>
-    <dd>once</dd>
-  <% elsif @coupon.duration == 'repeating' %>
-    <dd><%= "#{@coupon.duration_in_months} months" %></dd>
-  <% elsif @coupon.duration == 'forever' %>
-    <dd>forever</dd>
-  <% end %>
+    <% if @coupon.max_redemptions.present? %>
+      <dt>Max redemptions:</dt>
+      <dd><%= @coupon.max_redemptions %> times</dd>
+    <% end %>
 
-  <% if @coupon.max_redemptions.present? %>
-    <dt>Max redemptions:</dt>
-    <dd><%= @coupon.max_redemptions %> times</dd>
-  <% end %>
+    <% if @coupon.redeem_by.present? %>
+      <dt>Redeem by:</dt>
+      <dd><%= @coupon.redeem_by.strftime('%Y/%m/%d %H:%m') %></dd>
+    <% end %>
 
-  <% if @coupon.redeem_by.present? %>
-    <dt>Redeem by:</dt>
-    <dd><%= @coupon.redeem_by.strftime('%Y/%m/%d %H:%m') %></dd>
-  <% end %>
-
-  <dt>Valid:</dt>
-  <dd><%= @coupon.coupon_valid? %></dd>
-</dl>
+    <dt>Valid:</dt>
+    <dd><%= @coupon.coupon_valid? %></dd>
+  </dl>
+</div>
 
 <h3>Active redemptions</h3>
-<dl>
-  <% if @coupon.active_redemptions.any? %>
-    <% @coupon.active_redemptions.each do |customer| %>
-      <dd><%= link_to customer.email, admin_customer_path(customer) %></dd>
-    <% end %>
-  <% else %>
-    <dd>No active redemptions</dd>
-  <% end %>
-</dl>
+<div class="card">
+  <table class="table table-responsive card-text">
+    <tbody>
+      <% if @coupon.active_redemptions.any? %>
+        <% @coupon.active_redemptions.each do |customer| %>
+          <tr><td><%= link_to customer.email, admin_customer_path(customer) %></td></tr>
+        <% end %>
+      <% else %>
+        <tr><td>No active redemptions</td></tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
+<hr>
+<%= link_to 'Delete Coupon', tang.admin_coupon_path(@coupon), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger float-md-right' %>
 
-<%= link_to 'Delete Coupon', tang.admin_coupon_path(@coupon), method: :delete, data: { confirm: 'Are you sure?' } %>
+<%= render 'footer' %>

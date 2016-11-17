@@ -11,17 +11,16 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :email %><br>
-    <%= f.email_field :email %>
+  <div class="form-group">
+    <%= f.label :email %>
+    <%= f.email_field :email, class: 'form-control' %>
   </div>
 
-  <div class="field">
-    <%= f.label :account_balance %><br>
-    <%= f.number_field :account_balance %>
+  <div class="form-group">
+    <%= f.label :account_balance %>
+    <%= f.number_field :account_balance, class: 'form-control' %>
   </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  
+  <%= link_to 'Cancel', tang.admin_customer_path(customer), class: 'btn btn-secondary' %>
+  <%= f.submit class: 'btn btn-primary' %>
 <% end %>

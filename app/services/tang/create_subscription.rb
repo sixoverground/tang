@@ -7,7 +7,22 @@ module Tang
       begin
         if customer.stripe_id.blank?
           # Create a new subscription and customer
-          stripe_customer = Stripe::Customer.create(source: token, plan: plan.stripe_id, email: customer.email)
+          if customer.coupon.present?
+            puts "CUSTOMER HAS COUPON: #{customer.coupon.stripe_id}"
+            stripe_customer = Stripe::Customer.create(
+              source: token, 
+              plan: plan.stripe_id, 
+              email: customer.email,
+              coupon: customer.coupon.stripe_id
+            )
+          else
+            puts "CUSTOMER DOES NOT HAVE COUPON"
+            stripe_customer = Stripe::Customer.create(
+              source: token, 
+              plan: plan.stripe_id, 
+              email: customer.email
+            )
+          end
           customer.stripe_id = stripe_customer.id
           stripe_sub = stripe_customer.subscriptions.first
         else

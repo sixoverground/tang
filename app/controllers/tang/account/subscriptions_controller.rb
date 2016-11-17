@@ -9,8 +9,10 @@ module Tang
 
       if @subscription.present?
         @next_plan = @plans.where("tang_plans.order > ?", @subscription.plan.order).first
+        @previous_plan = @plans.where("tang_plans.order < ?", @subscription.plan.order).last
       else
         @next_plan = @plans.first
+        @previous_plan = nil
       end
     end
 
@@ -39,27 +41,24 @@ module Tang
     end
 
     def update
-      puts "params: #{params}"
-      plan = Plan.find(subscription_params[:plan])
+      plan = Plan.find(params[:plan])
       @subscription = ChangeSubscription.call(
         @subscription,
         plan
       )
       if @subscription.errors.blank?
-        redirect_to account_subscription_path, notice: 'Subscription was successfully updated.'
+        redirect_to account_subscription_path, notice: 'Subscription was successfully changed.'
       else
-        @subscription.errors.full_messages.each do |message|
-          puts "SUBSCRIPTION ERROR: #{message}"
-        end
         @plans = Plan.order(:order)
         @next_plan = @plans.where("tang_plans.order > ?", @subscription.plan.order).first
+        @previous_plan = @plans.where("tang_plans.order < ?", @subscription.plan.order).last
         render :show
       end
     end
 
     def destroy
       @subscription.destroy
-      redirect_to account_subscription_path, notice: 'Subscription was successfully destroyed.'
+      redirect_to account_subscription_path, notice: 'Subscription was successfully cancelled.'
     end
 
     private

@@ -1,8 +1,20 @@
-<ul>
-  <li><%= link_to 'Dashboard', admin_dashboard_path %></li>
-  <li><%= link_to 'Customers', admin_customers_path %></li>
-  <li><%= link_to 'Payments', admin_payments_path %></li>
-  <li><%= link_to 'Subscriptions', admin_subscriptions_path %></li>
-  <li><%= link_to 'Plans', admin_plans_path %></li>
-  <li><%= link_to 'Coupons', admin_coupons_path %></li>
+<ul class="nav">
+  <li class="nav-item">
+    <%= link_to 'Dashboard', admin_dashboard_path, class: 'nav-link' %>    
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Customers', admin_customers_path, class: 'nav-link' %>  
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Payments', admin_payments_path, class: 'nav-link' %>  
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Subscriptions', admin_subscriptions_path, class: 'nav-link' %>  
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Plans', admin_plans_path, class: 'nav-link' %>  
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Coupons', admin_coupons_path, class: 'nav-link' %>  
+  </li>
 </ul>

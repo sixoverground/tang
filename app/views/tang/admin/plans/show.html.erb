@@ -1,40 +1,57 @@
-<%= render 'nav' %>
+<%= render 'header' %>
 
 <h1><%= @plan.name %></h1>
 <h2><%= plan_cost(@plan) %></h2>
+<hr>
 
-<h3>Plan details</h3>
+<div class="clearfix">
+  <h3 class="float-md-left">Plan details</h3>
+  <ul class="nav nav-inline float-md-right">
+    <li class="nav-item">
+      <%= link_to 'Edit Details', tang.edit_admin_plan_path(@plan), class: 'nav-link' %>
+    </li>
+  </ul>
+</div>
+<div class="card card-block">
+  <dl class="card-text">
+    <dt>ID:</dt>
+    <dd><%= @plan.stripe_id %></dd>
 
-<dl>
-  <dt>ID:</dt>
-  <dd><%= @plan.stripe_id %></dd>
+    <dt>Name:</dt>
+    <dd><%= @plan.name %></dd>
 
-  <dt>Name:</dt>
-  <dd><%= @plan.name %></dd>
+    <dt>Price:</dt>
+    <dd><%= "#{number_to_currency(@plan.amount / 100)} #{@plan.currency.upcase}/#{@plan.interval}" %></dd>
 
-  <dt>Price:</dt>
-  <dd><%= "#{number_to_currency(@plan.amount / 100)} #{@plan.currency.upcase}/#{@plan.interval}" %></dd>
+    <dt>Trial period:</dt>
+    <% if @plan.trial_period_days.present? %>
+      <dd><%= @plan.trial_period_days %></dd>
+    <% else %>
+      <dd>No trial</dd>
+    <% end %>
 
-  <dt>Trial period:</dt>
-  <% if @plan.trial_period_days.present? %>
-    <dd><%= @plan.trial_period_days %></dd>
-  <% else %>
-    <dd>No trial</dd>
-  <% end %>
-
-  <% if @plan.statement_descriptor.present? %>
-    <dt>Statement descriptor:</dt>
-    <dd><%= @plan.statement_descriptor %></dd>
-  <% end %>
-</dl>
+    <% if @plan.statement_descriptor.present? %>
+      <dt>Statement descriptor:</dt>
+      <dd><%= @plan.statement_descriptor %></dd>
+    <% end %>
+  </dl>
+</div>
 
 <h3>Active subscriptions</h3>
-<ul>
-  <% @plan.subscriptions.each do |subscription| %>
-    <li><%= link_to subscription.customer.email, tang.admin_subscription_path(subscription) %></li>
-  <% end %>
-</ul>
+<div class="card">
+  <table class="table table-responsive card-text">
+    <tbody>
+      <% @plan.subscriptions.each do |subscription| %>
+        <tr><td><%= link_to subscription.customer.email, tang.admin_subscription_path(subscription) %></td></tr>
+      <% end %>
+      <% if @plan.subscriptions.empty? %>
+        <tr><td>No active subscriptions</td></tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
+<hr>
+<%= link_to 'Delete Plan', tang.admin_plan_path(@plan), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger float-md-right' %>
 
-<%= link_to 'Edit Details', tang.edit_admin_plan_path(@plan) %> |
-<%= link_to 'Delete Plan', tang.admin_plan_path(@plan), method: :delete, data: { confirm: 'Are you sure?' } %>
+<%= render 'footer' %>

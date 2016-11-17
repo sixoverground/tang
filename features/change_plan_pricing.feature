@@ -14,6 +14,6 @@ Feature: Switch customers to new plan pricing
       | Amount               | 4000                  |
       | Interval             | month                 |
     And I change a subscription to the new plan
-    Then I should see a subscription update success message
+    Then I should see a subscription updated success message
     And I should see the following subscription:
       | Name | Amazing New Gold Plan |

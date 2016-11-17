@@ -10,44 +10,12 @@
     </div>
   <% end %>
 
-  <span class="payment-errors"></span>
+  <%= render 'payment' %>
 
-  <div class="form-row">
-    <label>
-      <span>Cardholder name</span>
-      <input type="text" data-stripe="name" autocomplete="cc-name">
-    </label>
-  </div>
-
-  <div class="form-row">
-    <label>
-      <span>Card number</span>
-      <input type="tel" size="20" data-stripe="number" autocomplete="cc-number">
-    </label>
-  </div>
-
-  <div class="form-row">
-    <label>
-      <span>Expiration (MM/YY)</span>
-      <input type="tel" size="5" data-stripe="exp" autocomplete="cc-exp">
-    </label>
-  </div>
-
-  <div class="form-row">
-    <label>
-      <span>CVC</span>
-      <input type="tel" size="4" data-stripe="cvc" autocomplete="off">
-    </label>
-  </div>
-
-  <div class="form-row">
-    <label>
-      <span>Zip code</span>
-      <input type="tel" data-stripe="address_zip" autocomplete="postal-code">
-    </label>
-  </div>
-
-  <div class="actions">
-    <%= f.submit 'Save My Billing Information', class: 'submit' %>
-  </div>
+  <% if current_customer.card.present? %>
+    <%= link_to 'Cancel', account_card_path, class: 'btn btn-secondary' %>
+  <% else %>
+    <%= link_to 'Cancel', account_subscription_path, class: 'btn btn-secondary' %>  
+  <% end %>
+  <%= f.submit 'Save My Billing Information', class: 'btn btn-primary' %>
 <% end %>

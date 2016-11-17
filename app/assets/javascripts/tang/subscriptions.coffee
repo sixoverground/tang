@@ -1,4 +1,5 @@
 $ ->
+  console.log('find payment form')
   $form = $('#payment-form')
   $form.submit( (event) ->
 
@@ -40,6 +41,8 @@ $ ->
   $('input[data-stripe="exp"]').payment('formatCardExpiry')
   $('input[data-stripe="cvc"]').payment('formatCardCVC')
   $('input[data-stripe="address_zip"]').payment('restrictNumeric')
+
+  console.log('num: ' + $('input[data-stripe="number"]').length)
 
 stripeResponseHandler = (status, response) ->
   $form = $('#payment-form')

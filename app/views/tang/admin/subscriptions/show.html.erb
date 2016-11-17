@@ -1,59 +1,81 @@
-<%= render 'nav' %>
+<%= render 'header' %>
 
 <h1><%= @subscription.customer.email %> on <%= @subscription.plan.name %></h1>
 <h2><!-- status --></h2>
 
-<h3>Subscription details</h3>
+<hr>
 
-<dl>
+<div class="clearfix">
+  <h3 class="float-md-left">Subscription details</h3>
+  <ul class="nav nav-inline float-md-right">
+    <li class="nav-item">
+      <%= link_to 'Edit Details', tang.edit_admin_subscription_path(@subscription), class: 'nav-link' %>
+    </li>
+  </ul>
+</div>
+<div class="card card-block">
+  <dl class="card-text">
+    <dt>ID:</dt>
+    <dd><%= @subscription.stripe_id %></dd>
 
-  <dt>ID:</dt>
-  <dd><%= @subscription.stripe_id %></dd>
+    <dt>Customer:</dt>
+    <dd><%= link_to @subscription.customer.email, tang.admin_customer_path(@subscription.customer) %></dd>
 
-  <dt>Customer:</dt>
-  <dd><%= link_to @subscription.customer.email, tang.admin_customer_path(@subscription.customer) %></dd>
+    <dt>Plan:</dt>
+    <dd><%= link_to "#{@subscription.plan.name} #{plan_cost(@subscription.plan)}", tang.admin_plan_path(@subscription.plan) %></dd>
 
-  <dt>Plan:</dt>
-  <dd><%= link_to "#{@subscription.plan.name} #{plan_cost(@subscription.plan)}", tang.admin_plan_path(@subscription.plan) %></dd>
+    <dt>Quantity:</dt>
+    <dd><%= @subscription.quantity %></dd>
 
-  <dt>Quantity:</dt>
-  <dd><%= @subscription.quantity %></dd>
+    <dt>Current period:</dt>
+    <dd><%= @subscription.period_start.strftime('%Y/%m/%d') %> to <%= @subscription.period_end.strftime('%Y/%m/%d') %></dd>
 
-  <dt>Current period:</dt>
-  <dd><%= @subscription.period_start.strftime('%Y/%m/%d') %> to <%= @subscription.period_end.strftime('%Y/%m/%d') %></dd>
+    <dt>Created:</dt>
+    <dd><%= @subscription.created_at.strftime('%Y/%m/%d') %></dd>
 
-  <dt>Created:</dt>
-  <dd><%= @subscription.created_at.strftime('%Y/%m/%d') %></dd>
+    <% if @subscription.trial_end.present? %>
+      <dt>Trialing until:</dt>
+      <dd><%= @subscription.trial_end.strftime('%Y/%m/%d') %></dd>
+    <% end %>
+    
+    <dt>Tax percent:</dt>
+    <% if @subscription.tax_percent.present? %>
+      <dd><%= @subscription.tax_percent %>%</dd>
+    <% else %>
+      <dd>No tax applied</dd>
+    <% end %>    
+  </dl>
+</div>
 
-  <% if @subscription.trial_end.present? %>
-    <dt>Trialing until:</dt>
-    <dd><%= @subscription.trial_end.strftime('%Y/%m/%d') %></dd>
-  <% end %>
-  
-  <dt>Tax percent:</dt>
-  <% if @subscription.tax_percent.present? %>
-    <dd><%= @subscription.tax_percent %>%</dd>
-  <% else %>
-    <dd>No tax applied</dd>
-  <% end %>    
+<div class="clearfix">
+  <h3 class="float-md-left">Discount</h3>
+  <ul class="nav nav-inline float-md-right">
+    <% if @subscription.coupon.present? %>
+      <li class="nav-item">
+        <%= link_to 'Change Coupon', tang.admin_subscription_coupon_path(@subscription), class: 'nav-link' %>
+      </li>
+      <li class="nav-item">
+        <%= link_to 'Remove Coupon', tang.admin_subscription_coupon_path(@subscription), method: :delete, data: { confirm: 'Are you sure?' }, class: 'nav-link' %>
+      </li>
+    <% else %>
+      <li class="nav-item">
+        <%= link_to 'Add Coupon', tang.admin_subscription_coupon_path(@subscription), class: 'nav-link' %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+<div class="card card-block">
+  <dl class="card-text">
+    <% if @subscription.coupon.present? %>
+      <dt>Coupon:</dt>
+      <dd><%= "#{@subscription.coupon.stripe_id} — #{coupon_off(@subscription.coupon)} #{@subscription.coupon.formatted_duration}" %></dd>
+    <% else %>
+      <dd>No active coupon</dd>
+    <% end %>
+  </dl>
+</div>
 
-</dl>
+<hr>
+<p><%= link_to 'Cancel Subscription', tang.admin_subscription_path(@subscription), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger float-md-right' %></p>
 
-<h3>Discount</h3>
-<% if @subscription.coupon.present? %>
-  <%= link_to 'Change Coupon', tang.admin_subscription_coupon_path(@subscription) %> |
-  <%= link_to 'Remove Coupon', tang.admin_subscription_coupon_path(@subscription), method: :delete, data: { confirm: 'Are you sure?' } %>
-<% else %>
-  <%= link_to 'Add Coupon', tang.admin_subscription_coupon_path(@subscription) %>
-<% end %>
-<dl>
-  <% if @subscription.coupon.present? %>
-    <dt>Coupon:</dt>
-    <dd><%= "#{@subscription.coupon.stripe_id} — #{coupon_off(@subscription.coupon)} #{@subscription.coupon.formatted_duration}" %></dd>
-  <% else %>
-    <dd>No active coupon</dd>
-  <% end %>
-</dl>
-
-<%= link_to 'Edit Details', tang.edit_admin_subscription_path(@subscription) %> |
-<%= link_to 'Cancel Subscription', tang.admin_subscription_path(@subscription), method: :delete, data: { confirm: 'Are you sure?' } %>
+<%= render 'footer' %>

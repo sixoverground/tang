@@ -1,27 +1,67 @@
-<%= render 'nav' %>
+<%= render 'header' %>
 
 <h1><%= number_to_currency(@payment.amount / 100) %> <%= @payment.currency.upcase %></h1>
 <h2><%= @payment.stripe_id %></h2>
+<hr>
 
 <h3>Payment details</h3>
+<div class="card card-block">
+  <dl class="card-text">
+    <dt>ID:</dt>
+    <dd><%= @payment.stripe_id %></dd>
 
-<dl>
-  <dt>ID:</dt>
-  <dd><%= @payment.stripe_id %></dd>
+    <dt>Amount:</dt>
+    <dd><%= number_to_currency(@payment.amount / 100) %> <%= @payment.currency.upcase %></dd>
 
-  <dt>Amount:</dt>
-  <dd><%= number_to_currency(@payment.amount / 100) %> <%= @payment.currency.upcase %></dd>
+    <dt>Date:</dt>
+    <dd><%= @payment.created_at.strftime('%Y/%m/%d %H:%M:%S') %></dd>
+  </dl>
+</div>
 
-  <dt>Date:</dt>
-  <dd><%= @payment.created_at.strftime('%Y/%m/%d %H:%M:%S') %></dd>
-</dl>
+<h3>Card</h3>
+<div class="card card-block">
+  <dl class="card-text">
+    <dt>ID:</dt>
+    <dd><%= @payment.card.stripe_id %></dd>
+
+    <dt>Name:</dt>
+    <dd><%= @payment.card.name %></dd>
+
+    <dt>Number:</dt>
+    <dd><%= @payment.card.last4 %></dd>
+
+    <dt>Fingerprint:</dt>
+    <dd><%= @payment.card.fingerprint %></dd>
+
+    <dt>Expires:</dt>
+    <dd><%= "#{@payment.card.exp_month}/#{@payment.card.exp_year}" %></dd>
+
+    <dt>Type:</dt>
+    <dd><%= @payment.card.brand %></dd>
+
+    <dt>Zip code:</dt>
+    <dd><%= @payment.card.address_zip %></dd>
+
+    <dt>Origin:</dt>
+    <dd><%= @payment.card.country %></dd>
+
+    <dt>CVC check:</dt>
+    <dd><%= @payment.card.cvc_check %></dd>
+
+    <dt>Zip check:</dt>
+    <dd><%= @payment.card.address_zip_check %></dd>
+  </dl>
+</div>
 
 <h3>Connections</h3>
+<div class="card card-block">
+  <dl class="card-text">
+    <dt>Customer:</dt>
+    <dd><%= link_to "#{@payment.customer.stripe_id} — #{@payment.customer.email}", tang.admin_customer_path(@payment.customer) %></dd>
 
-<dl>
-  <dt>Customer:</dt>
-  <dd><%= link_to "#{@payment.customer.stripe_id} — #{@payment.customer.email}", tang.admin_customer_path(@payment.customer) %></dd>
+    <dt>Invoice:</dt>
+    <dd><%= link_to @payment.invoice.stripe_id, tang.admin_invoice_path(@payment.invoice) %></dd>
+  </dl>
+</div>
 
-  <dt>Invoice:</dt>
-  <dd><%= link_to @payment.invoice.stripe_id, tang.admin_invoice_path(@payment.invoice) %></dd>
-</dl>
+<%= render 'footer' %>

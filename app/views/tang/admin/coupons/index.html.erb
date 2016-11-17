@@ -1,10 +1,9 @@
-<%= render 'nav' %>
+<%= render 'header' %>
 
-<h1>Coupons</h1>
+<h1 class="float-md-left">Coupons</h1>
+<p><%= link_to 'New', tang.new_admin_coupon_path, class: 'btn btn-secondary float-md-right' %></p>
 
-<%= link_to 'New', tang.new_admin_coupon_path %>
-
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Coupon</th>
@@ -32,3 +31,4 @@
   </tbody>
 </table>
 
+<%= render 'footer' %>

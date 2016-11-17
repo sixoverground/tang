@@ -1,98 +1,145 @@
-<h1>Subscription</h1>
+<h2>Subscription</h2>
+<hr>
 
 <% if @subscription.present? %>
 
   <% if @next_plan.present? %>
-    <h3>Upgrade to the <%= @next_plan.name %></h3>
-    <h4><%= plan_cost(@next_plan) %></h4>
-    <% #if current_customer.card.present? %>
-      <%= link_to 'Upgrade', account_subscription_path(subscription: { plan: @next_plan }), method: :patch %>
-    <% #else %>
-      <%#= link_to 'Upgrade', edit_account_subscription_path(plan: @next_plan) %>
-    <% #end %>
+    <div class="alert alert-info">
+      <h4 class="alert-heading">Upgrade to the <%= @next_plan.name %></h4>
+      <p><%= plan_cost(@next_plan) %></p>
+      <%= link_to 'Upgrade', account_subscription_path(plan: @next_plan), method: :patch, class: 'btn btn-primary' %>
+    </div>
   <% end %>
 
-  <h2>Current Plan</h2>
+  <h4>Current plan</h4>
   <p>You're currently paying <%= plan_cost(@subscription.plan) %> on the <%= @subscription.plan.name %>.</p>
 
-  <% if current_customer.card.present? %>
-    <%= link_to 'Change Payment Details', account_card_path %>
-  <% else %>
-    <%= link_to 'Add Payment Details', new_account_card_path %>
-  <% end %>
-
-  <h2>Plans</h2>
-  <ul>
-    <li>
-      <h3><%= Tang.free_plan_name %></h3>
-      <h4>Free</h4>
-      <%= link_to 'Cancel Plan', account_subscription_path, method: :delete, data: { confirm: 'Are you sure you want to cancel your current plan?' } %>
-    </li>
-    <% @plans.each do |plan| %>
-      <li>
-        <h3><%= plan.name %></h3>
-        <h4><%= plan_cost(plan) %></h4>
-        <% if plan.order < @subscription.plan.order %>
-          <% if current_customer.card.present? %>
-            <%= link_to 'Downgrade', account_subscription_path(subscription: { plan: plan }), method: :patch %>
-          <% else %>
-            <%= link_to 'Downgrade', edit_account_subscription_path(plan: plan) %>
-          <% end %>
-        <% elsif plan.order > @subscription.plan.order %>
-          <% if current_customer.card.present? %>
-            <%= link_to 'Upgrade', account_subscription_path(subscription: { plan: plan }), method: :patch %>
-          <% else %>
-            <%= link_to 'Upgrade', edit_account_subscription_path(plan: plan) %>
-          <% end %>
-        <% else %>
-          <%= 'Current Plan' %>
-        <% end %>
-      </li>
+  <div>
+    <% if current_customer.card.present? %>
+      <%= link_to 'Change Payment Details', account_card_path, class: 'btn btn-secondary' %>
+    <% else %>
+      <%= link_to 'Add Payment Details', new_account_card_path, class: 'btn btn-secondary' %>
     <% end %>
-  </ul>
+
+    <% if @previous_plan.present? %>
+      <%= link_to 'Downgrade', account_subscription_path(plan: @previous_plan), method: :patch, class: 'btn btn-secondary' %>
+    <% end %>
+
+    <%= link_to 'Cancel Plan', account_subscription_path, method: :delete, data: { confirm: 'Are you sure you want to cancel your current plan?' }, class: 'btn btn-secondary' %>
+  </div>
+
+  <br>
+
+  <% if false %>
+    <h2>Plans</h2>
+    <ul>
+      <li>
+        <h3><%= Tang.free_plan_name %></h3>
+        <h4>Free</h4>
+        <%= link_to 'Cancel Plan', account_subscription_path, method: :delete, data: { confirm: 'Are you sure you want to cancel your current plan?' } %>
+      </li>
+      <% @plans.each do |plan| %>
+        <li>
+          <h3><%= plan.name %></h3>
+          <h4><%= plan_cost(plan) %></h4>
+          <% if plan.order < @subscription.plan.order %>
+            <% if current_customer.card.present? %>
+              <%= link_to 'Downgrade', account_subscription_path(subscription: { plan: plan }), method: :patch %>
+            <% else %>
+              <%= link_to 'Downgrade', edit_account_subscription_path(plan: plan) %>
+            <% end %>
+          <% elsif plan.order > @subscription.plan.order %>
+            <% if current_customer.card.present? %>
+              <%= link_to 'Upgrade', account_subscription_path(subscription: { plan: plan }), method: :patch %>
+            <% else %>
+              <%= link_to 'Upgrade', edit_account_subscription_path(plan: plan) %>
+            <% end %>
+          <% else %>
+            <%= 'Current Plan' %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
 
 <% else %>
 
   <% if @next_plan.present? %>
-    <h3>Upgrade to the <%= @next_plan.name %></h3>
-    <h4><%= plan_cost(@next_plan) %></h4>
-    <% if current_customer.card.present? %>
-      <%= link_to 'Upgrade', account_subscription_path(subscription: { plan: @next_plan }), method: :post %>
-    <% else %>
-      <%= link_to 'Upgrade', new_account_subscription_path(plan: @next_plan) %>
-    <% end %>
+    <div class="alert alert-info">
+      <h4 class="alert-heading">Upgrade to the <%= @next_plan.name %></h4>
+      <p><%= plan_cost(@next_plan) %></p>
+      <% if current_customer.card.present? %>
+        <%= link_to 'Upgrade', account_subscription_path(subscription: { plan: @next_plan }), method: :post, class: 'btn btn-primary' %>
+      <% else %>
+        <%= link_to 'Upgrade', new_account_subscription_path(plan: @next_plan), class: 'btn btn-primary' %>
+      <% end %>
+    </div>
   <% end %>
 
-  <h2>Current Plan</h2>
+  <h4>Current Plan</h4>
   <p>You're currently on the <%= Tang.free_plan_name %>.</p>
 
-  <% if current_customer.card.present? %>
-    <%= link_to 'Change Payment Details', account_card_path %>
-  <% else %>
-    <%= link_to 'Add Payment Details', new_account_card_path %>
-  <% end %>
-
-  <h2>Plans</h2>
-  <ul>
-    <li>
-      <h3><%= Tang.free_plan_name %></h3>
-      <h4>Free</h4>
-      <%= 'Current Plan' %>
-    </li>
-    <% @plans.each do |plan| %>
-      <li>
-        <h3><%= plan.name %></h3>
-        <h4><%= plan_cost(plan) %></h4>
-        <% if current_customer.card.present? %>
-          <%= link_to 'Upgrade', account_subscription_path(subscription: { plan: plan }), method: :post %>
-        <% else %>
-          <%= link_to 'Upgrade', new_account_subscription_path(plan: plan) %>
-        <% end %>
-      </li>
+ 
+  <div>
+    <% if current_customer.card.present? %>
+      <%= link_to 'Change Payment Details', account_card_path, class: 'btn btn-secondary' %>
+    <% else %>
+      <%= link_to 'Add Payment Details', new_account_card_path, class: 'btn btn-secondary' %>
     <% end %>
-  </ul>
+  </div>
+
+  <br>
+
+  <% if false %>
+    <h2>Plans</h2>
+    <ul>
+      <li>
+        <h3><%= Tang.free_plan_name %></h3>
+        <h4>Free</h4>
+        <%= 'Current Plan' %>
+      </li>
+      <% @plans.each do |plan| %>
+        <li>
+          <h3><%= plan.name %></h3>
+          <h4><%= plan_cost(plan) %></h4>
+          <% if current_customer.card.present? %>
+            <%= link_to 'Upgrade', account_subscription_path(subscription: { plan: plan }), method: :post %>
+          <% else %>
+            <%= link_to 'Upgrade', new_account_subscription_path(plan: plan) %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
 
 <% end %>
 
+<% if current_customer.coupon.present? %>
+  <h4>Discount</h4>
+  <p><%= "#{current_customer.coupon.stripe_id} - #{coupon_off(current_customer.coupon)} #{current_customer.coupon.formatted_duration}" %></p>
+<% else %>
+  <h4>Redeem coupon</h4>
+  <%= form_for current_customer.build_coupon, url: tang.account_coupon_path, html: { class: 'form-inline' } do |f| %>
+    <div class="form-group">
+      <%= f.label :stripe_id, 'Coupon', class: 'sr-only' %>
+      <%= f.text_field :stripe_id, placeholder: 'COUPON CODE', required: true, class: 'form-control' %>
+    </div>
+    <%= f.submit 'Apply discount', class: 'btn btn-secondary' %>
+  <% end %>
+<% end %>
 
+<br>
+
+<h4>Receipts</h4>
+<p>Access receipts for all of the payments you made for your account.</p>
+
+<ul class="list-group">
+  <% current_customer.charges.each do |charge| %>
+    <li class="list-group-item">
+      <%= link_to 'View Receipt', tang.account_receipt_path(charge), class: 'btn btn-secondary float-xs-right' %>
+      <h5 class="list-group-item-heading"><%= number_to_currency(charge.amount / 100) %></h5>
+      <p class="list-group-item-text">Paid on <%= charge.created_at.strftime('%d, %b %Y') %></p>
+    </li>
+  <% end %>
+</ul>
 
