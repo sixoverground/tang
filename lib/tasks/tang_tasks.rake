@@ -22,8 +22,10 @@ task :check do
 end
 
 namespace :tang do
-  task import_stripe: :environment do
-    Dotenv.load
+  task :import_stripe => :environment do
+    # Dotenv.load
+    puts "STRIPE_SECRET_KEY=#{ENV['STRIPE_SECRET_KEY']}"
+    puts "Stripe.api_key=#{Stripe.api_key}"
     Tang::ImportStripeJob.perform_now
   end
 end
