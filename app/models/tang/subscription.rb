@@ -7,8 +7,9 @@ module Tang
     belongs_to :coupon
     has_many :invoices
 
-    validates :customer, uniqueness: true
-    validates :stripe_id, uniqueness: true
+    validates :customer, presence: true, uniqueness: true
+    validates :plan, presence: true
+    validates :stripe_id, presence: true, uniqueness: true
     validates :application_fee_percent, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
     validates :quantity, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
     validates :tax_percent, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true,

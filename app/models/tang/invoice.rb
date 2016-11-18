@@ -6,6 +6,10 @@ module Tang
     has_many :invoice_items
     belongs_to :coupon
 
+    validates :subscription, presence: true
+    validates :customer, presence: true
+    validates :stripe_id, presence: true, uniqueness: true
+
     # scope :paid, -> { joins(:charge) }
 
     def period_start

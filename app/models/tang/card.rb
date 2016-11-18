@@ -3,6 +3,7 @@ module Tang
     belongs_to :customer, class_name: Tang.customer_class.to_s
 
     validates :customer, presence: true, uniqueness: true
+    validates :stripe_id, presence: true, uniqueness: true
     validates :name, presence: true
     validates :last4, numericality: { only_integer: true, greater_than_or_equal_to: 0 },
                       length: { is: 4 }

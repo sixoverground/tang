@@ -1,11 +1,11 @@
 <%= form_for(card, url: url, html: { id: 'payment-form' }) do |f| %>
   <% if card.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(card.errors.count, "error") %> prohibited this card from being saved:</h2>
-      <ul>
-      <% card.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+    <div id="error_explanation" class="alert alert-danger">
+      <h4 class="alert-heading"><%= pluralize(card.errors.count, "error") %> prohibited this card from being saved:</h4>
+      <ul class="mb-0">
+        <% card.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>

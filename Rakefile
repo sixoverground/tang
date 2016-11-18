@@ -29,6 +29,7 @@ begin
   task :cucumber => 'app:cucumber'
   task default: [:spec, :cucumber]
 rescue LoadError
+  puts 'You must install rspec/core/rake_task'
 end
 
 namespace :assets do

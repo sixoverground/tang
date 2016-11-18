@@ -2,8 +2,9 @@ module Tang
   class CreateSubscription
     def self.call(plan, customer, token)
       subscription = Subscription.new(plan: plan, customer: customer)
-      return subscription if !subscription.valid?
-
+      # return subscription if !subscription.valid?
+      return subscription if plan.nil? || customer.nil?
+      
       begin
         if customer.stripe_id.blank?
           # Create a new subscription and customer
@@ -24,7 +25,8 @@ module Tang
         # Save the subscription
         subscription.stripe_id = stripe_sub.id
         subscription.trial_end = DateTime.strptime(stripe_sub.trial_end.to_s, '%s') if stripe_sub.trial_end.present?
-        subscription.save!
+        sub_ok = subscription.save!
+        return subscription if !sub_ok
 
         # Save subscription data to customer
         customer.update_subscription_end(stripe_sub)

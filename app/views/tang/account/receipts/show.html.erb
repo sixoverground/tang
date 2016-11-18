@@ -1,9 +1,10 @@
 <h1>Receipt</h1>
 <p><%= number_to_currency(@receipt.amount / 100) %> at <%= Tang.company_name %></p>
 <hr>
-<% # TODO: This should be saved to the actual charge %>
-<p><%= @receipt.customer.card.brand %> <%= @receipt.customer.card.last4 %></p>
-<p><%= @receipt.created_at.strftime('%B %d, %Y') %></p>
+<p class="clearfix">
+  <span class="float-xs-left"><%= @receipt.card_brand %> <%= @receipt.card_last4 %></span>
+  <span class="float-xs-right"><%= @receipt.created_at.strftime('%B %d, %Y') %></span>
+</p>
 
 <table class="table">
   <thead>

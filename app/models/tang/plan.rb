@@ -4,14 +4,17 @@ module Tang
 
     has_many :subscriptions
 
-    validates :stripe_id, uniqueness: true
+    validates :stripe_id, presence: true, uniqueness: true
     validates :name, presence: true
     validates :amount, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
     validates :currency, length: { is: 3 }
     validates :interval, inclusion: { in: %w(day week month year) }
-    validates :interval_count, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true # TODO: restrict this to max 1 year time
+    validates :interval_count, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 1 }, allow_nil: true, if: "interval == 'year'"
+    validates :interval_count, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 12 }, allow_nil: true, if: "interval == 'month'"
+    validates :interval_count, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 52 }, allow_nil: true, if: "interval == 'week'"
+    validates :interval_count, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 365 }, allow_nil: true, if: "interval == 'day'"
     validates :trial_period_days, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true
-    validates :statement_descriptor, length: { maximum: 22 }, allow_nil: true # TODO: don't allow <>"' characters
+    validates :statement_descriptor, length: { maximum: 22 }, format: { without: /[<>"']/ }, allow_nil: true
 
     after_initialize :default_values
     before_create :create_stripe_plan

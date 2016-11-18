@@ -4,6 +4,13 @@ module Tang
     belongs_to :plan
     belongs_to :subscription
 
+    validates :invoice, presence: true
+    validates :plan, presence: true
+    validates :subscription, presence: true
+    validates :stripe_id, presence: true, uniqueness: true
+    validates :amount, numericality: { only_integer: true }
+    validates :currency, presence: true
+
     def self.from_stripe(stripe_invoice_item, invoice)
       if stripe_invoice_item.plan.present?
         plan = Plan.find_by(stripe_id: stripe_invoice_item.plan.id)

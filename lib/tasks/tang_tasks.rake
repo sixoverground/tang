@@ -18,3 +18,9 @@ task :check do
   Rake::Task['brakeman'].invoke
   Rake::Task['rails_best_practices'].invoke
 end
+
+namespace :tang do
+  task import_stripe: :environment do
+    Tang::ImportStripeJob.perform_now
+  end
+end

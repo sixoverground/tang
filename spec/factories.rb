@@ -1,17 +1,4 @@
 FactoryGirl.define do
-  factory :tang_invoice_item, class: 'Tang::InvoiceItem' do
-    stripe_id "MyString"
-    amount 1
-    currency "MyString"
-    invoice nil
-    period_start "2016-11-14 13:16:51"
-    period_end "2016-11-14 13:16:51"
-    plan nil
-    proration false
-    quantity 1
-    subscription nil
-    description "MyString"
-  end
   sequence :email do |n|
     "person#{n}@example.com"
   end
@@ -51,6 +38,7 @@ FactoryGirl.define do
   end
 
   factory :card, class: 'Tang::Card' do
+    stripe_id SecureRandom.uuid
     customer
     name 'John'
     last4 '0002'
@@ -67,6 +55,7 @@ FactoryGirl.define do
 
   factory :invoice, class: 'Tang::Invoice' do
     stripe_id SecureRandom.uuid
+    customer
     subscription
     date Time.now
     period_start Time.now
@@ -77,6 +66,20 @@ FactoryGirl.define do
     total 1000
     # ending_balance 0
     currency 'usd'
+  end
+
+  factory :invoice_item, class: 'Tang::InvoiceItem' do
+    stripe_id SecureRandom.uuid
+    amount 1
+    currency "usd"
+    invoice
+    period_start "2016-11-14 13:16:51"
+    period_end "2016-11-14 13:16:51"
+    plan
+    proration false
+    quantity 1
+    subscription
+    description "MyString"
   end
 
   factory :charge, class: 'Tang::Charge' do

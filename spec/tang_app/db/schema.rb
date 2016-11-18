@@ -52,8 +52,28 @@ ActiveRecord::Schema.define(version: 20161114181651) do
     t.string   "receipt_email"
     t.string   "statement_descriptor"
     t.integer  "invoice_id"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.string   "card_stripe_id"
+    t.string   "card_address_line1"
+    t.string   "card_address_line1_check"
+    t.string   "card_address_line2"
+    t.string   "card_address_city"
+    t.string   "card_address_country"
+    t.string   "card_address_state"
+    t.string   "card_address_zip"
+    t.string   "card_address_zip_check"
+    t.string   "card_name"
+    t.string   "card_brand"
+    t.string   "card_last4"
+    t.string   "card_dynamic_last4"
+    t.integer  "card_exp_month"
+    t.integer  "card_exp_year"
+    t.string   "card_cvc_check"
+    t.string   "card_country"
+    t.string   "card_tokenization_method"
+    t.string   "card_funding"
+    t.string   "card_fingerprint"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   add_index "tang_charges", ["invoice_id"], name: "index_tang_charges_on_invoice_id", using: :btree

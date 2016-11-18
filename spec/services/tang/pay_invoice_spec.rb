@@ -22,9 +22,9 @@ module Tang
 
       subscription = FactoryGirl.create(:subscription, plan: plan, customer: customer, stripe_id: stripe_customer.subscriptions.first.id)
 
-      invoice = FactoryGirl.create(:invoice, subscription: subscription)
+      invoice = FactoryGirl.create(:invoice, subscription: subscription, customer: customer)
 
-      stripe_charge = Stripe::Charge.create(amount: 100, currency: 'usd')
+      stripe_charge = Stripe::Charge.create(amount: 100, currency: 'usd', customer: stripe_customer.id)
 
       event = StripeMock.mock_webhook_event('invoice.payment_succeeded', id: invoice.stripe_id, subscription: subscription.stripe_id, charge: stripe_charge.id)
       
