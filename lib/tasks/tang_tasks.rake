@@ -3,6 +3,8 @@
 #   # Task goes here
 # end
 
+# require 'dotenv/tasks'
+
 task :rails_best_practices do
   path = File.expand_path("../../../", __FILE__)
   sh "rails_best_practices #{path}"
@@ -21,6 +23,7 @@ end
 
 namespace :tang do
   task import_stripe: :environment do
+    Dotenv.load
     Tang::ImportStripeJob.perform_now
   end
 end
