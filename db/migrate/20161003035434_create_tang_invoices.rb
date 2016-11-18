@@ -8,7 +8,7 @@ class CreateTangInvoices < ActiveRecord::Migration
       t.integer :customer_id, index: true
       t.timestamp :date
       t.string :currency
-      
+
       t.integer :subtotal
       t.integer :coupon_id, index: true, foreign_key: true
       t.integer :tax_percent

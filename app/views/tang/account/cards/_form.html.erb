@@ -15,7 +15,7 @@
   <% if current_customer.card.present? %>
     <%= link_to 'Cancel', account_card_path, class: 'btn btn-secondary' %>
   <% else %>
-    <%= link_to 'Cancel', account_subscription_path, class: 'btn btn-secondary' %>  
+    <%= link_to 'Cancel', account_subscription_path, class: 'btn btn-secondary' %>
   <% end %>
   <%= f.submit 'Save My Billing Information', class: 'btn btn-primary' %>
 <% end %>

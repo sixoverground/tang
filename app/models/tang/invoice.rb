@@ -6,7 +6,7 @@ module Tang
     has_many :invoice_items
     belongs_to :coupon
 
-    scope :paid, -> { joins(:charge) }
+    # scope :paid, -> { joins(:charge) }
 
     def period_start
       self[:period_start] || created_at

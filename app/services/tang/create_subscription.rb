@@ -44,15 +44,15 @@ module Tang
     def self.create_stripe_customer(plan, customer, token)
       if customer.coupon.present?
         stripe_customer = Stripe::Customer.create(
-          source: token, 
-          plan: plan.stripe_id, 
+          source: token,
+          plan: plan.stripe_id,
           email: customer.email,
           coupon: customer.coupon.stripe_id
         )
       else
         stripe_customer = Stripe::Customer.create(
-          source: token, 
-          plan: plan.stripe_id, 
+          source: token,
+          plan: plan.stripe_id,
           email: customer.email
         )
       end

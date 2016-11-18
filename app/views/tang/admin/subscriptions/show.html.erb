@@ -37,13 +37,13 @@
       <dt>Trialing until:</dt>
       <dd><%= @subscription.trial_end.strftime('%Y/%m/%d') %></dd>
     <% end %>
-    
+
     <dt>Tax percent:</dt>
     <% if @subscription.tax_percent.present? %>
       <dd><%= @subscription.tax_percent %>%</dd>
     <% else %>
       <dd>No tax applied</dd>
-    <% end %>    
+    <% end %>
   </dl>
 </div>
 

@@ -27,7 +27,7 @@ module Tang
         return date + interval_count.months
       elsif interval == 'year'
         return date + interval_count.years
-      end 
+      end
       return date + interval_count.days
     end
 

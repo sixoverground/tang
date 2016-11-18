@@ -40,12 +40,12 @@ module Tang
     end
 
     def subscribed_to?(stripe_id)
-      if self.subscription.present? && self.subscription.plan.present? 
+      if self.subscription.present? && self.subscription.plan.present?
         return true if self.subscription.plan.stripe_id == stripe_id
         if Tang.plan_inheritance
           plan = Plan.find_by(stripe_id: stripe_id)
-          return true if self.subscription.plan.order >= plan.order  
-        end        
+          return true if self.subscription.plan.order >= plan.order
+        end
       end
 
       return false

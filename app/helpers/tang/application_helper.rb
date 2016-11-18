@@ -1,9 +1,9 @@
 module Tang
   module ApplicationHelper
 
-    def created_date(date)
-      date.strftime('%Y/%m/%d')
-    end
+    # def created_date(date)
+    #   date.strftime('%Y/%m/%d')
+    # end
 
     def created_datetime(date)
       date.strftime('%Y/%m/%d %H:%M')

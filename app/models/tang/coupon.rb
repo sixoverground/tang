@@ -50,7 +50,7 @@ module Tang
     end
 
     def repeating?
-      duration == "repeating"  
+      duration == "repeating"
     end
 
     private

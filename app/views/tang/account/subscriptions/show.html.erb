@@ -87,7 +87,6 @@
   <h4>Current Plan</h4>
   <p>You're currently on the <%= Tang.free_plan_name %>.</p>
 
- 
   <div>
     <% if current_customer.card.present? %>
       <%= link_to 'Change Payment Details', account_card_path, class: 'btn btn-secondary' %>
