@@ -1,9 +1,7 @@
 module Tang
   class UpdateCustomer
     def self.call(customer)
-      if !customer.valid?
-        return customer
-      end
+      return customer if !customer.valid?
 
       if customer.stripe_id.present?
         begin
@@ -12,9 +10,7 @@ module Tang
           c.account_balance = customer.account_balance if customer.account_balance.present?
           c.business_vat_id = customer.business_vat_id if customer.business_vat_id.present?
           c.description = customer.description
-          if customer.coupon.present?
-            c.coupon = customer.coupon.stripe_id
-          end
+          c.coupon = customer.coupon.stripe_id if customer.coupon.present?
           c.save
         rescue Stripe::StripeError => e
           customer.errors[:base] << e.message

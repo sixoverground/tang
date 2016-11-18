@@ -7,20 +7,7 @@ module Tang
       begin
         if customer.stripe_id.blank?
           # Create a new subscription and customer
-          if customer.coupon.present?
-            stripe_customer = Stripe::Customer.create(
-              source: token, 
-              plan: plan.stripe_id, 
-              email: customer.email,
-              coupon: customer.coupon.stripe_id
-            )
-          else
-            stripe_customer = Stripe::Customer.create(
-              source: token, 
-              plan: plan.stripe_id, 
-              email: customer.email
-            )
-          end
+          stripe_customer = create_stripe_customer(plan, customer, token)
           customer.stripe_id = stripe_customer.id
           stripe_sub = stripe_customer.subscriptions.first
         else
@@ -50,6 +37,26 @@ module Tang
         subscription.errors[:base] << e.message
       end
       return subscription
+    end
+
+    private
+
+    def self.create_stripe_customer(plan, customer, token)
+      if customer.coupon.present?
+        stripe_customer = Stripe::Customer.create(
+          source: token, 
+          plan: plan.stripe_id, 
+          email: customer.email,
+          coupon: customer.coupon.stripe_id
+        )
+      else
+        stripe_customer = Stripe::Customer.create(
+          source: token, 
+          plan: plan.stripe_id, 
+          email: customer.email
+        )
+      end
+      stripe_customer
     end
   end
 end
