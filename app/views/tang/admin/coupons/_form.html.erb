@@ -11,42 +11,41 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :percent_off %><br>
-    <%= f.number_field :percent_off %>
+  <div class="form-group">
+    <%= f.label :percent_off %>
+    <%= f.number_field :percent_off, class: 'form-control' %>
   </div>
-  <div class="field">
-    <%= f.label :currency %><br>
-    <%= f.select :currency, options_for_select(['usd'], coupon.currency) %>
+  <div class="form-group">
+    <%= f.label :currency %>
+    <%= f.select :currency, options_for_select(['usd'], coupon.currency), {}, class: 'form-control' %>
   </div>
-  <div class="field">
-    <%= f.label :amount_off %><br>
-    <%= f.number_field :amount_off %>
-  </div>
-
-  <div class="field">
-    <%= f.label :duration %><br>
-    <%= f.select :duration, options_for_select(Tang::Coupon::DURATIONS, coupon.duration) %>
-  </div>
-  <div class="field">
-    <%= f.label :duration_in_months %><br>
-    <%= f.number_field :duration_in_months %>
+  <div class="form-group">
+    <%= f.label :amount_off %>
+    <%= f.number_field :amount_off, class: 'form-control' %>
   </div>
 
-  <div class="field">
-    <%= f.label :stripe_id, 'ID (Code)' %><br>
-    <%= f.text_field :stripe_id, required: true %>
+  <div class="form-group">
+    <%= f.label :duration %>
+    <%= f.select :duration, options_for_select(Tang::Coupon::DURATIONS, coupon.duration), {}, class: 'form-control' %>
   </div>
-  <div class="field">
-    <%= f.label :max_redemptions %><br>
-    <%= f.number_field :max_redemptions %>
+  <div class="form-group">
+    <%= f.label :duration_in_months %>
+    <%= f.number_field :duration_in_months, class: 'form-control' %>
   </div>
-  <div class="field">
-    <%= f.label :redeem_by %><br>
+
+  <div class="form-group">
+    <%= f.label :stripe_id, 'ID (Code)' %>
+    <%= f.text_field :stripe_id, required: true, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :max_redemptions %>
+    <%= f.number_field :max_redemptions, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :redeem_by %>
     <%= f.date_select :redeem_by, { include_blank: true, default: nil } %>
   </div>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <%= link_to 'Cancel', tang.admin_coupons_path, class: 'btn btn-secondary' %>
+  <%= f.submit class: 'btn btn-primary' %>
 <% end %>
