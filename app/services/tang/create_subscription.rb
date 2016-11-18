@@ -8,7 +8,6 @@ module Tang
         if customer.stripe_id.blank?
           # Create a new subscription and customer
           if customer.coupon.present?
-            puts "CUSTOMER HAS COUPON: #{customer.coupon.stripe_id}"
             stripe_customer = Stripe::Customer.create(
               source: token, 
               plan: plan.stripe_id, 
@@ -16,7 +15,6 @@ module Tang
               coupon: customer.coupon.stripe_id
             )
           else
-            puts "CUSTOMER DOES NOT HAVE COUPON"
             stripe_customer = Stripe::Customer.create(
               source: token, 
               plan: plan.stripe_id, 
@@ -38,13 +36,8 @@ module Tang
 
         # Save the subscription
         subscription.stripe_id = stripe_sub.id
-
-        if stripe_sub.trial_end.present?
-          timestamp = stripe_sub.trial_end.to_s
-          subscription.trial_end = DateTime.strptime(timestamp, '%s')
-        end
-
-        sub_ok = subscription.save!
+        subscription.trial_end = DateTime.strptime(stripe_sub.trial_end.to_s, '%s') if stripe_sub.trial_end.present?
+        subscription.save!
 
         # Save subscription data to customer
         customer.update_subscription_end(stripe_sub)

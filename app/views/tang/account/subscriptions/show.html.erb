@@ -6,13 +6,21 @@
   <% if @next_plan.present? %>
     <div class="alert alert-info">
       <h4 class="alert-heading">Upgrade to the <%= @next_plan.name %></h4>
-      <p><%= plan_cost(@next_plan) %></p>
+      <% if current_customer.coupon.present? %>
+        <p><del><%= plan_cost(@next_plan) %></del> <%= customer_plan_cost(current_customer, @next_plan) %></p>
+      <% else %>
+        <p><%= plan_cost(@next_plan) %></p>
+      <% end %>
       <%= link_to 'Upgrade', account_subscription_path(plan: @next_plan), method: :patch, class: 'btn btn-primary' %>
     </div>
   <% end %>
 
   <h4>Current plan</h4>
-  <p>You're currently paying <%= plan_cost(@subscription.plan) %> on the <%= @subscription.plan.name %>.</p>
+  <% if current_customer.coupon.present? %>
+    <p>You're currently paying <del><%= plan_cost(@subscription.plan) %></del> <%= customer_plan_cost(current_customer, @subscription.plan) %> on the <%= @subscription.plan.name %>.</p>
+  <% else %>
+    <p>You're currently paying <%= plan_cost(@subscription.plan) %> on the <%= @subscription.plan.name %>.</p>
+  <% end %>
 
   <div>
     <% if current_customer.card.present? %>

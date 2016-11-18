@@ -6,12 +6,6 @@ module Tang
       end
 
       begin
-
-        puts "TRIAL END: #{subscription.trial_end}"
-        puts "NIL: #{subscription.trial_end.nil?}"
-        puts "STRIPE TRIAL END: #{subscription.stripe_trial_end}"
-        puts "END TRIAL NOW: #{subscription.end_trial_now}"
-
         s = Stripe::Subscription.retrieve(subscription.stripe_id)
         s.plan = subscription.plan.stripe_id
         s.quantity = subscription.quantity

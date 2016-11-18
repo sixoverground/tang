@@ -13,5 +13,5 @@ When(/^I enter a coupon code$/) do
 end
 
 Then(/^I should see a reduced charge amount$/) do
-  expect(page).to have_content "You're currently paying $10.00/month on the Amazing Gold Plan."
+  expect(page).to have_content "You're currently paying $20.00/month $10.00/month on the Amazing Gold Plan."
 end

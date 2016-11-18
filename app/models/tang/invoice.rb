@@ -23,5 +23,30 @@ module Tang
         'unpaid'
       end
     end
+
+    def self.from_stripe(stripe_invoice)
+      subscription = Subscription.find_by(stripe_id: stripe_invoice.subscription)
+      if subscription.present?
+        invoice = Invoice.find_or_create_by(stripe_id: stripe_invoice.id) do |i|
+          i.subscription = subscription
+          i.customer = subscription.customer
+          i.period_start = stripe_invoice.period_start
+          i.period_end = stripe_invoice.period_end
+          i.date = stripe_invoice.date
+          i.currency = stripe_invoice.currency
+          i.subtotal = stripe_invoice.subtotal
+          i.tax_percent = stripe_invoice.tax_percent
+          i.tax = stripe_invoice.tax
+          i.total = stripe_invoice.total
+          i.amount_due = stripe_invoice.amount_due
+          if stripe_invoice.discount.present?
+            coupon = Coupon.find_by(stripe_id: stripe_invoice.discount.coupon.id)
+            i.coupon = coupon
+          end
+        end
+        return invoice
+      end
+      return nil
+    end
   end
 end

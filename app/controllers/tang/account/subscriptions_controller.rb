@@ -25,7 +25,6 @@ module Tang
     end
 
     def create
-      puts "params: #{params}"
       plan = Plan.find(subscription_params[:plan])
       @subscription = CreateSubscription.call(
         plan,

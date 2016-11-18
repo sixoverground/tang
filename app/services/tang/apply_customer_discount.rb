@@ -12,7 +12,6 @@ module Tang
       end
 
       customer.update(coupon: coupon)
-      puts "APPLY CUSTOMER COUPON: #{customer.coupon.stripe_id}"
 
       return customer
     end

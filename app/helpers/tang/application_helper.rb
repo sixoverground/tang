@@ -13,6 +13,20 @@ module Tang
       "#{number_to_currency(plan.amount / 100)}/#{plan.interval}"
     end
 
+    def customer_plan_cost(customer, plan)
+      amount_off = 0
+      if customer.coupon.present?
+        logger.debug "customer coupon present"
+        if customer.coupon.percent_off.present?
+          amount_off = (customer.coupon.percent_off.to_f / 100.0) * plan.amount.to_f
+        elsif customer.coupon.amount_off.present?
+          amount_off = customer.coupon.amount_off
+        end
+      end
+      amount = plan.amount - amount_off
+      "#{number_to_currency(amount / 100)}/#{plan.interval}"
+    end
+
     def current_customer
       @current_customer
     end
@@ -26,14 +40,12 @@ module Tang
     end
 
     def discount(amount, coupon)
-      puts "DISCOUNT: #{amount}, #{coupon.percent_off}"
       subtotal = amount
       if coupon.percent_off.present?
         subtotal = amount.to_f * (coupon.percent_off.to_f / 100)
       elsif coupon.amount_off.present?
         subtotal = coupon.amount_off
       end
-      puts "SUBTOTAL: #{subtotal}"
       return number_to_currency(subtotal.to_f / -100)
     end
   end

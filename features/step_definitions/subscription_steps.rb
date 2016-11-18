@@ -65,7 +65,7 @@ When(/^I complete the payment form with:$/) do |table|
   page.execute_script "window.testStripeToken = '#{token}';"
 
   click_on "Submit Payment"
-  sleep 4
+  # sleep 3
 end
 
 When(/^I cancel my subscription$/) do
@@ -90,8 +90,6 @@ Then(/^I should be an active customer$/) do
 end
 
 Then(/^I should receive a free trial period$/) do
-  @customer.reload
-  @customer.subscription.reload
   trial_end = @customer.subscription.created_at.change(usec: 0) + 30.days
   expect(@customer.subscription.trial_end).to eq(trial_end)
 end
