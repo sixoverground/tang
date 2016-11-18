@@ -39,8 +39,6 @@ module Tang
       return subscription
     end
 
-    private
-
     def self.create_stripe_customer(plan, customer, token)
       if customer.coupon.present?
         stripe_customer = Stripe::Customer.create(
