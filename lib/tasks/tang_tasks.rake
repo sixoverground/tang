@@ -24,6 +24,9 @@ end
 namespace :tang do
   task :import_stripe => [:environment, :dotenv] do
     # Dotenv.load
+    Dotenv::Railtie.load
+    Dotenv.load
+
     puts "ENV=#{ENV}"
     puts "STRIPE_SECRET_KEY=#{ENV['STRIPE_SECRET_KEY']}"
     puts "Stripe.api_key=#{Stripe.api_key}"
