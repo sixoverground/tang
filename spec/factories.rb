@@ -13,10 +13,13 @@ FactoryGirl.define do
     amount 2000
     currency 'usd'
     interval 'month'
+    order 1
 
     factory :premium_plan do
+      stripe_id SecureRandom.uuid
       name 'Amazing Diamond Plan'
       amount 5000
+      order 2
     end
   end
 
@@ -24,6 +27,12 @@ FactoryGirl.define do
     stripe_id SecureRandom.uuid
     duration 'once'
     percent_off 50
+
+    factory :amount_off_coupon do
+      percent_off nil
+      amount_off 500
+      currency 'usd'
+    end
   end
 
   factory :customer, class: 'User' do

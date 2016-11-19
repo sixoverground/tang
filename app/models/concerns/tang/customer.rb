@@ -47,7 +47,6 @@ module Tang
           return true if self.subscription.plan.order >= plan.order
         end
       end
-
       return false
     end
 

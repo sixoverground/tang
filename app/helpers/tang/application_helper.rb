@@ -16,7 +16,6 @@ module Tang
     def customer_plan_cost(customer, plan)
       amount_off = 0
       if customer.coupon.present?
-        logger.debug "customer coupon present"
         if customer.coupon.percent_off.present?
           amount_off = (customer.coupon.percent_off.to_f / 100.0) * plan.amount.to_f
         elsif customer.coupon.amount_off.present?
@@ -35,7 +34,7 @@ module Tang
       if coupon.percent_off.present?
         "#{coupon.percent_off}\% off"
       elsif coupon.amount_off.present?
-        "#{number_to_currency(coupon.amount_off)} off"
+        "#{number_to_currency(coupon.amount_off.to_f / 100.0)} off"
       end
     end
 
