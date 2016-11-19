@@ -24,9 +24,9 @@ module Tang
     def period_start
       invoice = invoices.last
       if invoice.present?
-        invoice.period_start
+        return invoice.period_start
       end
-      created_at
+      return created_at
     end
 
     def period_end

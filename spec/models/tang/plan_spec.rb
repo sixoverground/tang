@@ -29,5 +29,25 @@ module Tang
     it "is invalid without an interval" do
       expect(FactoryGirl.build(:plan, interval: nil)).to be_invalid
     end
+
+    it "calculates period days for a day interval" do
+      now = Time.now
+      expect(FactoryGirl.build(:plan, interval: 'day').period_days_from(now)).to eq(now + 1.day)
+    end
+
+    it "calculates period days for a week interval" do
+      now = Time.now
+      expect(FactoryGirl.build(:plan, interval: 'week').period_days_from(now)).to eq(now + 1.week)
+    end
+
+    it "calculates period days for a month interval" do
+      now = Time.now
+      expect(FactoryGirl.build(:plan, interval: 'month').period_days_from(now)).to eq(now + 1.month)
+    end
+
+    it "calculates period days for a year interval" do
+      now = Time.now
+      expect(FactoryGirl.build(:plan, interval: 'year').period_days_from(now)).to eq(now + 1.year)
+    end
   end
 end

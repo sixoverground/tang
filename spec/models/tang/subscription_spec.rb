@@ -26,6 +26,11 @@ module Tang
       expect(FactoryGirl.create(:subscription).period_start).to be <= Time.now
     end
 
+    it "matches its invoice period start" do
+      invoice = FactoryGirl.create(:invoice)
+      expect(invoice.subscription.period_start).to eq(invoice.period_start)
+    end
+
     it "has a period end" do
       expect(FactoryGirl.create(:subscription).period_end).to be >= Time.now
     end
@@ -33,6 +38,12 @@ module Tang
     it "has a stripe trial end" do
       trial_end = Time.now + 30.days
       expect(FactoryGirl.create(:subscription, trial_end: trial_end).stripe_trial_end).to eq(trial_end.to_i)
+    end
+
+    it "can have a stripe trial end of now" do
+      subscription = FactoryGirl.create(:subscription)
+      subscription.end_trial_now = true
+      expect(subscription.stripe_trial_end).to eq('now')
     end
   end
 end
