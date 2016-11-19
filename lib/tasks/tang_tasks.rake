@@ -19,7 +19,7 @@ task :check do
   Rake::Task['rails_best_practices'].invoke
 end
 
-namespace :tang do
+# namespace :tang do
   task :import_stripe => [:environment, :dotenv] do
     # Dotenv.load
     # Dotenv::Railtie.load
@@ -30,4 +30,4 @@ namespace :tang do
     puts "Stripe.api_key=#{Stripe.api_key}"
     Tang::ImportStripeJob.perform_now
   end
-end
+# end
