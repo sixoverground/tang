@@ -6,7 +6,10 @@ end
 
 require 'rdoc/task'
 
+require 'dotenv'
 require 'dotenv/tasks'
+# Dotenv::Railtie.load
+Dotenv.load
 
 RDoc::Task.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
