@@ -4,7 +4,7 @@ module Tang
       subscription = Subscription.new(plan: plan, customer: customer)
       # return subscription if !subscription.valid?
       return subscription if plan.nil? || customer.nil?
-      
+
       begin
         if customer.stripe_id.blank?
           # Create a new subscription and customer
@@ -13,11 +13,7 @@ module Tang
           stripe_sub = stripe_customer.subscriptions.first
         else
           # Update the payment method
-          stripe_customer = Stripe::Customer.retrieve(customer.stripe_id)
-          if token.present?
-            stripe_customer.source = token
-            stripe_customer.save
-          end
+          stripe_customer = update_stripe_customer(customer, token)
           # Subscribe
           stripe_sub = Stripe::Subscription.create(customer: stripe_customer.id, plan: plan.stripe_id)
         end
@@ -25,8 +21,8 @@ module Tang
         # Save the subscription
         subscription.stripe_id = stripe_sub.id
         subscription.trial_end = DateTime.strptime(stripe_sub.trial_end.to_s, '%s') if stripe_sub.trial_end.present?
-        sub_ok = subscription.save!
-        return subscription if !sub_ok
+        subscription.save!
+        # return subscription if !sub_ok
 
         # Save subscription data to customer
         customer.update_subscription_end(stripe_sub)
@@ -55,6 +51,16 @@ module Tang
           plan: plan.stripe_id,
           email: customer.email
         )
+      end
+      stripe_customer
+    end
+
+    def self.update_stripe_customer(customer, token)
+      # Update the payment method
+      stripe_customer = Stripe::Customer.retrieve(customer.stripe_id)
+      if token.present?
+        stripe_customer.source = token
+        stripe_customer.save
       end
       stripe_customer
     end

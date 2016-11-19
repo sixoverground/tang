@@ -1,5 +1,5 @@
 class FutureValidator < ActiveModel::EachValidator
-  def validate_each(record, attribute, value)
+  def validate_each(record, attribute, _value)
     if record[attribute] < Time.now
       record.errors[attribute] << (options[:message] || "must be in the future.")
     end

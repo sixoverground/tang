@@ -8,7 +8,7 @@ module Tang
         customer = Tang.customer_class.find_by(stripe_id: stripe_subscription.customer)
         plan = Plan.find_by(stripe_id: stripe_subscription.plan.id)
         if customer.present? && plan.present?
-          subscription = Subscription.find_or_create_by(stripe_id: stripe_subscription.id) do |s|
+          Subscription.find_or_create_by(stripe_id: stripe_subscription.id) do |s|
             s.customer = customer
             s.plan = plan
             s.application_fee_percent = stripe_subscription.application_fee_percent
