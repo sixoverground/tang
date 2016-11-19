@@ -20,7 +20,8 @@ task :check do
 end
 
 namespace :tang do
-  task :import_stripe => [:environment, :dotenv] do
+  # task :import_stripe => [:environment, :dotenv] do
+  task :import_stripe => :environment do
     # Dotenv.load
     # Dotenv::Railtie.load
     # Dotenv.load

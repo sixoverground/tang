@@ -13,9 +13,9 @@ require "sprockets/railtie"
 Bundler.require(*Rails.groups)
 
 # require 'dotenv-rails'
-require 'dotenv'
-Dotenv::Railtie.load
-Dotenv.load
+# require 'dotenv'
+# Dotenv::Railtie.load
+# Dotenv.load
 
 require "tang"
 

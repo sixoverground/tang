@@ -6,9 +6,8 @@ end
 
 require 'rdoc/task'
 
-require 'dotenv'
-require 'dotenv/tasks'
-
+# require 'dotenv'
+# require 'dotenv/tasks'
 
 RDoc::Task.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
@@ -25,8 +24,8 @@ load 'rails/tasks/statistics.rake'
 
 Bundler::GemHelper.install_tasks
 
-Dotenv::Railtie.load
-Dotenv.load
+# Dotenv::Railtie.load
+# Dotenv.load
 puts "Dotenv.loaded=#{ENV['STRIPE_SECRET_KEY']}"
 
 load './lib/tasks/tang_tasks.rake'
