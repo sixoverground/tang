@@ -29,5 +29,35 @@ module Tang
     it "is invalid without an amount off or percent off" do
       expect(FactoryGirl.build(:coupon, amount_off: nil, percent_off: nil)).to be_invalid
     end
+
+    it "is invalid with a reedem by date in the past" do
+      expect(FactoryGirl.build(:coupon, redeem_by: Time.now - 30.days)).to be_invalid
+      expect(FactoryGirl.build(:coupon, redeem_by: Time.now - 30.days).coupon_valid?).to be_falsey
+    end
+
+    it "is valid with a reedem by date in the future" do
+      expect(FactoryGirl.build(:coupon, redeem_by: Time.now + 30.days).coupon_valid?).to be_truthy
+    end
+
+    it "formats a repeating duration" do
+      expect(FactoryGirl.build(:coupon, duration: 'repeating', duration_in_months: 2).formatted_duration).to eq("for 2 months")
+    end
+
+    it "formats a non-repeating duration" do
+      expect(FactoryGirl.build(:coupon, duration: 'once').formatted_duration).to eq("once")
+    end
+
+    it "lists active redemptions" do
+      coupon = FactoryGirl.create(:coupon)
+      subscription = FactoryGirl.create(:subscription)
+      customer = subscription.customer
+      customer.coupon = coupon
+      customer.save
+      expect(coupon.active_redemptions).to include(customer)
+    end
+
+    it "answers to repeating?" do
+      expect(FactoryGirl.build(:coupon, duration: 'repeating').repeating?).to be_truthy
+    end
   end
 end

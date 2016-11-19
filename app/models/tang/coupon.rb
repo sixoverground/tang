@@ -25,14 +25,14 @@ module Tang
     def coupon_valid?
       # check if expired
       if self.redeem_by.present?
-        false if Time.now > self.redeem_by
+        return false if Time.now > self.redeem_by
       end
 
       if self.max_redemptions.present?
         # check if any discounts created
       end
 
-      true
+      return true
     end
 
     def formatted_duration

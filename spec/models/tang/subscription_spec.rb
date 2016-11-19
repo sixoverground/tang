@@ -21,5 +21,18 @@ module Tang
     it "is invalid without a plan" do
       expect(FactoryGirl.build(:subscription, plan: nil)).to be_invalid
     end
+
+    it "has a period start" do
+      expect(FactoryGirl.create(:subscription).period_start).to be <= Time.now
+    end
+
+    it "has a period end" do
+      expect(FactoryGirl.create(:subscription).period_end).to be >= Time.now
+    end
+
+    it "has a stripe trial end" do
+      trial_end = Time.now + 30.days
+      expect(FactoryGirl.create(:subscription, trial_end: trial_end).stripe_trial_end).to eq(trial_end.to_i)
+    end
   end
 end
