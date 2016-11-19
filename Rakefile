@@ -8,8 +8,7 @@ require 'rdoc/task'
 
 require 'dotenv'
 require 'dotenv/tasks'
-# Dotenv::Railtie.load
-Dotenv.load
+
 
 RDoc::Task.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
@@ -25,6 +24,9 @@ load 'rails/tasks/engine.rake'
 load 'rails/tasks/statistics.rake'
 
 Bundler::GemHelper.install_tasks
+
+Dotenv::Railtie.load
+Dotenv.load
 
 load './lib/tasks/tang_tasks.rake'
 

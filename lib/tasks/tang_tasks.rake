@@ -3,8 +3,6 @@
 #   # Task goes here
 # end
 
-require 'dotenv/tasks'
-
 task :rails_best_practices do
   path = File.expand_path("../../../", __FILE__)
   sh "rails_best_practices #{path}"
@@ -24,8 +22,8 @@ end
 namespace :tang do
   task :import_stripe => [:environment, :dotenv] do
     # Dotenv.load
-    Dotenv::Railtie.load
-    Dotenv.load
+    # Dotenv::Railtie.load
+    # Dotenv.load
 
     puts "ENV=#{ENV}"
     puts "STRIPE_SECRET_KEY=#{ENV['STRIPE_SECRET_KEY']}"
