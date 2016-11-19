@@ -27,6 +27,7 @@ Bundler::GemHelper.install_tasks
 
 Dotenv::Railtie.load
 Dotenv.load
+puts "Dotenv.loaded=#{ENV['STRIPE_SECRET_KEY']}"
 
 load './lib/tasks/tang_tasks.rake'
 
