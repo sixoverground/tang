@@ -3,7 +3,7 @@
 #   # Task goes here
 # end
 
-require 'dotenv/tasks'
+# require 'dotenv/tasks'
 
 task :rails_best_practices do
   path = File.expand_path("../../../", __FILE__)
