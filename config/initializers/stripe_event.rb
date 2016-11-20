@@ -7,7 +7,7 @@ end
 
 StripeEvent.configure do |events|
   events.all do |event|
-    logger.debug "stripe_event: #{event}"
+    # puts "stripe_event: #{event}"
   end
 
   # Disputes
@@ -15,7 +15,7 @@ StripeEvent.configure do |events|
   events.subscribe 'charge.dispute.created' do |event|
     dispute = event.data.object
     # TODO: create actual dispute model
-    StripeMailer.admin_dispute_created(dispute).deliver
+    Tang::StripeMailer.admin_dispute_created(dispute).deliver_now
   end
 
   events.subscribe 'charge.dispute.updated' do |event|
@@ -29,7 +29,7 @@ StripeEvent.configure do |events|
   # Subscription lifecycle
 
   events.subscribe 'invoice.created' do |event|
-    invoice = CreateInvoice.call(event)
+    invoice = Tang::CreateInvoice.call(event)
   end
 
   # events.subscribe 'charge.succeeded' do |event|
@@ -40,18 +40,18 @@ StripeEvent.configure do |events|
 
   events.subscribe('invoice.payment_succeeded') do |event|
     invoice = event.data.object
-    charge = PayInvoice.call(invoice)
-    StripeMailer.receipt(charge).deliver
-    StripeMailer.admin_charge_succeeded(charge).deliver
+    charge = Tang::PayInvoice.call(invoice)
+    Tang::StripeMailer.receipt(charge).deliver_now
+    Tang::StripeMailer.admin_charge_succeeded(charge).deliver_now
   end
 
   # Subscription lifecycle errors
 
   events.subscribe('invoice.payment_failed') do |event|
     invoice = event.data.object
-    charge = FailInvoice.call(invoice)
-    StripeMailer.failed_invoice(charge).deliver
-    StripeMailer.admin_charge_failed(charge).deliver
+    charge = Tang::FailInvoice.call(invoice)
+    Tang::StripeMailer.failed_invoice(charge).deliver_now
+    Tang::StripeMailer.admin_charge_failed(charge).deliver_now
   end
 
   # events.subscribe('customer.subscription.updated') do |event|
@@ -59,7 +59,7 @@ StripeEvent.configure do |events|
 
   events.subscribe('customer.subscription.deleted') do |event|
     stripe_subscription = event.data.object
-    subscription = Subscription.find_by(stripe_id: stripe_subscription.id)
+    subscription = Tang::Subscription.find_by(stripe_id: stripe_subscription.id)
     subscription.cancel!
   end
 end

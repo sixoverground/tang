@@ -60,6 +60,7 @@ FactoryGirl.define do
     stripe_id SecureRandom.uuid
     customer
     plan
+    status 'active'
   end
 
   factory :invoice, class: 'Tang::Invoice' do

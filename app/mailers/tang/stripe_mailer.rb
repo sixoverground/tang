@@ -21,12 +21,12 @@ module Tang
 
     def receipt(charge)
       @charge = charge
-      mail(to: @charge.receipt_email, subject: "Thank you!")
+      mail(to: @charge.customer.email, subject: "Thank you!")
     end
 
     def failed_invoice(charge)
       @charge = charge
-      mail(to: @charge.receipt_email, subject: "Oops! Your payment could not be processed.")
+      mail(to: @charge.customer.email, subject: "Oops! Your payment could not be processed.")
     end
 
   end
