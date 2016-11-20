@@ -121,4 +121,18 @@ describe 'Stripe Events' do
       expect(invoice_object.subscription).to_not be_nil
     end
   end
+
+  describe 'customer.subscription.deleted' do
+    it 'mocks a stripe webhook' do
+      subscription = FactoryGirl.create(:subscription)
+
+      event = StripeMock.mock_webhook_event('customer.subscription.deleted', id: subscription.stripe_id)
+      subscription_object = event.data.object
+
+      post '/stripe_event', id: event.id
+      expect(response.code).to eq('200')
+
+      expect(subscription_object.id).to_not be_nil
+    end
+  end
 end
