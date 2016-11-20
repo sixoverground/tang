@@ -26,10 +26,10 @@ module Tang
       expect(FactoryGirl.create(:subscription).period_start).to be <= Time.now
     end
 
-    it "matches its invoice period start" do
-      invoice = FactoryGirl.create(:invoice)
-      expect(invoice.subscription.period_start).to eq(invoice.period_start)
-    end
+    # it "matches its invoice period start" do
+    #   invoice = FactoryGirl.create(:invoice)
+    #   expect(invoice.subscription.period_start).to eq(invoice.period_start)
+    # end
 
     it "has a period end" do
       expect(FactoryGirl.create(:subscription).period_end).to be >= Time.now
