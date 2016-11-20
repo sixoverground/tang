@@ -47,7 +47,7 @@ module Tang
       Tang.customer_class.
            joins(:subscriptions).
            where("#{Tang.customer_class.to_s.downcase.pluralize}.coupon_id = ? OR tang_subscriptions.coupon_id = ?", self.id, self.id).
-           where.not("tang_subscriptions.status": :canceled).
+           where.not(tang_subscriptions: { status: :canceled }).
            uniq
     end
 

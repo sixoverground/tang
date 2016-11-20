@@ -59,11 +59,7 @@ module Tang
         c.card_name = stripe_charge.source.name
         # c.card_tokenization_method = stripe_charge.source.tokenization_method
       
-        if stripe_charge.status == 'succeeded'
-          c.succeed
-        elsif stripe_charge.status == 'failed'
-          c.fail
-        end
+        c.status = stripe_charge.status
       end
       return charge
     end

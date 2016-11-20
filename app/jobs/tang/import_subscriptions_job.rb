@@ -16,16 +16,7 @@ module Tang
             s.tax_percent = stripe_subscription.tax_percent
             s.trial_end = stripe_subscription.trial_end
             s.coupon = Coupon.find_by(stripe_id: stripe_subscription.discount.coupon.id) if stripe_subscription.discount.present?
-            
-            if stripe_subscription.status == 'active'
-              s.activate
-            elsif stripe_subscription.status == 'past_due'
-              s.fail
-            elsif stripe_subscription.status == 'canceled'
-              s.cancel
-            elsif stripe_subscription.status == 'unpaid'
-              s.close
-            end
+            s.status = stripe_subscription.status
           end
         end
       end

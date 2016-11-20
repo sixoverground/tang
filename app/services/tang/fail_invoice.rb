@@ -8,7 +8,6 @@ module Tang
       charge = Charge.from_stripe(stripe_charge, invoice)
 
       # update subscription
-      stripe_subscription = Stripe::Subscription.retrieve(stripe_invoice.subscription)
       subscription = Subscription.find_by(stripe_id: stripe_invoice.subscription)
       subscription.fail!
 
