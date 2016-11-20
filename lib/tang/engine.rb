@@ -1,6 +1,7 @@
 require 'stripe'
 require 'stripe_event'
 require 'paper_trail'
+require 'aasm'
 
 module Tang
   class Engine < ::Rails::Engine

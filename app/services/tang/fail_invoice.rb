@@ -1,5 +1,5 @@
 module Tang
-  class PayInvoice
+  class FailInvoice
     def self.call(stripe_invoice)
       invoice = Invoice.find_by(stripe_id: stripe_invoice.id)
 
@@ -10,10 +10,7 @@ module Tang
       # update subscription
       stripe_subscription = Stripe::Subscription.retrieve(stripe_invoice.subscription)
       subscription = Subscription.find_by(stripe_id: stripe_invoice.subscription)
-
-      # update customer active until
-      customer = subscription.customer
-      customer.update_subscription_end(stripe_subscription)
+      subscription.fail!
 
       return charge
     end

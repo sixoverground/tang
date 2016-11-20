@@ -20,7 +20,8 @@ require 'rails_helper'
 
 module Tang
   RSpec.describe Admin::CouponsController, type: :controller do
-
+    before { StripeMock.start }
+    after { StripeMock.stop }
     routes { Tang::Engine.routes }
 
     login_admin

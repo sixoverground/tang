@@ -24,6 +24,20 @@
   </dl>
 </div>
 
+<h3>Status</h3>
+<div class="card card-block">
+  <dl class="card-text">
+    <dt>Status:</dt>
+    <dd><%= @invoice.status %></dd>
+    <dt>Payment:</dt>
+    <dd>
+      <% if @invoice.charge.present? %>
+        <%= link_to @invoice.charge.stripe_id, tang.admin_payment_path(@invoice.charge) %>
+      <% end %>
+    </dd>
+  </dl>
+</div>
+
 <h3>Summary</h3>
 <div class="card">
   <table class="table card-text">
@@ -78,20 +92,7 @@
   </table>
 </div>
 
-<h3>Status</h3>
-<div class="card card-block">
-  <dl class="card-text">
-    <dt>Status:</dt>
-    <dd><%= @invoice.status %></dd>
 
-    <dt>Payment:</dt>
-    <dd>
-      <% if @invoice.charge.present? %>
-        <%= link_to @invoice.charge.stripe_id, admin_payment_path(@invoice.charge) %>
-      <% end %>
-    </dd>
-  </dl>
-</div>
 
 <%= render 'footer' %>
 

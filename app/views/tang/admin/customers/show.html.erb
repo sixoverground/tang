@@ -90,8 +90,10 @@
       <tr>
         <% if @customer.subscription.present? %>
           <td><%= link_to "#{@customer.subscription.plan.name} (#{plan_cost(@customer.subscription.plan)})", tang.admin_subscription_path(@customer.subscription) %></td>
+          <td><%= @customer.subscription.status %></td>
         <% else %>
           <td>No active subscription</td>
+          <td>&nbsp;</td>
         <% end %>
       </tr>
     </tbody>
@@ -105,6 +107,7 @@
       <% @customer.invoices.each do |invoice| %>
         <tr>
           <td><%= link_to number_to_currency(invoice.total / 100), admin_invoice_path(invoice) %></td>
+          <td><%= invoice.status %></td>
           <td><%= invoice.customer.stripe_id %></td>
           <td>Billed from <%= invoice.subscription.stripe_id %></td>
           <td><%= invoice.stripe_id %></td>

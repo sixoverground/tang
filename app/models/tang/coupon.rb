@@ -45,8 +45,9 @@ module Tang
 
     def active_redemptions
       Tang.customer_class.
-           joins(:subscription).
+           joins(:subscriptions).
            where("#{Tang.customer_class.to_s.downcase.pluralize}.coupon_id = ? OR tang_subscriptions.coupon_id = ?", self.id, self.id).
+           where.not("tang_subscriptions.status": :canceled).
            uniq
     end
 

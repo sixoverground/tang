@@ -39,7 +39,8 @@ StripeEvent.configure do |events|
   # end
 
   events.subscribe('invoice.payment_succeeded') do |event|
-    charge = PayInvoice.call(event)
+    invoice = event.data.object
+    charge = PayInvoice.call(invoice)
     StripeMailer.receipt(charge).deliver
     StripeMailer.admin_charge_succeeded(charge).deliver
   end
@@ -48,11 +49,17 @@ StripeEvent.configure do |events|
 
   events.subscribe('invoice.payment_failed') do |event|
     invoice = event.data.object
+    charge = FailInvoice.call(invoice)
+    StripeMailer.failed_invoice(charge).deliver
+    StripeMailer.admin_charge_failed(charge).deliver
   end
 
   # events.subscribe('customer.subscription.updated') do |event|
   # end
 
-  # events.subscribe('customer.subscription.deleted') do |event|
-  # end
+  events.subscribe('customer.subscription.deleted') do |event|
+    stripe_subscription = event.data.object
+    subscription = Subscription.find_by(stripe_id: stripe_subscription.id)
+    subscription.cancel!
+  end
 end

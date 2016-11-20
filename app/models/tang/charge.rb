@@ -1,5 +1,22 @@
 module Tang
   class Charge < ActiveRecord::Base
+    include AASM
+    has_paper_trail
+
+    aasm column: 'status' do
+      state :pending, initial: true
+      state :succeeded
+      state :failed
+
+      event :succeed do
+        transitions from: :pending, to: :succeeded
+      end
+
+      event :fail do
+        transitions from: :pending, to: :failed
+      end
+    end
+
     belongs_to :invoice
     has_one :subscription, through: :invoice
     has_one :customer, through: :subscription
@@ -41,8 +58,16 @@ module Tang
         c.card_last4 = stripe_charge.source.last4
         c.card_name = stripe_charge.source.name
         # c.card_tokenization_method = stripe_charge.source.tokenization_method
+      
+        if stripe_charge.status == 'succeeded'
+          c.succeed
+        elsif stripe_charge.status == 'failed'
+          c.fail
+        end
       end
       return charge
     end
+
+
   end
 end

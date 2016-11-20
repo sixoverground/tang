@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'uglifier', '~> 2.0' #'~> 1.3'
   s.add_dependency 'bootstrap', '~> 4.0.0.alpha5'
   s.add_dependency 'rails-assets-tether', '>= 1.1.1'
+  s.add_dependency 'aasm', '~> 4.11.1'
 
   s.add_development_dependency 'rails_best_practices', '~> 1.17'
   s.add_development_dependency 'brakeman', '~> 3.3'

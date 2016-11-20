@@ -1,0 +1,11 @@
+<html>
+  <body>
+    <h1>Your payment could not be processed</h1>
+    <p>
+      You purchased <% @charge.invoice.subscription.plan.name %> for <% number_to_currency(@charge.amount) %> on <%= @charge.created_at %>, but there was a problem with your payment method.
+    </p>
+    <p>
+      Please <%= link_to 'update your payment method', tang.account_card_url %>.
+    </p>
+  </body>
+</html>

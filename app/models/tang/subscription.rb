@@ -1,13 +1,38 @@
 module Tang
   class Subscription < ActiveRecord::Base
+    include AASM
     has_paper_trail
+
+    aasm column: 'status' do
+      state :trialing, initial: true
+      state :active
+      state :past_due
+      state :canceled
+      state :unpaid
+
+      event :activate do
+        transitions from: :trialing, to: :active
+      end
+
+      event :fail do
+        transitions from: :active, to: :past_due
+      end
+
+      event :cancel, after: :destroy_stripe_subscription do
+        transitions from: [:trialing, :active, :past_due], to: :canceled
+      end
+
+      event :close do
+        transitions from: :past_due, to: :unpaid
+      end
+    end
 
     belongs_to :customer, class_name: Tang.customer_class.to_s
     belongs_to :plan
     belongs_to :coupon
     has_many :invoices
 
-    validates :customer, presence: true, uniqueness: true
+    validates :customer, presence: true
     validates :plan, presence: true
     validates :stripe_id, presence: true, uniqueness: true
     validates :application_fee_percent, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
@@ -17,7 +42,7 @@ module Tang
 
     # before_save :nil_if_blank
     before_update :update_stripe_subscription
-    before_destroy :cancel_stripe_subscription
+    before_destroy :destroy_stripe_subscription
 
     STATUSES = ['trialing', 'active', 'past_due', 'canceled', 'unpaid']
 
@@ -61,8 +86,8 @@ module Tang
       UpdateSubscription.call(self)
     end
 
-    def cancel_stripe_subscription
-      CancelSubscription.call(self)
+    def destroy_stripe_subscription
+      DeleteSubscription.call(self)
     end
   end
 end

@@ -4,7 +4,7 @@ module Tang
 
     def perform
       # Do something later
-      Stripe::Subscription.list.each do |stripe_subscription|
+      Stripe::Subscription.list(status: 'all').each do |stripe_subscription|
         customer = Tang.customer_class.find_by(stripe_id: stripe_subscription.customer)
         plan = Plan.find_by(stripe_id: stripe_subscription.plan.id)
         if customer.present? && plan.present?
@@ -16,6 +16,16 @@ module Tang
             s.tax_percent = stripe_subscription.tax_percent
             s.trial_end = stripe_subscription.trial_end
             s.coupon = Coupon.find_by(stripe_id: stripe_subscription.discount.coupon.id) if stripe_subscription.discount.present?
+            
+            if stripe_subscription.status == 'active'
+              s.activate
+            elsif stripe_subscription.status == 'past_due'
+              s.fail
+            elsif stripe_subscription.status == 'canceled'
+              s.cancel
+            elsif stripe_subscription.status == 'unpaid'
+              s.close
+            end
           end
         end
       end

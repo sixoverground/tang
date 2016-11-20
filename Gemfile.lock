@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     tang (0.0.1)
+      aasm (~> 4.11.1)
       bootstrap (~> 4.0.0.alpha5)
       coffee-rails (~> 4.2)
       jquery-rails (~> 4.2)
@@ -17,6 +18,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    aasm (4.11.1)
     actionmailer (4.2.7.1)
       actionpack (= 4.2.7.1)
       actionview (= 4.2.7.1)

@@ -1,7 +1,7 @@
 <%= render 'header' %>
 
 <h1><%= @subscription.customer.email %> on <%= @subscription.plan.name %></h1>
-<h2><!-- status --></h2>
+<h2><%= @subscription.status %></h2>
 
 <hr>
 

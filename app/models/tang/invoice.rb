@@ -2,7 +2,7 @@ module Tang
   class Invoice < ActiveRecord::Base
     belongs_to :subscription
     belongs_to :customer, class_name: Tang.customer_class.to_s
-    has_one :charge
+    has_many :charges
     has_many :invoice_items
     belongs_to :coupon
 
@@ -11,6 +11,10 @@ module Tang
     validates :stripe_id, presence: true, uniqueness: true
 
     # scope :paid, -> { joins(:charge) }
+
+    def charge
+      self.charges.order(:created_at).last
+    end
 
     def period_start
       self[:period_start] || created_at

@@ -42,10 +42,16 @@
   <table class="table table-responsive card-text">
     <tbody>
       <% @plan.subscriptions.each do |subscription| %>
-        <tr><td><%= link_to subscription.customer.email, tang.admin_subscription_path(subscription) %></td></tr>
+        <tr>
+          <td><%= link_to subscription.customer.email, tang.admin_subscription_path(subscription) %></td>
+          <td><%= subscription.status %></td>
+        </tr>
       <% end %>
       <% if @plan.subscriptions.empty? %>
-        <tr><td>No active subscriptions</td></tr>
+        <tr>
+          <td>No active subscriptions</td>
+          <td>&nbsp;</td>
+        </tr>
       <% end %>
     </tbody>
   </table>

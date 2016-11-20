@@ -1,6 +1,6 @@
 <html>
 <body>
-  <p>Charge succeeded! Amount: <%= number_to_currency(@charge.amount) %></p>
+  <p>Charge failed! Amount: <%= number_to_currency(@charge.amount) %></p>
   <p><%= link_to @charge.stripe_id, tang.admin_payment_url(@charge) %></p>
 </body>
 </html>

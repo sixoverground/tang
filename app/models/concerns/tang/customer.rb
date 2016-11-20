@@ -5,8 +5,8 @@ module Tang
     extend ActiveSupport::Concern
 
     included do
-      has_one :card, class_name: 'Tang::Card', foreign_key: 'customer_id'
-      has_one :subscription, class_name: 'Tang::Subscription', foreign_key: 'customer_id'
+      has_many :cards, class_name: 'Tang::Card', foreign_key: 'customer_id'
+      has_many :subscriptions, class_name: 'Tang::Subscription', foreign_key: 'customer_id'
       belongs_to :coupon, class_name: 'Tang::Coupon'
       has_many :invoices, class_name: 'Tang::Invoice', foreign_key: 'customer_id'
       has_many :charges, through: :invoices, class_name: 'Tang::Charge'
@@ -22,6 +22,14 @@ module Tang
         self.respond_to?(:role) && self.role == 'admin'
       end
 
+    end
+
+    def card
+      self.cards.order(:created_at).last
+    end
+
+    def subscription
+      self.subscriptions.where.not(status: :canceled).order(:created_at).last
     end
 
     def generate_password

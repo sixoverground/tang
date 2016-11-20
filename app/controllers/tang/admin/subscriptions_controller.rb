@@ -6,7 +6,7 @@ module Tang
 
     # GET /subscriptions
     def index
-      @subscriptions = Subscription.all
+      @subscriptions = Subscription.where.not(status: :canceled)
     end
 
     # GET /subscriptions/1

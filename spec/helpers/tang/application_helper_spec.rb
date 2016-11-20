@@ -1,6 +1,9 @@
 require "rails_helper"
 
 RSpec.describe Tang::ApplicationHelper, :type => :helper do
+  before { StripeMock.start }
+  after { StripeMock.stop }
+
   describe "#created_datetime" do
     it "returns a formatted date" do
       created_at = Time.new(2015, 8, 1, 14, 35, 0)
