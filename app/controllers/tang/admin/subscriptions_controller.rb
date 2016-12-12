@@ -35,8 +35,8 @@ module Tang
 
     # DELETE /subscriptions/1
     def destroy
-      @subscription.destroy
-      redirect_to admin_subscriptions_url, notice: 'Subscription was successfully destroyed.'
+      @subscription.cancel!
+      redirect_to admin_subscriptions_url, notice: 'Subscription was successfully canceled.'
     end
 
     def coupon

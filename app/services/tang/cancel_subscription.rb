@@ -1,5 +1,5 @@
 module Tang
-  class DeleteSubscription
+  class CancelSubscription
     def self.call(subscription)
       begin
         s = Stripe::Subscription.retrieve(subscription.stripe_id)

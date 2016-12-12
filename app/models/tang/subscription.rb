@@ -18,7 +18,7 @@ module Tang
         transitions from: :active, to: :past_due
       end
 
-      event :cancel, after: :destroy_stripe_subscription do
+      event :cancel, after: :cancel_stripe_subscription do
         transitions from: [:trialing, :active, :past_due], to: :canceled
       end
 
@@ -42,7 +42,7 @@ module Tang
 
     # before_save :nil_if_blank
     before_update :update_stripe_subscription
-    before_destroy :destroy_stripe_subscription
+    # before_destroy :destroy_stripe_subscription
 
     STATUSES = ['trialing', 'active', 'past_due', 'canceled', 'unpaid']
 
@@ -86,8 +86,8 @@ module Tang
       UpdateSubscription.call(self)
     end
 
-    def destroy_stripe_subscription
-      DeleteSubscription.call(self)
+    def cancel_stripe_subscription
+      CancelSubscription.call(self)
     end
   end
 end

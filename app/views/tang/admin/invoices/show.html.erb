@@ -19,8 +19,10 @@
     <dt>Customer:</dt>
     <dd><%= link_to @invoice.customer.stripe_id, tang.admin_customer_path(@invoice.customer) %></dd>
 
-    <dt>Subscription:</dt>
-    <dd><%= link_to @invoice.subscription.stripe_id, tang.admin_subscription_path(@invoice.subscription) %></dd>
+    <% if @invoice.subscription.present? %>
+      <dt>Subscription:</dt>
+      <dd><%= link_to @invoice.subscription.stripe_id, tang.admin_subscription_path(@invoice.subscription) %></dd>
+    <% end %>
   </dl>
 </div>
 
@@ -49,7 +51,7 @@
       <% if @invoice.coupon.present? %>
         <tr>
           <td><%= "#{@invoice.coupon.stripe_id} (#{coupon_off(@invoice.coupon)})" %></td>
-          <th><%= discount(@invoice.subtotal, @invoice.coupon) %></th>
+          <th><%= @invoice.coupon.discount(@invoice.subtotal) %></th>
         </tr>
       <% end %>
       <tr>
@@ -80,7 +82,7 @@
       <% @invoice.invoice_items.each do |invoice_item| %>
         <tr>
           <td><%= number_to_currency(invoice_item.amount / 100) %></td>
-          <% if invoice_item.subscription.present? %>
+          <% if invoice_item.description.present? %>
             <td><%= invoice_item.description %></td>
           <% else %>
             <td>Subscription to <%= invoice_item.plan.name %> (<%= plan_cost(invoice_item.plan) %>)</td>

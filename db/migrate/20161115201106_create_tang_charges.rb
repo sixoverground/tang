@@ -30,6 +30,9 @@ class CreateTangCharges < ActiveRecord::Migration
       t.string :card_funding
       t.string :card_fingerprint
 
+      t.string :status
+      t.timestamp :created
+
       t.timestamps null: false
     end
   end

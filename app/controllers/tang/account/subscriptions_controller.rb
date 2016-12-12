@@ -14,6 +14,8 @@ module Tang
         @next_plan = @plans.first
         @previous_plan = nil
       end
+
+      @receipts = current_customer.charges.order(created: :desc).limit(5)
     end
 
     def new
@@ -56,7 +58,8 @@ module Tang
     end
 
     def destroy
-      @subscription.destroy
+      # @subscription.destroy
+      @subscription.cancel!
       redirect_to account_subscription_path, notice: 'Subscription was successfully cancelled.'
     end
 

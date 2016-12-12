@@ -10,42 +10,49 @@
   <thead>
     <tr>
       <th>Description</th>
+      <th>Period</th>
       <th>Amount</th>
     </tr>
   </thead>
   <tbody>
     <% @receipt.invoice.invoice_items.each do |invoice_item| %>
       <tr>
-        <% if invoice_item.subscription.present? %>
+        <% if invoice_item.description.present? %>
           <td><%= invoice_item.description %></td>
         <% else %>
           <td>Subscription to <%= invoice_item.plan.name %></td>
         <% end %>
+        <td><%= invoice_item.period_start.strftime('%B %d, %Y') %> to <%= invoice_item.period_end.strftime('%B %d, %Y') %></td>
         <td><%= number_to_currency(invoice_item.amount / 100) %></td>
       </tr>
     <% end %>
   </tbody>
   <tfoot>
-    <tr>
-      <th>Subtotal</th>
-      <td><%= number_to_currency(@receipt.invoice.subtotal / 100) %></td>
-    </tr>
     <% if @receipt.invoice.coupon.present? %>
       <tr>
+        <th>Subtotal</th>
+        <td>&nbsp;</td>
+        <td><%= number_to_currency(@receipt.invoice.subtotal / 100) %></td>
+      </tr>
+      <tr>
         <th>Coupons</th>
-        <td><%= discount(@receipt.invoice.subtotal, @receipt.invoice.coupon) %></td>
+        <td>&nbsp;</td>
+        <td><%= number_to_currency(@receipt.invoice.coupon.discount(@receipt.invoice.subtotal) / 100) %></td>
       </tr>
       <tr>
         <th>&nbsp;</th>
+        <td>&nbsp;</td>
         <td><%= "#{@receipt.invoice.coupon.stripe_id} (#{coupon_off(@receipt.invoice.coupon)})" %></td>
       </tr>
     <% end %>
     <tr>
       <th>Total</th>
+      <td>&nbsp;</td>
       <td><%= number_to_currency(@receipt.invoice.total / 100) %></td>
     </tr>
     <tr>
       <th>Paid</th>
+      <th>&nbsp;</th>
       <th><%= number_to_currency(@receipt.amount / 100) %></th>
     </tr>
   </tfoot>

@@ -3,6 +3,7 @@ module Tang
     belongs_to :invoice
     belongs_to :plan
     belongs_to :subscription
+    has_one :customer, through: :invoice
 
     validates :invoice, presence: true
     validates :plan, presence: true
@@ -21,6 +22,7 @@ module Tang
       else
         subscription = Subscription.find_by(stripe_id: stripe_invoice_item.subscription)
       end
+      
       invoice_item = InvoiceItem.find_or_create_by(stripe_id: stripe_invoice_item.id, invoice: invoice) do |ii|
         ii.amount = stripe_invoice_item.amount
         ii.currency = stripe_invoice_item.currency
@@ -36,6 +38,7 @@ module Tang
         ii.subscription = subscription
         ii.description = stripe_invoice_item.description
       end
+
       return invoice_item
     end
   end

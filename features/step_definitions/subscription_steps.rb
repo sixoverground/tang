@@ -85,7 +85,7 @@ end
 
 Then(/^I should be an active customer$/) do
   @customer.reload
-  period_end = @customer.subscription.created_at.change(usec: 0) + 30.days
+  period_end = @customer.subscription.period_end.change(usec: 0)
   expect(@customer.active_until).to eq(period_end)
 end
 

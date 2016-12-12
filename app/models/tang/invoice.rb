@@ -6,7 +6,6 @@ module Tang
     has_many :invoice_items
     belongs_to :coupon
 
-    validates :subscription, presence: true
     validates :customer, presence: true
     validates :stripe_id, presence: true, uniqueness: true
 
@@ -21,7 +20,11 @@ module Tang
     end
 
     def period_end
-      self[:period_end] || subscription.plan.period_days_from(period_start)
+      if subscription.present?
+        self[:period_end] || subscription.plan.period_days_from(period_start)
+      else
+        self.period_start
+      end
     end
 
     def status
@@ -33,28 +36,26 @@ module Tang
     end
 
     def self.from_stripe(stripe_invoice)
+      customer = Tang.customer_class.find_by(stripe_id: stripe_invoice.customer)
       subscription = Subscription.find_by(stripe_id: stripe_invoice.subscription)
-      if subscription.present?
-        invoice = Invoice.find_or_create_by(stripe_id: stripe_invoice.id) do |i|
-          i.subscription = subscription
-          i.customer = subscription.customer
-          i.period_start = stripe_invoice.period_start
-          i.period_end = stripe_invoice.period_end
-          i.date = stripe_invoice.date
-          i.currency = stripe_invoice.currency
-          i.subtotal = stripe_invoice.subtotal
-          i.tax_percent = stripe_invoice.tax_percent
-          i.tax = stripe_invoice.tax
-          i.total = stripe_invoice.total
-          i.amount_due = stripe_invoice.amount_due
-          if stripe_invoice.discount.present?
-            coupon = Coupon.find_by(stripe_id: stripe_invoice.discount.coupon.id)
-            i.coupon = coupon
-          end
+      invoice = Invoice.find_or_create_by(stripe_id: stripe_invoice.id) do |i|
+        i.subscription = subscription
+        i.customer = customer
+        i.period_start = stripe_invoice.period_start
+        i.period_end = stripe_invoice.period_end
+        i.date = stripe_invoice.date
+        i.currency = stripe_invoice.currency
+        i.subtotal = stripe_invoice.subtotal
+        i.tax_percent = stripe_invoice.tax_percent
+        i.tax = stripe_invoice.tax
+        i.total = stripe_invoice.total
+        i.amount_due = stripe_invoice.amount_due
+        if stripe_invoice.discount.present?
+          coupon = Coupon.find_by(stripe_id: stripe_invoice.discount.coupon.id)
+          i.coupon = coupon
         end
-        return invoice
       end
-      return nil
+      return invoice
     end
   end
 end

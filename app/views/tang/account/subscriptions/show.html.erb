@@ -141,12 +141,10 @@
 <p>Access receipts for all of the payments you made for your account.</p>
 
 <ul class="list-group">
-  <% current_customer.charges.each do |charge| %>
-    <li class="list-group-item">
-      <%= link_to 'View Receipt', tang.account_receipt_path(charge), class: 'btn btn-secondary float-xs-right' %>
-      <h5 class="list-group-item-heading"><%= number_to_currency(charge.amount / 100) %></h5>
-      <p class="list-group-item-text">Paid on <%= charge.created_at.strftime('%d, %b %Y') %></p>
-    </li>
+  <% @receipts.each do |charge| %>
+    <%= render partial: 'tang/account/receipts/receipt', locals: { charge: charge } %>
   <% end %>
 </ul>
+<br>
+<p><%= link_to 'View all receipts', account_receipts_path, class: 'btn btn-secondary' %></p>
 

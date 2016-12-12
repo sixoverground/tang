@@ -17,13 +17,14 @@ Tang::Engine.routes.draw do
     resources :plans
     resources :coupons, only: [:index, :show, :new, :create, :destroy]
     resources :invoices, only: [:index, :show]
+    get :search, to: 'search#index'
   end
 
   namespace :account do
     resource :subscription
     resource :card, only: [:show, :new, :create]
     resource :coupon, only: [:create]
-    resources :receipts, only: [:show]
+    resources :receipts, only: [:index, :show]
   end
 
   # get 'unauthorized', to: 'errors#unauthorized'

@@ -15,16 +15,14 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :coupon_id %><br>
-    <%= f.collection_select :coupon_id, Tang::Coupon.all, :id, :stripe_id, prompt: true %>
+    <%= f.collection_select :coupon_id, Tang::Coupon.all, :id, :stripe_id, { prompt: true }, { class: 'form-control' } %>
   </div>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <%= link_to 'Cancel', tang.admin_subscription_path(@subscription), class: 'btn btn-secondary' %>
+  <%= f.submit 'Change coupon', class: 'btn btn-primary' %>
 <% end %>
 
-<%= link_to 'Cancel', tang.admin_subscription_path(@subscription) %>
 
 <%= render 'footer' %>

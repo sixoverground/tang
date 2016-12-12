@@ -30,6 +30,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'bootstrap', '~> 4.0.0.alpha5'
   s.add_dependency 'rails-assets-tether', '>= 1.1.1'
   s.add_dependency 'aasm', '~> 4.11.1'
+  s.add_dependency 'wicked_pdf', '~> 1.0'
+  s.add_dependency 'wkhtmltopdf-binary', '~> 0.12'
 
   s.add_development_dependency 'rails_best_practices', '~> 1.17'
   s.add_development_dependency 'brakeman', '~> 3.3'

@@ -4,8 +4,8 @@ module Tang
 
     def admin_dispute_created(dispute)
       @charge = Charge.find_by(stripe_id: dispute.charge)
-      if @charge
-        mail(to: Tang.admin_email, subject: "Dispute created on charge #{@charge.stripe_id}").deliver
+      if @charge.present?
+        mail(to: Tang.admin_email, subject: "Dispute created on charge #{@charge.stripe_id}")
       end
     end
 

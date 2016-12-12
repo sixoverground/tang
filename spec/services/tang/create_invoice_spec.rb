@@ -7,7 +7,7 @@ module Tang
   
     it "creates a new invoice for a subscription" do
       subscription = FactoryGirl.create(:subscription)
-      event = StripeMock.mock_webhook_event('invoice.created', subscription: subscription.stripe_id)
+      event = StripeMock.mock_webhook_event('invoice.created', customer: subscription.customer.stripe_id, subscription: subscription.stripe_id)
 
       count = Invoice.count
       

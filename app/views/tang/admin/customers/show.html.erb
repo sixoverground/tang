@@ -109,7 +109,11 @@
           <td><%= link_to number_to_currency(invoice.total / 100), admin_invoice_path(invoice) %></td>
           <td><%= invoice.status %></td>
           <td><%= invoice.customer.stripe_id %></td>
-          <td>Billed from <%= invoice.subscription.stripe_id %></td>
+          <% if invoice.subscription.present? %>
+            <td><%= invoice.subscription.stripe_id %></td>
+          <% else %>
+            <td>—</td>
+          <% end %>
           <td><%= invoice.stripe_id %></td>
           <td><%= invoice.created_at.strftime('%Y/%m/%d %H:%M') %></td>
         </tr>

@@ -1,0 +1,13 @@
+<%= link_to 'View your subscription', account_subscription_path, class: 'btn btn-secondary float-xs-right' %>
+<h2>Receipts</h2>
+<hr>
+
+<ul class="list-group">
+  <% @receipts.each do |charge| %>
+    <%= render partial: 'tang/account/receipts/receipt', locals: { charge: charge } %>
+  <% end %>
+</ul>
+
+<% if @receipts.empty? %>
+  <p>You don't have any receipts.</p>
+<% end %>

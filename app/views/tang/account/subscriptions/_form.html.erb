@@ -12,8 +12,8 @@
 
   <%= f.hidden_field :plan, value: subscription.plan.id %>
 
-  <h2><%= subscription.plan.name %></h2>
-  <h3><%= plan_cost(subscription.plan) %></h3>
+  <h3><%= subscription.plan.name %></h3>
+  <h4><%= plan_cost(subscription.plan) %></h4>
 
   <%= render 'tang/account/cards/payment' %>
 

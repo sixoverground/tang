@@ -58,18 +58,4 @@ RSpec.describe Tang::ApplicationHelper, :type => :helper do
       expect(helper.coupon_off(coupon)).to eq('$5.00 off')
     end
   end
-
-  describe "#discount" do
-    it "returns a formatted percent off discount" do
-      amount = 2000
-      coupon = FactoryGirl.build(:coupon)
-      expect(helper.discount(amount, coupon)).to eq('-$10.00')
-    end
-
-    it "returns a formatted amount off discount" do
-      amount = 2000
-      coupon = FactoryGirl.build(:amount_off_coupon)
-      expect(helper.discount(amount, coupon)).to eq('-$5.00')
-    end
-  end
 end

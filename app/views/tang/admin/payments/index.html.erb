@@ -22,7 +22,7 @@
           <% end %>
         </td>
         <td><%= payment.stripe_id %></td>
-        <td><%= payment.invoice.subscription.customer.email %></td>
+        <td><%= payment.invoice.customer.email %></td>
         <td><%= payment.created_at.strftime('%Y/%m/%d %H:%M:%S') %></td>
       </tr>
     <% end %>

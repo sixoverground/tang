@@ -12,5 +12,9 @@ module Tang
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
     end
 
+    config.to_prepare do
+      Rails.application.config.assets.precompile += %w( tang/pdf.css )
+    end
+
   end
 end

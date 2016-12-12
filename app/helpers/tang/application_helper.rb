@@ -37,15 +37,5 @@ module Tang
         "#{number_to_currency(coupon.amount_off.to_f / 100.0)} off"
       end
     end
-
-    def discount(amount, coupon)
-      subtotal = amount
-      if coupon.percent_off.present?
-        subtotal = amount.to_f * (coupon.percent_off.to_f / 100)
-      elsif coupon.amount_off.present?
-        subtotal = coupon.amount_off
-      end
-      return number_to_currency(subtotal.to_f / -100)
-    end
   end
 end

@@ -1,0 +1,52 @@
+<%= render 'header' %>
+
+<h1>Search</h1>
+
+<% if @results.any? %>
+  <table class="table">
+    <tbody>
+      <% @results.each do |result| %>
+        <% if result.is_a? Tang::Charge %>
+          <tr>
+            <td><%= link_to "#{number_to_currency(result.amount / 100)} #{result.currency.upcase}", admin_payment_path(result) %></td>
+            <td><%= result.stripe_id %></td>
+            <td><%= "****#{result.card_last4}" %></td>
+            <td><%= result.created_at.strftime('%Y/%m/%d %H:%M:%S') %></td>
+          </tr>
+        <% elsif result.is_a? Tang.customer_class %>
+          <tr>
+            <td colspan="3"><%= link_to "#{result.email} — #{result.stripe_id}", admin_customer_path(result) %></td>
+            <td><%= result.created_at.strftime('%Y/%m/%d %H:%M:%S') %></td>
+          </tr>
+        <% elsif result.is_a? Tang::Plan %>
+          <tr>
+            <td colspan="3"><%= link_to "#{result.stripe_id} — #{result.name}", admin_plan_path(result) %></td>
+            <td><%= plan_cost(result) %></td>
+          </tr>
+        <% elsif result.is_a? Tang::Coupon %>
+          <tr>
+            <td colspan="3"><%= link_to result.stripe_id, admin_coupon_path(result) %></td>
+            <td><%= "#{coupon_off(result)} #{result.formatted_duration}" %></td>
+          </tr>
+        <% elsif result.is_a? Tang::Invoice %>
+          <tr>
+            <td><%= link_to number_to_currency(result.total / 100), admin_invoice_path(result) %></td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td><%= result.created_at.strftime('%Y/%m/%d %H:%M:%S') %></td>
+          </tr>
+        <% elsif result.is_a? Tang::InvoiceItem %>
+          <tr>
+            <td><%= link_to number_to_currency(result.amount / 100), admin_invoice_path(result.invoice) %></td>
+            <td><%= result.description %></td>
+            <td><%= result.invoice.stripe_id %></td>
+            <td><%= result.created_at.strftime('%Y/%m/%d %H:%M:%S') %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>There aren't any results for that query.</p>
+<% end %>
+<%= render 'footer' %>

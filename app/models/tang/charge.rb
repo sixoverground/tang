@@ -19,7 +19,7 @@ module Tang
 
     belongs_to :invoice
     has_one :subscription, through: :invoice
-    has_one :customer, through: :subscription
+    has_one :customer, through: :invoice
     has_one :card, through: :customer
 
     validates :invoice, presence: true
@@ -59,6 +59,9 @@ module Tang
         c.card_name = stripe_charge.source.name
         # c.card_tokenization_method = stripe_charge.source.tokenization_method
       
+        created = stripe_charge.created.to_s
+        c.created = DateTime.strptime(created, '%s')
+
         c.status = stripe_charge.status
       end
       return charge

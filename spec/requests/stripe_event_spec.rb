@@ -1,17 +1,23 @@
 require 'rails_helper'
 
-describe 'Stripe Events' do
+describe 'Stripe Events', type: :request do
   let(:stripe_helper) { StripeMock.create_test_helper }
   before { StripeMock.start }
   after { StripeMock.stop }
 
   describe 'charge.dispute.created' do
     it 'mocks a stripe webhook' do
-      event = StripeMock.mock_webhook_event('charge.dispute.created')
+      charge = FactoryGirl.create(:charge)
+
+      event = StripeMock.mock_webhook_event('charge.dispute.created', charge: charge.stripe_id)
       dispute_object = event.data.object
+
+      deliveries = Tang::StripeMailer.deliveries.length
 
       post '/stripe_event', id: event.id
       expect(response.code).to eq('200')
+
+      expect(Tang::StripeMailer.deliveries.length).to eq(deliveries + 1)
 
       expect(dispute_object.id).to_not be_nil
       expect(dispute_object.charge).to_not be_nil
@@ -80,8 +86,12 @@ describe 'Stripe Events' do
       )
       invoice_object = event.data.object
 
+      deliveries = Tang::StripeMailer.deliveries.length
+
       post '/stripe_event', id: event.id
       expect(response.code).to eq('200')
+
+      expect(Tang::StripeMailer.deliveries.length).to eq(deliveries + 2)
 
       expect(invoice_object.id).to_not be_nil
       expect(invoice_object.charge).to_not be_nil
@@ -113,8 +123,12 @@ describe 'Stripe Events' do
       )
       invoice_object = event.data.object
 
+      deliveries = Tang::StripeMailer.deliveries.length
+
       post '/stripe_event', id: event.id
       expect(response.code).to eq('200')
+
+      expect(Tang::StripeMailer.deliveries.length).to eq(deliveries + 2)
 
       expect(invoice_object.id).to_not be_nil
       expect(invoice_object.charge).to_not be_nil

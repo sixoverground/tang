@@ -1,6 +1,7 @@
 require "tang/engine"
 require 'bootstrap'
 require 'rails-assets-tether'
+require 'wicked_pdf'
 
 module Tang
   @@customer_class = 'User'

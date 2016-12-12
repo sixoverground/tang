@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161119184337) do
+ActiveRecord::Schema.define(version: 20161115201106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,9 +72,10 @@ ActiveRecord::Schema.define(version: 20161119184337) do
     t.string   "card_tokenization_method"
     t.string   "card_funding"
     t.string   "card_fingerprint"
+    t.string   "status"
+    t.datetime "created"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
-    t.string   "status"
   end
 
   add_index "tang_charges", ["invoice_id"], name: "index_tang_charges_on_invoice_id", using: :btree
@@ -165,9 +166,9 @@ ActiveRecord::Schema.define(version: 20161119184337) do
     t.decimal  "tax_percent"
     t.datetime "trial_end"
     t.integer  "coupon_id"
+    t.string   "status"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.string   "status"
   end
 
   add_index "tang_subscriptions", ["coupon_id"], name: "index_tang_subscriptions_on_coupon_id", using: :btree
