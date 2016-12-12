@@ -2,12 +2,14 @@
 <h2>Receipts</h2>
 <hr>
 
-<ul class="list-group">
-  <% @receipts.each do |charge| %>
-    <%= render partial: 'tang/account/receipts/receipt', locals: { charge: charge } %>
-  <% end %>
-</ul>
-
-<% if @receipts.empty? %>
+<% if @receipts.any? %>
+  <ul class="list-group">
+    <% @receipts.each do |charge| %>
+      <%= render partial: 'tang/account/receipts/receipt', locals: { charge: charge } %>
+    <% end %>
+  </ul>
+<% else %>
   <p>You don't have any receipts.</p>
 <% end %>
+
+<%= will_paginate @receipts %>

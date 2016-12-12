@@ -5,7 +5,9 @@ module Tang
     before_action :set_receipt, only: [:show]
 
     def index
-      @receipts = current_customer.charges.order(created: :desc)
+      @receipts = current_customer.charges.
+                                   paginate(page: params[:page]).
+                                   order(created: :desc)
     end
 
     def show

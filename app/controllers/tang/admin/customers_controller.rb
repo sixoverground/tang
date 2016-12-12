@@ -6,7 +6,9 @@ module Tang
 
     # GET /customers
     def index
-      @customers = Tang.customer_class.where.not(stripe_id: nil).order(:email)
+      @customers = Tang.customer_class.where.not(stripe_id: nil).
+                        paginate(page: params[:page]).
+                        order(:email)
     end
 
     # GET /customers/1

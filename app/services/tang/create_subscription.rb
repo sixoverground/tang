@@ -1,7 +1,7 @@
 module Tang
   class CreateSubscription
     def self.call(plan, customer, token)
-      subscription = Subscription.new(plan: plan, customer: customer)
+      subscription = Subscription.new(plan: plan, customer: customer, coupon: customer.subscription_coupon)
       # return subscription if !subscription.valid?
       return subscription if plan.nil? || customer.nil?
 
@@ -10,13 +10,30 @@ module Tang
           # Create a new subscription and customer
           stripe_customer = create_stripe_customer(plan, customer, token)
           customer.stripe_id = stripe_customer.id
-          stripe_sub = stripe_customer.subscriptions.first
+          # stripe_sub = stripe_customer.subscriptions.first
         else
           # Update the payment method
           stripe_customer = update_stripe_customer(customer, token)
           # Subscribe
-          stripe_sub = Stripe::Subscription.create(customer: stripe_customer.id, plan: plan.stripe_id)
+          # stripe_sub = Stripe::Subscription.create(customer: stripe_customer.id, plan: plan.stripe_id)
         end
+
+        # Subscribe
+        if customer.subscription_coupon.present?
+          stripe_sub = Stripe::Subscription.create(
+            customer: stripe_customer.id,
+            plan: plan.stripe_id,
+            coupon: customer.subscription_coupon.stripe_id
+          )
+        else
+          stripe_sub = Stripe::Subscription.create(
+            customer: stripe_customer.id,
+            plan: plan.stripe_id
+          )
+        end
+
+        # Remove temporary coupon
+        customer.subscription_coupon = nil
 
         # Save the subscription
         subscription.stripe_id = stripe_sub.id
@@ -41,14 +58,14 @@ module Tang
       if customer.coupon.present?
         stripe_customer = Stripe::Customer.create(
           source: token,
-          plan: plan.stripe_id,
+          # plan: plan.stripe_id,
           email: customer.email,
           coupon: customer.coupon.stripe_id
         )
       else
         stripe_customer = Stripe::Customer.create(
           source: token,
-          plan: plan.stripe_id,
+          # plan: plan.stripe_id,
           email: customer.email
         )
       end

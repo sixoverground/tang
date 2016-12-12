@@ -11,6 +11,7 @@ class CreateTangSubscriptions < ActiveRecord::Migration
       t.timestamp :trial_end
 
       t.integer :coupon_id, index: true, foreign_key: true
+      t.timestamp :coupon_start
 
       t.string :status
       

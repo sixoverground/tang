@@ -16,7 +16,7 @@ gemspec
 ruby '2.3.1'
 
 gem 'dotenv-rails', require: 'dotenv/rails-now'
-gem 'jquery-rails'
+# gem 'jquery-rails'
 gem 'puma'
 gem 'pg'
 gem 'rails_12factor', group: :production

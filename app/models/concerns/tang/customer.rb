@@ -5,9 +5,10 @@ module Tang
     extend ActiveSupport::Concern
 
     included do
+      belongs_to :coupon, class_name: 'Tang::Coupon'
+      belongs_to :subscription_coupon, class_name: 'Tang::Coupon'
       has_many :cards, class_name: 'Tang::Card', foreign_key: 'customer_id'
       has_many :subscriptions, class_name: 'Tang::Subscription', foreign_key: 'customer_id'
-      belongs_to :coupon, class_name: 'Tang::Coupon'
       has_many :invoices, class_name: 'Tang::Invoice', foreign_key: 'customer_id'
       has_many :charges, through: :invoices, class_name: 'Tang::Charge'
 
@@ -56,6 +57,22 @@ module Tang
         end
       end
       return false
+    end
+
+    def coupon_end
+      if coupon.present? && coupon.duration != 'forever'
+        
+      end
+      return nil
+    end
+
+    def has_coupon?
+      if self.subscription.present?
+        if self.subscription.coupon.present?
+          return true
+        end
+      end
+      return self.coupon.present?
     end
 
     private

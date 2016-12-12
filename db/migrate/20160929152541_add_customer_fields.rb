@@ -8,5 +8,7 @@ class AddCustomerFields < ActiveRecord::Migration
     add_column Tang.customer_class.to_s.downcase.pluralize, :description, :string
     add_column Tang.customer_class.to_s.downcase.pluralize, :active_until, :timestamp
     add_column Tang.customer_class.to_s.downcase.pluralize, :coupon_id, :integer, index: true, foreign_key: true
+    add_column Tang.customer_class.to_s.downcase.pluralize, :coupon_start, :timestamp
+    add_column Tang.customer_class.to_s.downcase.pluralize, :subscription_coupon_id, :integer, index: true, foreign_key: true
   end
 end

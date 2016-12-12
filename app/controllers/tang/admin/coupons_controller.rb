@@ -6,7 +6,9 @@ module Tang
 
     # GET /coupons
     def index
-      @coupons = Coupon.all
+      @coupons = Coupon.all.
+                        paginate(page: params[:page]).
+                        order(:stripe_id)
     end
 
     # GET /coupons/1

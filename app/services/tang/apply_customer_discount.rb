@@ -6,12 +6,14 @@ module Tang
           cu = Stripe::Customer.retrieve(customer.stripe_id)
           cu.coupon = coupon.stripe_id
           cu.save
+
+          start = cu.discount.start.to_s
+          start_timestamp = DateTime.strptime(start, '%s')
+          customer.update(coupon: coupon, coupon_start: start_timestamp)
         rescue Stripe::StripeError => e
           customer.errors[:base] << e.message
         end
       end
-
-      customer.update(coupon: coupon)
 
       return customer
     end

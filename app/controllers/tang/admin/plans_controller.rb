@@ -6,7 +6,9 @@ module Tang
 
     # GET /plans
     def index
-      @plans = Plan.all
+      @plans = Plan.all.
+                    paginate(page: params[:page]).
+                    order(:name)
     end
 
     # GET /plans/1

@@ -7,7 +7,7 @@ module Tang
         subscription.errors[:base] << e.message
       end
 
-      subscription.update(coupon: nil)
+      subscription.update(coupon: nil, coupon_start: nil)
 
       return subscription
     end

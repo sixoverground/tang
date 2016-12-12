@@ -121,17 +121,33 @@
 
 <% end %>
 
-<% if current_customer.coupon.present? %>
-  <h4>Discount</h4>
-  <p><%= "#{current_customer.coupon.stripe_id} - #{coupon_off(current_customer.coupon)} #{current_customer.coupon.formatted_duration}" %></p>
+<% if current_customer.subscription.present? %>
+  <% if current_customer.subscription.coupon.present? %>
+    <h4>Discount</h4>
+    <p><%= "#{current_customer.subscription.coupon.stripe_id} - #{coupon_off(current_customer.subscription.coupon)} #{current_customer.subscription.coupon.formatted_duration}" %></p>
+  <% else %>
+    <h4>Redeem coupon</h4>
+    <%= form_for current_customer.subscription.build_coupon, url: tang.account_coupon_path, html: { class: 'form-inline' } do |f| %>
+      <div class="form-group">
+        <%= f.label :stripe_id, 'Coupon', class: 'sr-only' %>
+        <%= f.text_field :stripe_id, placeholder: 'COUPON CODE', required: true, class: 'form-control' %>
+      </div>
+      <%= f.submit 'Apply discount', class: 'btn btn-secondary' %>
+    <% end %>
+  <% end %>
 <% else %>
-  <h4>Redeem coupon</h4>
-  <%= form_for current_customer.build_coupon, url: tang.account_coupon_path, html: { class: 'form-inline' } do |f| %>
-    <div class="form-group">
-      <%= f.label :stripe_id, 'Coupon', class: 'sr-only' %>
-      <%= f.text_field :stripe_id, placeholder: 'COUPON CODE', required: true, class: 'form-control' %>
-    </div>
-    <%= f.submit 'Apply discount', class: 'btn btn-secondary' %>
+  <% if current_customer.subscription_coupon.present? %>
+    <h4>Discount</h4>
+    <p><%= "#{current_customer.subscription_coupon.stripe_id} - #{coupon_off(current_customer.subscription_coupon)} #{current_customer.subscription_coupon.formatted_duration}" %></p>
+  <% else %>
+    <h4>Redeem coupon</h4>
+    <%= form_for current_customer.build_subscription_coupon, url: tang.account_coupon_path, html: { class: 'form-inline' } do |f| %>
+      <div class="form-group">
+        <%= f.label :stripe_id, 'Coupon', class: 'sr-only' %>
+        <%= f.text_field :stripe_id, placeholder: 'COUPON CODE', required: true, class: 'form-control' %>
+      </div>
+      <%= f.submit 'Apply discount', class: 'btn btn-secondary' %>
+    <% end %>
   <% end %>
 <% end %>
 

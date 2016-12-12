@@ -16,7 +16,7 @@
     <dd><%= number_to_currency(@payment.amount / 100) %> <%= @payment.currency.upcase %></dd>
 
     <dt>Date:</dt>
-    <dd><%= @payment.created_at.strftime('%Y/%m/%d %H:%M:%S') %></dd>
+    <dd><%= @payment.created.strftime('%Y/%m/%d %H:%M:%S') %></dd>
   </dl>
 </div>
 

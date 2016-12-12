@@ -5,13 +5,18 @@ module Tang
     def create
       @coupon = Coupon.find_by(stripe_id: params[:coupon][:stripe_id])
       if @coupon.present?
-        ApplyCustomerDiscount.call(
-          current_customer,
-          @coupon
-        )
+        if current_customer.subscription.present?
+          ApplySubscriptionDiscount.call(
+            current_customer.subscription,
+            @coupon
+          )
+        else
+          current_customer.subscription_coupon = @coupon
+          current_customer.save
+        end
         redirect_to account_subscription_path, notice: 'Coupon was successfully applied.'
       else
-        redirect_to account_subscription_path, notice: 'Coupon could not be applied.'
+        redirect_to account_subscription_path, alert: 'Coupon could not be applied.'
       end
     end
   end

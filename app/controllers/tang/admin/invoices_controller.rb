@@ -4,10 +4,6 @@ module Tang
   class Admin::InvoicesController < Admin::ApplicationController
     before_action :set_invoice, only: [:show]
 
-    def index
-      @invoices = Invoice.all
-    end
-
     def show
     end
 

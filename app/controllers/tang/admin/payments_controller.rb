@@ -5,7 +5,9 @@ module Tang
     before_action :set_payment, only: [:show]
 
     def index
-      @payments = Charge.all
+      @payments = Charge.all.
+                         paginate(page: params[:page]).
+                         order(created: :desc)
     end
 
     def show

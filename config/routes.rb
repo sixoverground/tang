@@ -16,7 +16,7 @@ Tang::Engine.routes.draw do
     end
     resources :plans
     resources :coupons, only: [:index, :show, :new, :create, :destroy]
-    resources :invoices, only: [:index, :show]
+    resources :invoices, only: [:show]
     get :search, to: 'search#index'
   end
 

@@ -166,6 +166,7 @@ ActiveRecord::Schema.define(version: 20161115201106) do
     t.decimal  "tax_percent"
     t.datetime "trial_end"
     t.integer  "coupon_id"
+    t.datetime "coupon_start"
     t.string   "status"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
@@ -203,6 +204,8 @@ ActiveRecord::Schema.define(version: 20161115201106) do
     t.string   "description"
     t.datetime "active_until"
     t.integer  "coupon_id"
+    t.datetime "coupon_start"
+    t.integer  "subscription_coupon_id"
     t.string   "role"
   end
 

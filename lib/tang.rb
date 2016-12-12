@@ -1,7 +1,9 @@
 require "tang/engine"
+require 'jquery-rails'
 require 'bootstrap'
 require 'rails-assets-tether'
 require 'wicked_pdf'
+require 'will_paginate'
 
 module Tang
   @@customer_class = 'User'

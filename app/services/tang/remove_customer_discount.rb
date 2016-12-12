@@ -8,7 +8,7 @@ module Tang
         customer.errors[:base] << e.message
       end
 
-      customer.update(coupon: nil)
+      customer.update(coupon: nil, coupon_start: nil)
 
       return customer
     end

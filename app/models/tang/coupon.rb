@@ -18,7 +18,7 @@ module Tang
 
     before_create :create_stripe_coupon
     before_update :update_stripe_coupon
-    before_destroy :delete_stripe_coupon
+    before_destroy :delete_stripe_coupon # TODO: should be a soft delete
 
     DURATIONS = ['once', 'repeating', 'forever']
 

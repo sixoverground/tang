@@ -6,7 +6,10 @@ module Tang
 
     # GET /subscriptions
     def index
-      @subscriptions = Subscription.where.not(status: :canceled)
+      @subscriptions = Subscription.includes(:customer).
+                                    where.not(status: :canceled).
+                                    paginate(page: params[:page]).
+                                    order("#{Tang.customer_class.to_s.downcase.pluralize}.email")
     end
 
     # GET /subscriptions/1

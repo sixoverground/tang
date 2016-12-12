@@ -31,7 +31,9 @@ end
 # Then
 
 Then(/^I should see a reduced charge amount$/) do
-  expect(page).to have_content "You're currently paying $20.00/month $10.00/month on the Amazing Gold Plan."
+  # expect(page).to have_content "You're currently paying $20.00/month $10.00/month on the Amazing Gold Plan."
+  # expect(page).to have_content "#{@coupon.stripe_id}"
+  expect(@customer.subscription.coupon).to eq(@coupon)
 end
 
 Then(/^I should see a coupon created success message$/) do
