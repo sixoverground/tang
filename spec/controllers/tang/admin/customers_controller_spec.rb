@@ -30,11 +30,13 @@ module Tang
     # Customer. As you add validations to Customer, be sure to
     # adjust the attributes here as well.
     let(:valid_attributes) {
-      skip("Add a hash of attributes valid for your model")
+      # skip("Add a hash of attributes valid for your model")
+      FactoryGirl.attributes_for(:customer, stripe_id: SecureRandom.uuid)
     }
 
     let(:invalid_attributes) {
-      skip("Add a hash of attributes invalid for your model")
+      # skip("Add a hash of attributes invalid for your model")
+      FactoryGirl.attributes_for(:customer, email: nil)
     }
 
     # This should return the minimal set of values that should be in the session
@@ -44,7 +46,7 @@ module Tang
 
     describe "GET #index" do
       it "assigns all customers as @customers" do
-        customer = User.create! valid_attributes
+        customer = FactoryGirl.create(:customer, valid_attributes)
         get :index, params: {}, session: valid_session
         expect(assigns(:customers)).to eq([customer])
       end
@@ -53,7 +55,7 @@ module Tang
     describe "GET #show" do
       it "assigns the requested customer as @customer" do
         customer = User.create! valid_attributes
-        get :show, params: {id: customer.to_param}, session: valid_session
+        get :show, {id: customer.to_param}, session: valid_session
         expect(assigns(:customer)).to eq(customer)
       end
     end
@@ -61,7 +63,7 @@ module Tang
     describe "GET #edit" do
       it "assigns the requested customer as @customer" do
         customer = User.create! valid_attributes
-        get :edit, params: {id: customer.to_param}, session: valid_session
+        get :edit, {id: customer.to_param}, session: valid_session
         expect(assigns(:customer)).to eq(customer)
       end
     end
@@ -69,39 +71,41 @@ module Tang
     describe "PUT #update" do
       context "with valid params" do
         let(:new_attributes) {
-          skip("Add a hash of attributes valid for your model")
+          # skip("Add a hash of attributes valid for your model")
+          FactoryGirl.attributes_for(:customer, email: 'new@email.com')
         }
 
         it "updates the requested customer" do
           customer = User.create! valid_attributes
-          put :update, params: {id: customer.to_param, customer: new_attributes}, session: valid_session
+          put :update, {id: customer.to_param, user: new_attributes}, session: valid_session
           customer.reload
-          skip("Add assertions for updated state")
+          # skip("Add assertions for updated state")
+          expect(customer.email).to eq('new@email.com')
         end
 
         it "assigns the requested customer as @customer" do
           customer = User.create! valid_attributes
-          put :update, params: {id: customer.to_param, customer: valid_attributes}, session: valid_session
+          put :update, {id: customer.to_param, user: valid_attributes}, session: valid_session
           expect(assigns(:customer)).to eq(customer)
         end
 
         it "redirects to the customer" do
           customer = User.create! valid_attributes
-          put :update, params: {id: customer.to_param, customer: valid_attributes}, session: valid_session
-          expect(response).to redirect_to(customer)
+          put :update, {id: customer.to_param, user: valid_attributes}, session: valid_session
+          expect(response).to redirect_to(admin_customer_url(customer))
         end
       end
 
       context "with invalid params" do
         it "assigns the customer as @customer" do
           customer = User.create! valid_attributes
-          put :update, params: {id: customer.to_param, customer: invalid_attributes}, session: valid_session
+          put :update, {id: customer.to_param, user: invalid_attributes}, session: valid_session
           expect(assigns(:customer)).to eq(customer)
         end
 
         it "re-renders the 'edit' template" do
           customer = User.create! valid_attributes
-          put :update, params: {id: customer.to_param, customer: invalid_attributes}, session: valid_session
+          put :update, {id: customer.to_param, user: invalid_attributes}, session: valid_session
           expect(response).to render_template("edit")
         end
       end
@@ -111,14 +115,14 @@ module Tang
       it "destroys the requested customer" do
         customer = User.create! valid_attributes
         expect {
-          delete :destroy, params: {id: customer.to_param}, session: valid_session
+          delete :destroy, {id: customer.to_param}, session: valid_session
         }.to change(User, :count).by(-1)
       end
 
       it "redirects to the customers list" do
         customer = User.create! valid_attributes
-        delete :destroy, params: {id: customer.to_param}, session: valid_session
-        expect(response).to redirect_to(customers_url)
+        delete :destroy, {id: customer.to_param}, session: valid_session
+        expect(response).to redirect_to(admin_customers_url)
       end
     end
 
