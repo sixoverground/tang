@@ -60,6 +60,6 @@ StripeEvent.configure do |events|
   events.subscribe('customer.subscription.deleted') do |event|
     stripe_subscription = event.data.object
     subscription = Tang::Subscription.find_by(stripe_id: stripe_subscription.id)
-    subscription.cancel!
+    subscription.cancel! if !subscription.canceled?
   end
 end

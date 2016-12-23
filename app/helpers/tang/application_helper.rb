@@ -51,7 +51,7 @@ module Tang
       unless options[:renderer]
         options = options.merge renderer: BootstrapLinkRenderer
       end
-      super *[collection_or_options, options].compact
+      super(*[collection_or_options, options].compact)
     end
 
     class BootstrapLinkRenderer < WillPaginate::ActionView::LinkRenderer

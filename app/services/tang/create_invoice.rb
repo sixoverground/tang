@@ -7,7 +7,7 @@ module Tang
 
       if invoice.present?
         stripe_invoice.lines.data.each do |stripe_invoice_item|
-          invoice_item = InvoiceItem.from_stripe(stripe_invoice_item, invoice)
+          InvoiceItem.from_stripe(stripe_invoice_item, invoice)
         end
       end
 
