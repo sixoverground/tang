@@ -75,6 +75,20 @@ module Tang
       return self.coupon.present?
     end
 
+    def has_subscription_coupon?
+      return self.subscription.present? && self.subscription.coupon.present?
+    end
+
+    def discount_for_plan(plan)
+      amount_off = 0
+      if self.coupon.percent_off.present?
+        amount_off = (self.coupon.percent_off.to_f / 100.0) * plan.amount.to_f
+      elsif self.coupon.amount_off.present?
+        amount_off = self.coupon.amount_off
+      end
+      return amount_off
+    end
+
     private
 
     def nil_if_blank

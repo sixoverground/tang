@@ -1,12 +1,14 @@
 module Tang
   class Coupon < ActiveRecord::Base
     has_paper_trail
+    # acts_as_paranoid
 
     has_many :customers, class_name: Tang.customer_class.to_s
     has_many :subscriptions
     has_many :invoices
 
-    validates :stripe_id, presence: true, uniqueness: true
+    validates :stripe_id, presence: true
+    validates :stripe_id, uniqueness: true # , if: "deleted_at.nil?"
     validates :duration, inclusion: { in: %w(once repeating forever) }
     validates :amount_off, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true
     validates :currency, presence: true, if: "amount_off.present?"
@@ -18,7 +20,7 @@ module Tang
 
     before_create :create_stripe_coupon
     before_update :update_stripe_coupon
-    before_destroy :delete_stripe_coupon # TODO: should be a soft delete
+    before_destroy :delete_stripe_coupon # should be soft delete
 
     DURATIONS = ['once', 'repeating', 'forever']
 

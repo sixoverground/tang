@@ -15,18 +15,10 @@ module Tang
 
     def customer_plan_cost(customer, plan)
       amount_off = 0
-      if customer.subscription.present? && customer.subscription.coupon.present?
-        if customer.subscription.coupon.percent_off.present?
-          amount_off = (customer.subscription.coupon.percent_off.to_f / 100.0) * plan.amount.to_f
-        elsif customer.subscription.coupon.amount_off.present?
-          amount_off = customer.subscription.coupon.amount_off
-        end
+      if customer.has_subscription_coupon?
+        amount_off = customer.subscription.discount_for_plan(plan)
       elsif customer.coupon.present?
-        if customer.coupon.percent_off.present?
-          amount_off = (customer.coupon.percent_off.to_f / 100.0) * plan.amount.to_f
-        elsif customer.coupon.amount_off.present?
-          amount_off = customer.coupon.amount_off
-        end
+        amount_off = customer.discount_for_plan(plan)
       end
       amount = plan.amount - amount_off
       "#{number_to_currency(amount / 100)}/#{plan.interval}"

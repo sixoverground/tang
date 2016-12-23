@@ -33,6 +33,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'wicked_pdf', '~> 1.0'
   s.add_dependency 'wkhtmltopdf-binary', '~> 0.12'
   s.add_dependency 'will_paginate', '~> 3.1'
+  # s.add_dependency 'paranoia', '~> 2.2'
 
   s.add_development_dependency 'rails_best_practices', '~> 1.17'
   s.add_development_dependency 'brakeman', '~> 3.3'

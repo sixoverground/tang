@@ -4,6 +4,7 @@ require 'bootstrap'
 require 'rails-assets-tether'
 require 'wicked_pdf'
 require 'will_paginate'
+# require 'paranoia'
 
 module Tang
   @@customer_class = 'User'

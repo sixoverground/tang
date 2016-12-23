@@ -1,10 +1,12 @@
 module Tang
   class Plan < ActiveRecord::Base
     has_paper_trail
+    # acts_as_paranoid
 
     has_many :subscriptions
 
-    validates :stripe_id, presence: true, uniqueness: true
+    validates :stripe_id, presence: true
+    validates :stripe_id, uniqueness: true # , if: "deleted_at.nil?"
     validates :name, presence: true
     validates :amount, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
     validates :currency, length: { is: 3 }
@@ -19,7 +21,7 @@ module Tang
     after_initialize :default_values
     before_create :create_stripe_plan
     before_update :update_stripe_plan
-    before_destroy :delete_stripe_plan
+    before_destroy :delete_stripe_plan # should be soft delete
 
     INTERVALS = ['day', 'week', 'month', 'year']
 
