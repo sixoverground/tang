@@ -111,14 +111,16 @@ module Tang
     describe "PUT #update" do
       context "with valid params" do
         let(:new_attributes) {
-          skip("Add a hash of attributes valid for your model")
+          # skip("Add a hash of attributes valid for your model")
+          FactoryGirl.attributes_for(:plan, name: 'Changed Plan')
         }
 
         it "updates the requested plan" do
           plan = Plan.create! valid_attributes
           put :update, {id: plan.to_param, plan: new_attributes}, session: valid_session
           plan.reload
-          skip("Add assertions for updated state")
+          # skip("Add assertions for updated state")
+          expect(plan.name).to eq('Changed Plan')
         end
 
         it "assigns the requested plan as @plan" do
