@@ -17,7 +17,7 @@
 
     <% if @coupon.amount_off.present? %>
       <dt>Amount off:</dt>
-      <dd><%= "#{number_to_currency(@coupon.amount_off)} #{@coupon.currency.upcase} off" %></dd>
+      <dd><%= "#{number_to_currency(@coupon.amount_off.to_f / 100.0)} #{@coupon.currency.upcase} off" %></dd>
     <% end %>
 
     <dt>Duration:</dt>

@@ -7,7 +7,7 @@ module Tang
     def show
       @plans = Plan.order(:order)
 
-      if @subscription.present?
+      if @subscription.present? && @subscription.plan.present?
         @next_plan = @plans.where("tang_plans.order > ?", @subscription.plan.order).first
         @previous_plan = @plans.where("tang_plans.order < ?", @subscription.plan.order).last
       else

@@ -16,6 +16,7 @@ module Tang
     mattr_accessor :admin_email
     mattr_accessor :plan_inheritance
     mattr_accessor :company_name
+    mattr_accessor :admin_layout
 
     self.default_currency = 'usd'
     self.free_plan_name = 'Free Plan'
@@ -23,6 +24,7 @@ module Tang
     self.admin_email = 'hello@tangapp.herokuapp.com'
     self.plan_inheritance = true
     self.company_name = 'Tang'
+    self.admin_layout = 'application'
   end
 
   def self.setup #(&block)

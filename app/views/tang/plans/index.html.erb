@@ -1,0 +1,57 @@
+<div class="pricing">
+  <div class="pricing__item">
+    <h3 class="pricing__title"><%= Tang.free_plan_name %></h3>
+    <div class="pricing__price">Free</div>
+    <p class="pricing__sentence">plan sentence goes here</p>
+    <ul class="pricing__feature-list">
+      <li class="pricing__feature">3 Photos</li>
+      <li class="pricing__feature">1 Instagram Account</li>
+    </ul>
+
+    <% if user_signed_in? %>
+      <% if current_user.subscription.present? %>
+        <% # downgrade to free %>
+        <%= link_to 'Choose Plan', account_subscription_path, method: :delete, data: { confirm: 'Are you sure you want to cancel your current plan?' }, class: 'pricing__action' %>
+      <% else %>
+        <% # already on free plan %>
+        <%= button_tag 'Selected', class: 'pricing__action', disabled: 'disabled' %>
+      <% end %>
+    <% else %>
+      <% # sign in for free %>
+      <%= link_to 'Get started', main_app.new_user_registration_path, class: 'pricing__action' %>
+    <% end %>
+
+  </div>
+
+  <% @plans.each do |plan| %>
+    <div class="pricing__item <%= 'pricing__item--featured' if plan.highlight %>">
+      <h3 class="pricing__title"><%= plan.name %></h3>
+      <div class="pricing__price"><span class="pricing__currency"><%= number_to_currency(plan.amount / 100, format: '%u') %></span><%= number_to_currency(plan.amount / 100, format: '%n') %><span class="pricing__period">/<%= plan.interval %></span></div>
+      <p class="pricing__sentence">plan sentence goes here</p>
+      <ul class="pricing__feature-list">
+        <% (plan.features || '').split('\n').each do |feature| %>
+          <li class="pricing__feature"><%= feature %></li>
+        <% end %>
+      </ul>
+
+      <% if user_signed_in? %>
+        <% if current_user.subscription.present? %>
+          <% if current_user.subscription.plan_id == plan.id %>
+            <% # current plan %>
+            <%= button_tag 'Selected', class: 'pricing__action', disabled: 'disabled' %>
+          <% else %>
+            <% # upgrade or downgrade to plan %>
+            <%= link_to 'Choose plan', account_subscription_path(plan: plan), method: :patch, class: 'pricing__action' %>
+          <% end %>
+        <% else %>
+          <% # subscribe to new plan %>
+          <%= link_to 'Choose plan', account_subscription_path(subscription: { plan: plan }), method: :post, class: 'pricing__action' %>
+        <% end %>
+      <% else %>
+        <% # sign in and subscribe %>
+        <%= link_to 'Choose plan', account_subscription_path(subscription: { plan: plan }), method: :post, class: 'pricing__action' %>
+      <% end %>
+
+    </div>
+  <% end %>
+</div>

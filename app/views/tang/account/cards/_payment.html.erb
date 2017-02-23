@@ -1,15 +1,15 @@
 <span class="payment-errors"></span>
 
 <div class="payment-row">
-  <label>
+  <label for="name">
     <span>Cardholder name</span>
-    <input type="text" data-stripe="name" autocomplete="cc-name" placeholder="Full Name" required class="form-control">
   </label>
+    <input id="name" type="text" data-stripe="name" autocomplete="cc-name" placeholder="Full Name" required class="form-control">
 
-  <label>
+  <label for="number">
     <span>Card number</span>
-    <input type="tel" size="20" data-stripe="number" autocomplete="cc-number" placeholder="•••• •••• •••• ••••" required class="form-control">
   </label>
+  <input id="number" type="tel" size="20" data-stripe="number" autocomplete="cc-number" placeholder="•••• •••• •••• ••••" required class="form-control">
 </div>
 
 <div class="payment-row">

@@ -11,6 +11,7 @@ class CreateTangPlans < ActiveRecord::Migration
       t.integer :trial_period_days
       t.integer :order
       t.boolean :highlight, null: false, default: false
+      t.text :features
 
       t.timestamps null: false
     end

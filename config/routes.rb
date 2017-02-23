@@ -18,6 +18,8 @@ Tang::Engine.routes.draw do
     resources :coupons, only: [:index, :show, :new, :create, :destroy]
     resources :invoices, only: [:show]
     get :search, to: 'search#index'
+
+    root to: 'dashboard#index'
   end
 
   namespace :account do

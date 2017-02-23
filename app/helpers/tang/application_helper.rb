@@ -10,7 +10,7 @@ module Tang
     end
 
     def plan_cost(plan)
-      "#{number_to_currency(plan.amount / 100)}/#{plan.interval}"
+      "#{number_to_currency(plan.amount.to_f / 100.0)}/#{plan.interval}"
     end
 
     def customer_plan_cost(customer, plan)
@@ -21,7 +21,7 @@ module Tang
         amount_off = customer.discount_for_plan(plan)
       end
       amount = plan.amount - amount_off
-      "#{number_to_currency(amount / 100)}/#{plan.interval}"
+      "#{number_to_currency(amount.to_f / 100.0)}/#{plan.interval}"
     end
 
     def current_customer

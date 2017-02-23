@@ -21,7 +21,7 @@
     <dd><%= @plan.name %></dd>
 
     <dt>Price:</dt>
-    <dd><%= "#{number_to_currency(@plan.amount / 100)} #{@plan.currency.upcase}/#{@plan.interval}" %></dd>
+    <dd><%= "#{number_to_currency(@plan.amount.to_f / 100.0)} #{@plan.currency.upcase}/#{@plan.interval}" %></dd>
 
     <dt>Trial period:</dt>
     <% if @plan.trial_period_days.present? %>
