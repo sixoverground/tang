@@ -147,6 +147,7 @@ ActiveRecord::Schema.define(version: 20161115201106) do
     t.integer  "trial_period_days"
     t.integer  "order"
     t.boolean  "highlight",            default: false, null: false
+    t.text     "features"
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
   end
