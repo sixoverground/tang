@@ -25,6 +25,25 @@ module Tang
 
     end
 
+    def self.table_name
+      return Tang.customer_class.to_s.downcase.pluralize
+    end
+
+    def self.search(query)
+      customers = Tang.customer_class.none
+      if query.present?
+        q = "%#{query.downcase}%"
+        customer_table = ActiveRecord::Base.connection.quote_table_name(Customer.table_name)
+        customers = Tang.customer_class.
+            joins(:subscriptions, :coupon).
+            where.not(stripe_id: nil).
+            where("lower(#{customer_table}.stripe_id) like ? or lower(#{customer_table}.email) like ? or lower(tang_subscriptions.stripe_id) like ? or lower(tang_coupons.stripe_id) like ?", 
+                q, q, q, q).
+            distinct
+      end
+      return customers
+    end
+
     def card
       self.cards.order(:created_at).last
     end

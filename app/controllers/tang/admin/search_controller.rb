@@ -18,31 +18,11 @@ module Tang
     private
 
     def search_charges
-      charges = Charge.none
-      if @query.present?
-        q = "%#{@query.downcase}%"
-        customer_table = Tang.customer_class.to_s.downcase.pluralize
-        charges = Charge.joins(:customer).
-            where("lower(tang_charges.stripe_id) like ? or lower(#{customer_table}.stripe_id) like ?",
-                q, q).
-            distinct
-      end
-      return charges
+      return Charge.search(@query)
     end
 
     def search_customers
-      customers = Tang.customer_class.none
-      if @query.present?
-        q = "%#{@query.downcase}%"
-        customer_table = Tang.customer_class.to_s.downcase.pluralize
-        customers = Tang.customer_class.
-            joins(:subscriptions, :coupon).
-            where.not(stripe_id: nil).
-            where("lower(#{customer_table}.stripe_id) like ? or lower(#{customer_table}.email) like ? or lower(tang_subscriptions.stripe_id) like ? or lower(tang_coupons.stripe_id) like ?", 
-                q, q, q, q).
-            distinct
-      end
-      return customers
+      return Customer.search(@query)
     end
 
     def search_plans
@@ -68,32 +48,11 @@ module Tang
     end
 
     def search_invoices
-      invoices = Invoice.none
-      if @query.present?
-        q = "%#{@query.downcase}%"
-        customer_table = Tang.customer_class.to_s.downcase.pluralize
-        invoices = Invoice.joins("left join tang_charges on tang_invoices.id = tang_charges.invoice_id").
-            joins("left join tang_subscriptions on tang_subscriptions.id = tang_invoices.subscription_id").
-            joins("left join #{customer_table} on #{customer_table}.id = tang_invoices.customer_id").
-            where("lower(tang_charges.stripe_id) like ? or lower(tang_subscriptions.stripe_id) like ? or lower(#{customer_table}.stripe_id) like ?", 
-                q, q, q).
-            distinct
-      end
-      return invoices
+      return Invoice.search(@query)
     end
 
     def search_invoice_items
-      invoice_items = InvoiceItem.none
-      if @query.present?
-        q = "%#{@query.downcase}%"
-        customer_table = Tang.customer_class.to_s.downcase.pluralize
-        invoice_items = InvoiceItem.joins(:customer, :subscription).
-            where.not(description: nil).
-            where("lower(tang_invoice_items.description) like ? or lower(#{customer_table}.stripe_id) like ? or lower(tang_subscriptions.stripe_id) like ?",
-                q, q, q).
-            distinct
-      end
-      return invoice_items
+      return InvoiceItem.search(@query)
     end
   end
 end

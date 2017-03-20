@@ -41,5 +41,19 @@ module Tang
 
       return invoice_item
     end
+
+    def self.search(query)
+      invoice_items = InvoiceItem.none
+      if query.present?
+        q = "%#{query.downcase}%"
+        customer_table = connection.quote_table_name(Customer.table_name)
+        invoice_items = InvoiceItem.joins(:customer, :subscription).
+            where.not(description: nil).
+            where("lower(tang_invoice_items.description) like ? or lower(#{customer_table}.stripe_id) like ? or lower(tang_subscriptions.stripe_id) like ?",
+                q, q, q).
+            distinct
+      end
+      return invoice_items
+    end
   end
 end

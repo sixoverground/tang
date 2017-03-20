@@ -46,9 +46,10 @@ module Tang
     end
 
     def active_redemptions
+      customer_table = ActiveRecord::Base.connection.quote_table_name(Customer.table_name)
       Tang.customer_class.
            joins(:subscriptions).
-           where("#{Tang.customer_class.to_s.downcase.pluralize}.coupon_id = ? OR tang_subscriptions.coupon_id = ?", self.id, self.id).
+           where("#{customer_table}.coupon_id = ? OR tang_subscriptions.coupon_id = ?", self.id, self.id).
            where.not(tang_subscriptions: { status: :canceled }).
            uniq
     end

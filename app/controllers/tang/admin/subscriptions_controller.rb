@@ -9,7 +9,7 @@ module Tang
       @subscriptions = Subscription.includes(:customer).
                                     where.not(status: :canceled).
                                     paginate(page: params[:page]).
-                                    order("#{Tang.customer_class.to_s.downcase.pluralize}.email")
+                                    order("#{Customer.table_name}.email")
     end
 
     # GET /subscriptions/1

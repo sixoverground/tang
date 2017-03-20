@@ -67,6 +67,17 @@ module Tang
       return charge
     end
 
-
+    def self.search(query)
+      charges = Charge.none
+      if query.present?
+        q = "%#{query.downcase}%"
+        customer_table = connection.quote_table_name(Customer.table_name)
+        charges = Charge.joins(:customer).
+            where("lower(tang_charges.stripe_id) like ? or lower(#{customer_table}.stripe_id) like ?",
+                q, q).
+            distinct
+      end
+      return charges
+    end
   end
 end

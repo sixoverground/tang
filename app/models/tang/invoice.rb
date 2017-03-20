@@ -61,5 +61,20 @@ module Tang
       end
       return invoice
     end
+
+    def self.search(query)
+      invoices = Invoice.none
+      if query.present?
+        q = "%#{query.downcase}%"
+        customer_table = connection.quote_table_name(Customer.table_name)
+        invoices = Invoice.joins("left join tang_charges on tang_invoices.id = tang_charges.invoice_id").
+            joins("left join tang_subscriptions on tang_subscriptions.id = tang_invoices.subscription_id").
+            joins("left join #{customer_table} on #{customer_table}.id = tang_invoices.customer_id").
+            where("lower(tang_charges.stripe_id) like ? or lower(tang_subscriptions.stripe_id) like ? or lower(#{customer_table}.stripe_id) like ?", 
+                q, q, q).
+            distinct
+      end
+      return invoices
+    end
   end
 end
