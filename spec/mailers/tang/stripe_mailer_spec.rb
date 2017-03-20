@@ -11,23 +11,26 @@ module Tang
 
         event = StripeMock.mock_webhook_event('charge.dispute.created', charge: charge.stripe_id)
 
-        mail = StripeMailer.admin_dispute_created(event.data.object)
+        dispute = event.data.object
+        dispute_charge = Charge.find_by(stripe_id: dispute.charge)
+
+        mail = StripeMailer.admin_dispute_created(dispute_charge)
         expect(mail.subject).to eq "Dispute created on charge #{charge.stripe_id}"
       end
     end
 
-    describe 'admin_charge_succeded' do
-      it 'should send a charge succeeded notification' do
+    describe 'admin_payment_succeeded' do
+      it 'should send a payment succeeded notification' do
         charge = FactoryGirl.create(:charge)
-        mail = StripeMailer.admin_charge_succeeded(charge)
+        mail = StripeMailer.admin_payment_succeeded(charge)
         expect(mail.subject).to eq "Woo! Charge succeeded!"
       end
     end
 
-    describe 'receipt' do
+    describe 'customer_payment_succeeded' do
       it 'should send a receipt' do
         charge = FactoryGirl.create(:charge)
-        mail = StripeMailer.receipt(charge)
+        mail = StripeMailer.customer_payment_succeeded(charge)
         expect(mail.subject).to eq "Thank you!"
       end
     end

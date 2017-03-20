@@ -58,11 +58,11 @@ module Tang
 
       # Only allow a trusted parameter "white list" through.
       def plan_create_params
-        params.require(:plan).permit(:stripe_id, :amount, :currency, :interval, :interval_count, :name, :statement_descriptor, :trial_period_days)
+        params.require(:plan).permit(:stripe_id, :amount, :currency, :interval, :interval_count, :name, :statement_descriptor, :trial_period_days, :order, :highlight, :features, :description)
       end
 
       def plan_update_params
-        params.require(:plan).permit(:name)
+        params.require(:plan).permit(:name, :order, :highlight, :features, :description)
       end
   end
 end

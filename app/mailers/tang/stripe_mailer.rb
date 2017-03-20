@@ -1,30 +1,29 @@
 module Tang
   class StripeMailer < ApplicationMailer
-    default from: 'team@tangapp.herokuapp.com'
+    add_template_helper(Tang::ApplicationHelper)
+    default from: Tang.admin_email
 
-    def admin_dispute_created(dispute)
-      @charge = Charge.find_by(stripe_id: dispute.charge)
-      if @charge.present?
-        mail(to: Tang.admin_email, subject: "Dispute created on charge #{@charge.stripe_id}")
-      end
+    def admin_dispute_created(charge)
+      @charge = charge
+      mail(to: Tang.admin_email, subject: "Dispute created on charge #{@charge.stripe_id}")
     end
 
-    def admin_charge_succeeded(charge)
+    def admin_payment_succeeded(charge)
       @charge = charge
       mail(to: Tang.admin_email, subject: "Woo! Charge succeeded!")
     end
 
-    def admin_charge_failed(charge)
+    def admin_payment_failed(charge)
       @charge = charge
       mail(to: Tang.admin_email, subject: "Oh no! Charge failed!")
     end
 
-    def receipt(charge)
-      @charge = charge
-      mail(to: @charge.customer.email, subject: "Thank you!")
+    def customer_payment_succeeded(charge)
+      @receipt = charge
+      mail(to: @receipt.customer.email, subject: "Thank you!")
     end
 
-    def failed_invoice(charge)
+    def customer_payment_failed(charge)
       @charge = charge
       mail(to: @charge.customer.email, subject: "Oops! Your payment could not be processed.")
     end

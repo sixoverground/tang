@@ -15,7 +15,8 @@ StripeEvent.configure do |events|
   events.subscribe 'charge.dispute.created' do |event|
     dispute = event.data.object
     # TODO: create actual dispute model
-    Tang::StripeMailer.admin_dispute_created(dispute).deliver_now
+    charge = Tang::Charge.find_by(stripe_id: dispute.charge)
+    Tang::StripeMailer.admin_dispute_created(charge).deliver_now
   end
 
   events.subscribe 'charge.dispute.updated' do |event|
@@ -41,8 +42,8 @@ StripeEvent.configure do |events|
   events.subscribe('invoice.payment_succeeded') do |event|
     invoice = event.data.object
     charge = Tang::PayInvoice.call(invoice)
-    Tang::StripeMailer.receipt(charge).deliver_now
-    Tang::StripeMailer.admin_charge_succeeded(charge).deliver_now
+    Tang::StripeMailer.customer_payment_succeeded(charge).deliver_now
+    Tang::StripeMailer.admin_payment_succeeded(charge).deliver_now
   end
 
   # Subscription lifecycle errors
@@ -50,8 +51,8 @@ StripeEvent.configure do |events|
   events.subscribe('invoice.payment_failed') do |event|
     invoice = event.data.object
     charge = Tang::FailInvoice.call(invoice)
-    Tang::StripeMailer.failed_invoice(charge).deliver_now
-    Tang::StripeMailer.admin_charge_failed(charge).deliver_now
+    Tang::StripeMailer.customer_payment_failed(charge).deliver_now
+    Tang::StripeMailer.admin_payment_failed(charge).deliver_now
   end
 
   # events.subscribe('customer.subscription.updated') do |event|

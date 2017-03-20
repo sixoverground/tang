@@ -9,7 +9,7 @@ FactoryGirl.define do
 
   factory :plan, class: 'Tang::Plan' do
     stripe_id SecureRandom.uuid
-    name 'Amazing Gold Plan'
+    name 'Amazing Gold'
     amount 2000
     currency 'usd'
     interval 'month'
@@ -17,7 +17,7 @@ FactoryGirl.define do
 
     factory :premium_plan do
       stripe_id SecureRandom.uuid
-      name 'Amazing Diamond Plan'
+      name 'Amazing Diamond'
       amount 5000
       order 2
     end

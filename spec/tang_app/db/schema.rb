@@ -148,6 +148,7 @@ ActiveRecord::Schema.define(version: 20161115201106) do
     t.integer  "order"
     t.boolean  "highlight",            default: false, null: false
     t.text     "features"
+    t.text     "description"
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
   end
@@ -197,6 +198,7 @@ ActiveRecord::Schema.define(version: 20161115201106) do
     t.datetime "locked_at"
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
+    t.string   "role"
     t.string   "stripe_id"
     t.integer  "account_balance"
     t.string   "business_vat_id"
@@ -207,7 +209,6 @@ ActiveRecord::Schema.define(version: 20161115201106) do
     t.integer  "coupon_id"
     t.datetime "coupon_start"
     t.integer  "subscription_coupon_id"
-    t.string   "role"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

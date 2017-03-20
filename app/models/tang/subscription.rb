@@ -30,7 +30,7 @@ module Tang
     belongs_to :customer, class_name: Tang.customer_class.to_s
     belongs_to :plan
     belongs_to :coupon
-    has_many :invoices
+    has_many :invoices, dependent: :destroy
 
     validates :customer, presence: true
     validates :plan, presence: true
@@ -43,6 +43,7 @@ module Tang
     # before_save :nil_if_blank
     before_update :update_stripe_subscription
     # before_destroy :destroy_stripe_subscription
+    before_save :check_for_upgrade
 
     STATUSES = ['trialing', 'active', 'past_due', 'canceled', 'unpaid']
 
@@ -91,6 +92,21 @@ module Tang
     # def nil_if_blank
     #   self.trial_end = nil if self.trial_end.blank?
     # end
+
+    def check_for_upgrade
+      if plan_id_changed?
+        old_plan_id = plan_id_was
+        old_plan = Plan.find(old_plan_id) if old_plan_id.present?
+        if old_plan.nil? || old_plan.order < plan.order
+          # upgrading
+          SubscriptionMailer.upgraded(self).deliver_now
+        else
+          # downgrading
+        end
+      elsif status_changed? && status == 'canceled'
+        # downgrading
+      end
+    end
 
     def update_stripe_subscription
       UpdateSubscription.call(self)

@@ -5,7 +5,8 @@
 
   <% if @next_plan.present? %>
     <div class="alert alert-info">
-      <h4 class="alert-heading">Upgrade to the <%= @next_plan.name %></h4>
+      <h4 class="alert-heading">Upgrade to the <%= @next_plan.name %> Plan</h4>
+      <p><%= @next_plan.description %></p>
       <% if current_customer.coupon.present? %>
         <p><del><%= plan_cost(@next_plan) %></del> <%= customer_plan_cost(current_customer, @next_plan) %></p>
       <% else %>
@@ -17,9 +18,9 @@
 
   <h4>Current plan</h4>
   <% if current_customer.coupon.present? %>
-    <p>You're currently paying <del><%= plan_cost(@subscription.plan) %></del> <%= customer_plan_cost(current_customer, @subscription.plan) %> on the <%= @subscription.plan.name %>.</p>
+    <p>You're currently paying <del><%= plan_cost(@subscription.plan) %></del> <%= customer_plan_cost(current_customer, @subscription.plan) %> on the <%= @subscription.plan.name %> Plan.</p>
   <% else %>
-    <p>You're currently paying <%= plan_cost(@subscription.plan) %> on the <%= @subscription.plan.name %>.</p>
+    <p>You're currently paying <%= plan_cost(@subscription.plan) %> on the <%= @subscription.plan.name %> Plan.</p>
   <% end %>
 
   <div>
@@ -42,13 +43,13 @@
     <h2>Plans</h2>
     <ul>
       <li>
-        <h3><%= Tang.free_plan_name %></h3>
+        <h3><%= Tang.free_plan_name %> Plan</h3>
         <h4>Free</h4>
         <%= link_to 'Cancel Plan', account_subscription_path, method: :delete, data: { confirm: 'Are you sure you want to cancel your current plan?' } %>
       </li>
       <% @plans.each do |plan| %>
         <li>
-          <h3><%= plan.name %></h3>
+          <h3><%= plan.name %> Plan</h3>
           <h4><%= plan_cost(plan) %></h4>
           <% if plan.order < @subscription.plan.order %>
             <% if current_customer.card.present? %>
@@ -70,11 +71,12 @@
     </ul>
   <% end %>
 
-<% else %>
+<% else # no subscription present %>
 
   <% if @next_plan.present? %>
     <div class="alert alert-info">
-      <h4 class="alert-heading">Upgrade to the <%= @next_plan.name %></h4>
+      <h4 class="alert-heading">Upgrade to the <%= @next_plan.name %> Plan</h4>
+      <p><%= @next_plan.description %></p>
       <p><%= plan_cost(@next_plan) %></p>
       <% if current_customer.card.present? %>
         <%= link_to 'Upgrade', account_subscription_path(subscription: { plan: @next_plan }), method: :post, class: 'btn btn-primary' %>
@@ -85,7 +87,7 @@
   <% end %>
 
   <h4>Current Plan</h4>
-  <p>You're currently on the <%= Tang.free_plan_name %>.</p>
+  <p>You're currently on the <%= Tang.free_plan_name %> Plan.</p>
 
   <div>
     <% if current_customer.card.present? %>
@@ -101,13 +103,13 @@
     <h2>Plans</h2>
     <ul>
       <li>
-        <h3><%= Tang.free_plan_name %></h3>
+        <h3><%= Tang.free_plan_name %> Plan</h3>
         <h4>Free</h4>
         <%= 'Current Plan' %>
       </li>
       <% @plans.each do |plan| %>
         <li>
-          <h3><%= plan.name %></h3>
+          <h3><%= plan.name %> Plan</h3>
           <h4><%= plan_cost(plan) %></h4>
           <% if current_customer.card.present? %>
             <%= link_to 'Upgrade', account_subscription_path(subscription: { plan: plan }), method: :post %>

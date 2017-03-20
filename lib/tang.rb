@@ -19,7 +19,7 @@ module Tang
     mattr_accessor :admin_layout
 
     self.default_currency = 'usd'
-    self.free_plan_name = 'Free Plan'
+    self.free_plan_name = 'Free'
     self.unauthorized_url = '/'
     self.admin_email = 'hello@tangapp.herokuapp.com'
     self.plan_inheritance = true

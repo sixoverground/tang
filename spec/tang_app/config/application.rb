@@ -38,6 +38,8 @@ module TangApp
 
     # config.middleware.use PDFKit::Middleware
     # config.middleware.use WickedPdf::Middleware
+
+    config.action_mailer.preview_path = File.expand_path('../../../../spec/mailers/previews', __FILE__)
   end
 end
 

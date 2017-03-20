@@ -11,7 +11,7 @@ customer = User.create(
 
 gold = Tang::Plan.create(
   stripe_id: 'gold',
-  name: 'Gold Plan',
+  name: 'Gold',
   amount: 2000,
   interval: 'month',
   highlight: true,
@@ -20,7 +20,7 @@ gold = Tang::Plan.create(
 
 diamond = Tang::Plan.create(
   stripe_id: 'diamond',
-  name: 'Diamond Plan',
+  name: 'Diamond',
   amount: 5000,
   interval: 'month',
   order: 2

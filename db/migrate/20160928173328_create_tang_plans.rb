@@ -12,6 +12,7 @@ class CreateTangPlans < ActiveRecord::Migration
       t.integer :order
       t.boolean :highlight, null: false, default: false
       t.text :features
+      t.text :description
 
       t.timestamps null: false
     end

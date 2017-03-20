@@ -2,8 +2,8 @@ module Tang
   class Invoice < ActiveRecord::Base
     belongs_to :subscription
     belongs_to :customer, class_name: Tang.customer_class.to_s
-    has_many :charges
-    has_many :invoice_items
+    has_many :charges, dependent: :destroy
+    has_many :invoice_items, dependent: :destroy
     belongs_to :coupon
 
     validates :customer, presence: true
@@ -50,10 +50,14 @@ module Tang
         i.tax = stripe_invoice.tax
         i.total = stripe_invoice.total
         i.amount_due = stripe_invoice.amount_due
+
+        # TODO: coupons should probably be hard coded
         if stripe_invoice.discount.present?
+          # coupon = Coupon.from_stripe(stripe_invoice.discount.coupon)
           coupon = Coupon.find_by(stripe_id: stripe_invoice.discount.coupon.id)
           i.coupon = coupon
         end
+      
       end
       return invoice
     end
