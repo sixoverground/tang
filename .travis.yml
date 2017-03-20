@@ -15,3 +15,5 @@ env:
 addons:
   code_climate:
     repo_token: 70f628f222463ae4c15e93290d92a1260d057d124c394b502779eda72db4948a
+dist: trusty
+sudo: required
