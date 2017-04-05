@@ -86,7 +86,9 @@ end
 Then(/^I should be an active customer$/) do
   @customer.reload
   period_end = @customer.subscription.period_end.change(usec: 0)
-  expect(@customer.active_until).to eq(period_end)
+  # expect(@customer.active_until).to eq(period_end)
+  difference = @customer.active_until - period_end
+  expect(difference.abs).to be <= 1 # difference of one second (allow for delay)
 end
 
 Then(/^I should receive a free trial period$/) do
