@@ -16,7 +16,7 @@ module Tang
       before_update :update_stripe_customer
       before_destroy :delete_stripe_customer
 
-      validates :stripe_id, uniqueness: true, allow_nil: true
+      validates :stripe_id, uniqueness: true, allow_nil: true, if: :stripe_id_changed?
       validates :account_balance, numericality: { only_integer: true }, allow_nil: true
 
       define_method :admin? do
@@ -49,7 +49,7 @@ module Tang
     end
 
     def subscription
-      self.subscriptions.where.not(status: :canceled).order(:created_at).last
+      @subscription ||= self.subscriptions.where.not(status: :canceled).order(:created_at).last
     end
 
     def generate_password
@@ -72,7 +72,9 @@ module Tang
         return true if self.subscription.plan.stripe_id == stripe_id
         if Tang.plan_inheritance
           plan = Plan.find_by(stripe_id: stripe_id)
-          return true if self.subscription.plan.order >= plan.order
+          if plan.present?
+            return true if self.subscription.plan.order >= plan.order
+          end
         end
       end
       return false
