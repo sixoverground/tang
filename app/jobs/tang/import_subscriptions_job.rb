@@ -3,7 +3,10 @@ module Tang
     queue_as :default
 
     def perform
-      # Do something later
+      # Make sure we don't email everyone
+      Subscription.skip_callback(:save, :before, :check_for_upgrade)
+
+      # Import all Stripe subscriptions
       Stripe::Subscription.list(status: 'all').each do |stripe_subscription|
         customer = Tang.customer_class.find_by(stripe_id: stripe_subscription.customer)
         plan = Plan.find_by(stripe_id: stripe_subscription.plan.id)
@@ -25,6 +28,9 @@ module Tang
           end
         end
       end
+
+      # All done, enable the mailer
+      Subscription.set_callback(:save, :before, :check_for_upgrade)
     end
   end
 end
