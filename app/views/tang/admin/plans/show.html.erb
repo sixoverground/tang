@@ -41,7 +41,7 @@
 <div class="card">
   <table class="table table-responsive card-text">
     <tbody>
-      <% @plan.subscriptions.each do |subscription| %>
+      <% @plan.subscriptions.where(status: [:trialing, :active, :past_due]).each do |subscription| %>
         <tr>
           <td><%= link_to subscription.customer.email, tang.admin_subscription_path(subscription) %></td>
           <td><%= subscription.status %></td>
