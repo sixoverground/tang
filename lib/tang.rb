@@ -17,6 +17,7 @@ module Tang
     mattr_accessor :plan_inheritance
     mattr_accessor :company_name
     mattr_accessor :admin_layout
+    mattr_accessor :pricing_layout
 
     self.default_currency = 'usd'
     self.free_plan_name = 'Free'
@@ -25,6 +26,7 @@ module Tang
     self.plan_inheritance = true
     self.company_name = 'Tang'
     self.admin_layout = 'application'
+    self.pricing_layout = 'application'
   end
 
   def self.setup #(&block)

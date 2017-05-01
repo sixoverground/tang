@@ -29,7 +29,7 @@
       <div class="pricing__price"><span class="pricing__currency"><%= number_to_currency(plan.amount / 100, format: '%u') %></span><%= number_to_currency(plan.amount / 100, format: '%n') %><span class="pricing__period">/<%= plan.interval %></span></div>
       <p class="pricing__sentence">plan sentence goes here</p>
       <ul class="pricing__feature-list">
-        <% (plan.features || '').split('\n').each do |feature| %>
+        <% (plan.features || '').split("\n").each do |feature| %>
           <li class="pricing__feature"><%= feature %></li>
         <% end %>
       </ul>

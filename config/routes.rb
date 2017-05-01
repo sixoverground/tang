@@ -29,5 +29,7 @@ Tang::Engine.routes.draw do
     resources :receipts, only: [:index, :show]
   end
 
+  # get 'pricing', to: 'plans#index'
+
   # get 'unauthorized', to: 'errors#unauthorized'
 end
