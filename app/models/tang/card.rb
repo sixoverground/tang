@@ -36,7 +36,7 @@ module Tang
     end
 
     def self.from_stripe(stripe_card, customer)
-      card = Card.find_or_create_by(stripe_id: stripe_card.id) do |c|
+      card = Card.find_or_initialize_by(stripe_id: stripe_card.id) do |c|
         c.customer = customer
         c.address_city = stripe_card.address_city
         c.address_country = stripe_card.address_country
@@ -57,6 +57,7 @@ module Tang
         c.name = stripe_card.name
         c.tokenization_method = stripe_card.tokenization_method
       end
+      card.save(validate: false) if card.new_record?
       return card
     end
   end
