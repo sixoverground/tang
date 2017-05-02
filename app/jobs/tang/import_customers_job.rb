@@ -8,7 +8,7 @@ module Tang
       stripe_customers.each do |stripe_customer|
         customer = Tang.customer_class.find_by(email: stripe_customer.email)
         if customer.present?
-          customer.stripe_id = stripe_customer.id
+          customer.stripe_id = stripe_customer.id if customer.stripe_id.nil?
           customer.coupon = Coupon.find_by(stripe_id: stripe_customer.discount.coupon.id) if stripe_customer.discount.present?
           customer.save
 

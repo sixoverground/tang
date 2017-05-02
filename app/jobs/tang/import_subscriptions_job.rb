@@ -15,16 +15,7 @@ module Tang
         plan = Plan.find_by(stripe_id: stripe_subscription.plan.id)
         puts "plan: #{plan.id}" if plan.present?
         if customer.present? && plan.present?
-          subscription = Subscription.find_or_create_by(stripe_id: stripe_subscription.id) do |s|
-            s.customer = customer
-            s.plan = plan
-            s.application_fee_percent = stripe_subscription.application_fee_percent
-            s.quantity = stripe_subscription.quantity
-            s.tax_percent = stripe_subscription.tax_percent
-            s.trial_end = stripe_subscription.trial_end
-            s.coupon = Coupon.find_by(stripe_id: stripe_subscription.discount.coupon.id) if stripe_subscription.discount.present?
-            s.status = stripe_subscription.status
-          end
+          subscription = Subscription.from_stripe(stripe_subscription, customer, plan)
           puts "tang subscription: #{subscription.id}"
 
           # Handle removed discounts
