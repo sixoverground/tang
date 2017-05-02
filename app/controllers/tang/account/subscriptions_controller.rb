@@ -35,6 +35,7 @@ module Tang
       )
 
       if @subscription.errors.blank?
+        flash[:upgrade] = 'true' if @subscription.upgraded
         redirect_to account_subscription_path, notice: 'Subscription was successfully created.'
       else
         render :new
@@ -48,6 +49,7 @@ module Tang
         plan
       )
       if @subscription.errors.blank?
+        flash[:upgrade] = 'true' if @subscription.upgraded
         redirect_to account_subscription_path, notice: 'Subscription was successfully changed.'
       else
         @plans = Plan.order(:order)

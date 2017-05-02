@@ -44,6 +44,7 @@ module Tang
     before_update :update_stripe_subscription
     # before_destroy :destroy_stripe_subscription
     before_save :check_for_upgrade
+    after_save :handle_upgrade
 
     STATUSES = ['trialing', 'active', 'past_due', 'canceled', 'unpaid']
 
@@ -91,6 +92,14 @@ module Tang
       @end_trial_now = val
     end
 
+    def upgraded
+      @upgraded || false
+    end
+
+    def upgraded=(val)
+      @upgraded = val
+    end
+
     def discount_for_plan(plan)
       amount_off = 0
       if self.coupon.percent_off.present?
@@ -113,12 +122,22 @@ module Tang
         old_plan = Plan.find(old_plan_id) if old_plan_id.present?
         if old_plan.nil? || old_plan.order < plan.order
           # upgrading
-          SubscriptionMailer.upgraded(self).deliver_now
+          self.upgraded = true
         else
           # downgrading
         end
       elsif status_changed? && status == 'canceled'
         # downgrading
+      end
+    end
+
+    def handle_upgrade
+      if self.upgraded
+        if Tang.delayed_email
+          SubscriptionMailer.upgraded(self).deliver_later
+        else
+          SubscriptionMailer.upgraded(self).deliver_now
+        end
       end
     end
 
