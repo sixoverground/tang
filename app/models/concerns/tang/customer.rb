@@ -13,7 +13,7 @@ module Tang
       has_many :charges, through: :invoices, class_name: 'Tang::Charge', dependent: :destroy
 
       before_save :nil_if_blank
-      before_update :update_stripe_customer
+      # before_update :update_stripe_customer
       before_destroy :delete_stripe_customer
 
       validates :stripe_id, uniqueness: true, allow_nil: true, if: :stripe_id_changed?

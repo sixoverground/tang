@@ -22,6 +22,7 @@ module Tang
     # PATCH/PUT /customers/1
     def update
       if @customer.update(customer_params)
+        UpdateCustomer.call(@customer)
         redirect_to admin_customer_path(@customer), notice: 'Customer was successfully updated.'
       else
         render :edit
