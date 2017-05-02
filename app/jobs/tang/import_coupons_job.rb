@@ -2,10 +2,15 @@ module Tang
   class ImportCouponsJob < ActiveJob::Base
     queue_as :default
 
-    def perform
+    def perform(starting_after = nil)
       # Do something later
-      Stripe::Coupon.list.each do |stripe_coupon|
+      stripe_coupons = Stripe::Coupon.list(limit: 100, starting_after: starting_after)
+      stripe_coupons.each do |stripe_coupon|
         Coupon.from_stripe(stripe_coupon)
+      end
+
+      if stripe_coupons.has_more
+        Tang::ImportCouponsJob.perform_now(stripe_coupons.data.last.id)
       end
     end
   end
