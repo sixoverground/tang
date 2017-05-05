@@ -25,10 +25,10 @@
     <% if @customer.account_balance.present? && @customer.account_balance != 0 %>
       <% if @customer.account_balance > 0 %>
         <dt>Unattempted charges:</dt>
-        <dd><%= number_to_currency(@customer.account_balance.to_f / 100) %></dd>
+        <dd><%= number_to_currency(@customer.account_balance.to_f / 100.0) %></dd>
       <% elsif @customer.account_balance < 0 %>
         <dt>Credit:</dt>
-        <dd><%= number_to_currency(@customer.account_balance.to_f / -100) %></dd>
+        <dd><%= number_to_currency(@customer.account_balance.to_f / -100.0) %></dd>
       <% end %>
     <% end %>
   </dl>
@@ -73,7 +73,7 @@
     <tbody>
       <% @customer.charges.each do |charge| %>
         <tr>
-          <td><%= link_to "#{number_to_currency(charge.amount / 100)} #{charge.currency.upcase}", admin_payment_path(charge) %></td>
+          <td><%= link_to "#{number_to_currency(charge.amount.to_f / 100.0)} #{charge.currency.upcase}", admin_payment_path(charge) %></td>
           <td><%= charge.stripe_id %></td>
           <td><%= charge.customer.email %></td>
           <td><%= charge.created_at.strftime('%Y/%m/%d %H:%M:%S') %></td>
@@ -106,7 +106,7 @@
     <tbody>
       <% @customer.invoices.each do |invoice| %>
         <tr>
-          <td><%= link_to number_to_currency(invoice.total / 100), admin_invoice_path(invoice) %></td>
+          <td><%= link_to number_to_currency(invoice.total.to_f / 100.0), admin_invoice_path(invoice) %></td>
           <td><%= invoice.status %></td>
           <td><%= invoice.customer.stripe_id %></td>
           <% if invoice.subscription.present? %>

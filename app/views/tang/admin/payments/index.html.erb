@@ -17,7 +17,7 @@
       <tr>
         <td>
           <%= link_to tang.admin_payment_path(payment) do %>
-            <%= number_to_currency(payment.amount / 100) %>
+            <%= number_to_currency(payment.amount.to_f / 100.0) %>
             <%= payment.currency.upcase %>
           <% end %>
         </td>

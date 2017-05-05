@@ -1,5 +1,5 @@
 <h1>Receipt</h1>
-<p><%= number_to_currency(@receipt.amount / 100) %> at <%= Tang.company_name %></p>
+<p><%= number_to_currency(@receipt.amount.to_f / 100.0) %> at <%= Tang.company_name %></p>
 <hr>
 <p class="clearfix">
   <span class="float-xs-left"><%= @receipt.card_brand %> <%= @receipt.card_last4 %></span>
@@ -23,7 +23,7 @@
           <td>Subscription to <%= invoice_item.plan.name %></td>
         <% end %>
         <td><%= invoice_item.period_start.strftime('%B %d, %Y') %> to <%= invoice_item.period_end.strftime('%B %d, %Y') %></td>
-        <td><%= number_to_currency(invoice_item.amount / 100) %></td>
+        <td><%= number_to_currency(invoice_item.amount.to_f / 100.0) %></td>
       </tr>
     <% end %>
   </tbody>
@@ -32,12 +32,12 @@
       <tr>
         <th>Subtotal</th>
         <td>&nbsp;</td>
-        <td><%= number_to_currency(@receipt.invoice.subtotal / 100) %></td>
+        <td><%= number_to_currency(@receipt.invoice.subtotal.to_f / 100.0) %></td>
       </tr>
       <tr>
         <th>Coupons</th>
         <td>&nbsp;</td>
-        <td><%= number_to_currency(@receipt.invoice.coupon.discount(@receipt.invoice.subtotal) / 100) %></td>
+        <td><%= number_to_currency(@receipt.invoice.coupon.discount(@receipt.invoice.subtotal) / 100.0) %></td>
       </tr>
       <tr>
         <th>&nbsp;</th>
@@ -48,12 +48,12 @@
     <tr>
       <th>Total</th>
       <td>&nbsp;</td>
-      <td><%= number_to_currency(@receipt.invoice.total / 100) %></td>
+      <td><%= number_to_currency(@receipt.invoice.total.to_f / 100.0) %></td>
     </tr>
     <tr>
       <th>Paid</th>
       <th>&nbsp;</th>
-      <th><%= number_to_currency(@receipt.amount / 100) %></th>
+      <th><%= number_to_currency(@receipt.amount.to_f / 100.0) %></th>
     </tr>
   </tfoot>
 </table>

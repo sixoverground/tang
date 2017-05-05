@@ -1,6 +1,6 @@
 <%= render 'header' %>
 
-<h1><%= number_to_currency(@payment.amount / 100) %> <%= @payment.currency.upcase %></h1>
+<h1><%= number_to_currency(@payment.amount.to_f / 100.0) %> <%= @payment.currency.upcase %></h1>
 <h2><%= @payment.stripe_id %></h2>
 <hr>
 
@@ -13,7 +13,7 @@
     <dd><%= @payment.stripe_id %></dd>
 
     <dt>Amount:</dt>
-    <dd><%= number_to_currency(@payment.amount / 100) %> <%= @payment.currency.upcase %></dd>
+    <dd><%= number_to_currency(@payment.amount.to_f / 100.0) %> <%= @payment.currency.upcase %></dd>
 
     <dt>Date:</dt>
     <dd><%= @payment.created.strftime('%Y/%m/%d %H:%M:%S') %></dd>

@@ -46,7 +46,7 @@
     <tbody>
       <tr>
         <td>Subtotal:</td>
-        <th><%= number_to_currency(@invoice.subtotal / 100) %></th>
+        <th><%= number_to_currency(@invoice.subtotal.to_f / 100.0) %></th>
       </tr>
       <% if @invoice.coupon.present? %>
         <tr>
@@ -56,12 +56,12 @@
       <% end %>
       <tr>
         <td>Total:</td>
-        <th><%= number_to_currency(@invoice.total / 100) %></th>
+        <th><%= number_to_currency(@invoice.total.to_f / 100.0) %></th>
       </tr>
       <% if @invoice.charge.present? %>
         <tr>
           <th>Amount paid:</th>
-          <th><%= number_to_currency(@invoice.charge.amount / 100) %></th>
+          <th><%= number_to_currency(@invoice.charge.amount.to_f / 100.0) %></th>
         </tr>
       <% end %>
     </tbody>
@@ -81,7 +81,7 @@
     <tbody>
       <% @invoice.invoice_items.each do |invoice_item| %>
         <tr>
-          <td><%= number_to_currency(invoice_item.amount / 100) %></td>
+          <td><%= number_to_currency(invoice_item.amount.to_f / 100.0) %></td>
           <% if invoice_item.description.present? %>
             <td><%= invoice_item.description %></td>
           <% else %>

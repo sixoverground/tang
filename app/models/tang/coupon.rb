@@ -61,7 +61,7 @@ module Tang
     def discount(amount)
       subtotal = amount
       if self.percent_off.present?
-        subtotal = amount.to_f * (self.percent_off.to_f / 100)
+        subtotal = amount.to_f * (self.percent_off.to_f / 100.0)
       elsif self.amount_off.present?
         subtotal = self.amount_off
       end

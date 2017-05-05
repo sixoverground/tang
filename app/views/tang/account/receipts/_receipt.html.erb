@@ -3,6 +3,6 @@
     <%= link_to 'View', tang.account_receipt_path(charge), class: 'btn btn-secondary' %>
     <%= link_to 'Download receipt as PDF', tang.account_receipt_path(charge, format: :pdf), class: 'btn btn-secondary' %>
   </div>
-  <h5 class="list-group-item-heading"><%= number_to_currency(charge.amount / 100) %></h5>
+  <h5 class="list-group-item-heading"><%= number_to_currency(charge.amount.to_f / 100.0) %></h5>
   <p class="list-group-item-text">Paid on <%= charge.created_at.strftime('%b %d, %Y') %></p>
 </li>

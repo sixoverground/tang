@@ -8,7 +8,7 @@
       <% @results.each do |result| %>
         <% if result.is_a? Tang::Charge %>
           <tr>
-            <td><%= link_to "#{number_to_currency(result.amount / 100)} #{result.currency.upcase}", admin_payment_path(result) %></td>
+            <td><%= link_to "#{number_to_currency(result.amount.to_f / 100.0)} #{result.currency.upcase}", admin_payment_path(result) %></td>
             <td><%= result.stripe_id %></td>
             <td><%= "****#{result.card_last4}" %></td>
             <td><%= result.created_at.strftime('%Y/%m/%d %H:%M:%S') %></td>
@@ -30,14 +30,14 @@
           </tr>
         <% elsif result.is_a? Tang::Invoice %>
           <tr>
-            <td><%= link_to number_to_currency(result.total / 100), admin_invoice_path(result) %></td>
+            <td><%= link_to number_to_currency(result.total.to_f / 100.0), admin_invoice_path(result) %></td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td><%= result.created_at.strftime('%Y/%m/%d %H:%M:%S') %></td>
           </tr>
         <% elsif result.is_a? Tang::InvoiceItem %>
           <tr>
-            <td><%= link_to number_to_currency(result.amount / 100), admin_invoice_path(result.invoice) %></td>
+            <td><%= link_to number_to_currency(result.amount.to_f / 100.0), admin_invoice_path(result.invoice) %></td>
             <td><%= result.description %></td>
             <td><%= result.invoice.stripe_id %></td>
             <td><%= result.created_at.strftime('%Y/%m/%d %H:%M:%S') %></td>
