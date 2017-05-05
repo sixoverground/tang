@@ -9,7 +9,7 @@ module Tang
 
       # update subscription
       subscription = Subscription.find_by(stripe_id: stripe_invoice.subscription)
-      subscription.fail!
+      subscription.fail! if !subscription.past_due?
 
       return charge
     end
