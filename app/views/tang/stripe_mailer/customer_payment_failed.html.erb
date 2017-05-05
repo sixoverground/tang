@@ -2,7 +2,7 @@
 
 <p>It looks like a payment has failed for your latest invoice. We will attempt to process your payment again in a few days, but you may want to take a look at the <%= link_to 'payment method', tang.account_card_url %> for your account.</p>
 
-<p>We attempted to renew your <%= @charge.invoice.subscription.plan.name %> subscription for <%= number_to_currency(@charge.amount / 100) %> on <%= @charge.created_at.strftime('%B %d, %Y') %>.</p>
+<p>We attempted to renew your <%= @charge.invoice.subscription.plan.name %> subscription for <%= number_to_currency(@charge.amount.to_f / 100.0) %> on <%= @charge.created_at.strftime('%B %d, %Y') %>.</p>
 
 <p>Of course, if you ever want to cancel your plan, you can downgrade to the free plan at any time.</p>
 
