@@ -51,7 +51,7 @@
       <% if @invoice.coupon.present? %>
         <tr>
           <td><%= "#{@invoice.coupon.stripe_id} (#{coupon_off(@invoice.coupon)})" %></td>
-          <th><%= @invoice.coupon.discount(@invoice.subtotal) %></th>
+          <th><%= number_to_currency(@invoice.coupon.discount(@invoice.subtotal) / 100.0) %></th>
         </tr>
       <% end %>
       <tr>
