@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161115201106) do
+ActiveRecord::Schema.define(version: 20170523122759) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -151,6 +151,7 @@ ActiveRecord::Schema.define(version: 20161115201106) do
     t.text     "description"
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
+    t.integer  "group"
   end
 
   create_table "tang_stripe_webhooks", force: :cascade do |t|

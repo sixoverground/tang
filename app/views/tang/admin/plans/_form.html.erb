@@ -79,6 +79,11 @@
     <%= f.text_area :description, class: 'form-control' %>
   </div>
 
+  <div class="form-group">
+    <%= f.label :group %>
+    <%= f.number_field :group, min: 0, step: 1, class: 'form-control' %>
+  </div>
+
   <%= link_to 'Cancel', url, class: 'btn btn-secondary' %>
   <%= f.submit class: 'btn btn-primary' %>
 <% end %>

@@ -39,38 +39,6 @@
 
   <br>
 
-  <% if false %>
-    <h2>Plans</h2>
-    <ul>
-      <li>
-        <h3><%= Tang.free_plan_name %> Plan</h3>
-        <h4>Free</h4>
-        <%= link_to 'Cancel Plan', account_subscription_path, method: :delete, data: { confirm: 'Are you sure you want to cancel your current plan?' } %>
-      </li>
-      <% @plans.each do |plan| %>
-        <li>
-          <h3><%= plan.name %> Plan</h3>
-          <h4><%= plan_cost(plan) %></h4>
-          <% if plan.order < @subscription.plan.order %>
-            <% if current_customer.card.present? %>
-              <%= link_to 'Downgrade', account_subscription_path(subscription: { plan: plan }), method: :patch %>
-            <% else %>
-              <%= link_to 'Downgrade', edit_account_subscription_path(plan: plan) %>
-            <% end %>
-          <% elsif plan.order > @subscription.plan.order %>
-            <% if current_customer.card.present? %>
-              <%= link_to 'Upgrade', account_subscription_path(subscription: { plan: plan }), method: :patch %>
-            <% else %>
-              <%= link_to 'Upgrade', edit_account_subscription_path(plan: plan) %>
-            <% end %>
-          <% else %>
-            <%= 'Current Plan' %>
-          <% end %>
-        </li>
-      <% end %>
-    </ul>
-  <% end %>
-
 <% else # no subscription present %>
 
   <% if @next_plan.present? %>

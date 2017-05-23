@@ -5,7 +5,7 @@ module Tang
     before_action :set_subscription, only: [:show, :edit, :update, :destroy]
 
     def show
-      @plans = Plan.order(:order)
+      @plans = Plan.where(interval: 'month').order(:order)
 
       if @subscription.present? && @subscription.plan.present?
         @next_plan = @plans.where("tang_plans.order > ?", @subscription.plan.order).first

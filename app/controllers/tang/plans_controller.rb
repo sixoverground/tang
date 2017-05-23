@@ -5,7 +5,7 @@ module Tang
     layout Tang.pricing_layout
 
     def index
-      @plans = Plan.all.order(:order)
+      @plans = Plan.where(interval: 'month').order(:order)
     end
   end
 end
