@@ -44,19 +44,24 @@ module Tang
 
     def update
       plan = Plan.find(params[:plan])
-      @subscription = ChangeSubscription.call(
-        @subscription,
-        plan
-      )
-      if @subscription.errors.blank?
-        flash[:upgrade] = 'true' if @subscription.upgraded
-        redirect_to account_subscription_path, notice: 'Subscription was successfully changed.'
+      if @subscription.present?
+        @subscription = ChangeSubscription.call(
+          @subscription,
+          plan
+        )
+        if @subscription.errors.blank?
+          flash[:upgrade] = 'true' if @subscription.upgraded
+          redirect_to account_subscription_path, notice: 'Subscription was successfully changed.'
+        else
+          @plans = Plan.order(:order)
+          @next_plan = @plans.where("tang_plans.order > ?", @subscription.plan.order).first
+          @previous_plan = @plans.where("tang_plans.order < ?", @subscription.plan.order).last
+          render :show
+        end
       else
-        @plans = Plan.order(:order)
-        @next_plan = @plans.where("tang_plans.order > ?", @subscription.plan.order).first
-        @previous_plan = @plans.where("tang_plans.order < ?", @subscription.plan.order).last
-        render :show
+        redirect_to account_subscription_path, notice: 'Sorry, we could not find your subscription.'
       end
+      
     end
 
     def destroy
