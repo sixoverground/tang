@@ -5,8 +5,11 @@ module Tang
       invoice = Invoice.from_stripe(stripe_invoice)
 
       # create charge
-      stripe_charge = Stripe::Charge.retrieve(stripe_invoice.charge)
-      charge = Charge.from_stripe(stripe_charge, invoice)
+      charge = nil
+      if stripe_invoice.charge.present?
+        stripe_charge = Stripe::Charge.retrieve(stripe_invoice.charge)
+        charge = Charge.from_stripe(stripe_charge, invoice)
+      end
 
       # update subscription
       stripe_subscription = Stripe::Subscription.retrieve(stripe_invoice.subscription)

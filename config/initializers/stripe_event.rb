@@ -46,12 +46,14 @@ StripeEvent.configure do |events|
   events.subscribe('invoice.payment_succeeded') do |event|
     invoice = event.data.object
     charge = Tang::PayInvoice.call(invoice)
-    if Tang.delayed_email
-      Tang::StripeMailer.customer_payment_succeeded(charge).deliver_later
-      Tang::StripeMailer.admin_payment_succeeded(charge).deliver_later
-    else
-      Tang::StripeMailer.customer_payment_succeeded(charge).deliver_now
-      Tang::StripeMailer.admin_payment_succeeded(charge).deliver_now
+    if charge.present?
+      if Tang.delayed_email
+        Tang::StripeMailer.customer_payment_succeeded(charge).deliver_later
+        Tang::StripeMailer.admin_payment_succeeded(charge).deliver_later
+      else
+        Tang::StripeMailer.customer_payment_succeeded(charge).deliver_now
+        Tang::StripeMailer.admin_payment_succeeded(charge).deliver_now
+      end
     end
   end
 
@@ -60,12 +62,14 @@ StripeEvent.configure do |events|
   events.subscribe('invoice.payment_failed') do |event|
     invoice = event.data.object
     charge = Tang::FailInvoice.call(invoice)
-    if Tang.delayed_email
-      Tang::StripeMailer.customer_payment_failed(charge).deliver_later
-      Tang::StripeMailer.admin_payment_failed(charge).deliver_later
-    else
-      Tang::StripeMailer.customer_payment_failed(charge).deliver_now
-      Tang::StripeMailer.admin_payment_failed(charge).deliver_now
+    if charge.present?
+      if Tang.delayed_email
+        Tang::StripeMailer.customer_payment_failed(charge).deliver_later
+        Tang::StripeMailer.admin_payment_failed(charge).deliver_later
+      else
+        Tang::StripeMailer.customer_payment_failed(charge).deliver_now
+        Tang::StripeMailer.admin_payment_failed(charge).deliver_now
+      end
     end
   end
 
