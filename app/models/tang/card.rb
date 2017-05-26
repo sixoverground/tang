@@ -9,7 +9,8 @@ module Tang
                       length: { is: 4 }
     validates :exp_month, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 12 }
     validates :exp_year, numericality: { only_integer: true, greater_than_or_equal_to: Date.today.year - 30.years, less_than_or_equal_to: Date.today.year + 70.years }
-    validates :address_zip, format: { with: /\A\d{5}(-\d{4})?\z/ }
+    # validates :address_zip, format: { with: /\A\d{5}(-\d{4})?\z/ }
+    validates :address_zip, presence: true
 
     def update_from_stripe(stripe_card)
       self.stripe_id = stripe_card.id
