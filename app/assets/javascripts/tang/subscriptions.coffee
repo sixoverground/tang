@@ -25,10 +25,10 @@ $ ->
       alert('Please enter a valid CVC code.')
       return false
 
-    zip = $('input[data-stripe="address_zip"]').val()
-    if zip.trim().length < 5
-      alert('Please enter a valid zip code.')
-      return false
+    # zip = $('input[data-stripe="address_zip"]').val()
+    # if zip.trim().length < 5
+    #   alert('Please enter a valid zip code.')
+    #   return false
 
     $form.find('.submit').prop('disabled', true)
     if window.testStripeToken?
@@ -41,7 +41,7 @@ $ ->
   $('input[data-stripe="number"]').payment('formatCardNumber')
   $('input[data-stripe="exp"]').payment('formatCardExpiry')
   $('input[data-stripe="cvc"]').payment('formatCardCVC')
-  $('input[data-stripe="address_zip"]').payment('restrictNumeric')
+  # $('input[data-stripe="address_zip"]').payment('restrictNumeric')
 
 stripeResponseHandler = (status, response) ->
   $form = $('#payment-form')
