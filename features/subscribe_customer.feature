@@ -14,7 +14,7 @@ Feature: Subscribe a customer to a plan
       | Card number        | "4242424242424242" |
       | Expiration (MM/YY) | 12/17              |
       | CVC                | 123                |
-      | Zip code           | 90210              |
+      | Postal code        | 90210              |
     Then I should see a subscription created success message
     And I should see my current subscription
     And I should be an active customer

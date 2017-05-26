@@ -48,7 +48,7 @@ When(/^I complete the payment form with:$/) do |table|
   number = find_field('Card number').value
   exp = find_field('Expiration (MM/YY)').value
   cvc = find_field('CVC').value
-  address_zip = find_field('Zip code').value
+  address_zip = find_field('Postal code').value
 
   if number == '4000 0000 0000 0002'
     StripeMock.prepare_card_error(:card_declined, :new_customer)

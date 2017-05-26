@@ -14,6 +14,6 @@ Feature: Begin a subscription with a free trial period
       | Card number        | "4242424242424242" |
       | Expiration (MM/YY) | 12/17              |
       | CVC                | 123                |
-      | Zip code           | 90210              |
+      | Postal code        | 90210              |
     Then I should receive a free trial period
 

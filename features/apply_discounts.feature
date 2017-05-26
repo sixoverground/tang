@@ -16,7 +16,7 @@ Feature: Apply a discount to a customer
       | Card number        | "4242424242424242" |
       | Expiration (MM/YY) | 12/17              |
       | CVC                | 123                |
-      | Zip code           | 90210              |
+      | Postal code        | 90210              |
     Then I should see a reduced charge amount
 
   Scenario: A customer enters a discount after subscribing
