@@ -35,8 +35,8 @@
       </ul>
 
       <% if user_signed_in? %>
-        <% if current_user.subscription.present? %>
-          <% if current_user.subscription.group == plan.group %>
+        <% if current_user.subscription.present? && current_user.subscription.plan.present? %>
+          <% if current_user.subscription.plan.group == plan.group %>
             <% # current plan %>
             <%= button_tag 'Selected', class: 'pricing__action', disabled: 'disabled' %>
           <% else %>
