@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170523122759) do
+ActiveRecord::Schema.define(version: 20170701162853) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20170523122759) do
   end
 
   add_index "tang_cards", ["customer_id"], name: "index_tang_cards_on_customer_id", using: :btree
+  add_index "tang_cards", ["stripe_id"], name: "index_tang_cards_on_stripe_id", unique: true, using: :btree
 
   create_table "tang_charges", force: :cascade do |t|
     t.string   "stripe_id"
@@ -79,6 +80,7 @@ ActiveRecord::Schema.define(version: 20170523122759) do
   end
 
   add_index "tang_charges", ["invoice_id"], name: "index_tang_charges_on_invoice_id", using: :btree
+  add_index "tang_charges", ["stripe_id"], name: "index_tang_charges_on_stripe_id", unique: true, using: :btree
 
   create_table "tang_coupons", force: :cascade do |t|
     t.string   "stripe_id"
@@ -93,6 +95,8 @@ ActiveRecord::Schema.define(version: 20170523122759) do
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
   end
+
+  add_index "tang_coupons", ["stripe_id"], name: "index_tang_coupons_on_stripe_id", unique: true, using: :btree
 
   create_table "tang_invoice_items", force: :cascade do |t|
     t.string   "stripe_id"
@@ -112,6 +116,7 @@ ActiveRecord::Schema.define(version: 20170523122759) do
 
   add_index "tang_invoice_items", ["invoice_id"], name: "index_tang_invoice_items_on_invoice_id", using: :btree
   add_index "tang_invoice_items", ["plan_id"], name: "index_tang_invoice_items_on_plan_id", using: :btree
+  add_index "tang_invoice_items", ["stripe_id"], name: "index_tang_invoice_items_on_stripe_id", unique: true, using: :btree
   add_index "tang_invoice_items", ["subscription_id"], name: "index_tang_invoice_items_on_subscription_id", using: :btree
 
   create_table "tang_invoices", force: :cascade do |t|
@@ -134,6 +139,7 @@ ActiveRecord::Schema.define(version: 20170523122759) do
 
   add_index "tang_invoices", ["coupon_id"], name: "index_tang_invoices_on_coupon_id", using: :btree
   add_index "tang_invoices", ["customer_id"], name: "index_tang_invoices_on_customer_id", using: :btree
+  add_index "tang_invoices", ["stripe_id"], name: "index_tang_invoices_on_stripe_id", unique: true, using: :btree
   add_index "tang_invoices", ["subscription_id"], name: "index_tang_invoices_on_subscription_id", using: :btree
 
   create_table "tang_plans", force: :cascade do |t|
@@ -154,11 +160,15 @@ ActiveRecord::Schema.define(version: 20170523122759) do
     t.integer  "group"
   end
 
+  add_index "tang_plans", ["stripe_id"], name: "index_tang_plans_on_stripe_id", unique: true, using: :btree
+
   create_table "tang_stripe_webhooks", force: :cascade do |t|
     t.string   "stripe_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_index "tang_stripe_webhooks", ["stripe_id"], name: "index_tang_stripe_webhooks_on_stripe_id", unique: true, using: :btree
 
   create_table "tang_subscriptions", force: :cascade do |t|
     t.string   "stripe_id"
@@ -178,6 +188,7 @@ ActiveRecord::Schema.define(version: 20170523122759) do
   add_index "tang_subscriptions", ["coupon_id"], name: "index_tang_subscriptions_on_coupon_id", using: :btree
   add_index "tang_subscriptions", ["customer_id"], name: "index_tang_subscriptions_on_customer_id", using: :btree
   add_index "tang_subscriptions", ["plan_id"], name: "index_tang_subscriptions_on_plan_id", using: :btree
+  add_index "tang_subscriptions", ["stripe_id"], name: "index_tang_subscriptions_on_stripe_id", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
@@ -215,6 +226,7 @@ ActiveRecord::Schema.define(version: 20170523122759) do
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["stripe_id"], name: "index_users_on_stripe_id", unique: true, using: :btree
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
 
   create_table "versions", force: :cascade do |t|
