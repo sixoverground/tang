@@ -15,7 +15,7 @@ module Tang
       end
 
       event :fail do
-        transitions from: :active, to: :past_due
+        transitions from: [:trialing, :active], to: :past_due
       end
 
       event :cancel, after: :cancel_stripe_subscription do

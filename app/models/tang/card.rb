@@ -33,7 +33,7 @@ module Tang
       self.last4 = stripe_card.last4
       self.name = stripe_card.name
       # self.tokenization_method = stripe_card.tokenization_method
-      self.save!
+      self.save(validate: false)
     end
 
     def self.from_stripe(stripe_card, customer)
