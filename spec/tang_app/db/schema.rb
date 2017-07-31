@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170701162853) do
+ActiveRecord::Schema.define(version: 20170731010913) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -186,6 +186,7 @@ ActiveRecord::Schema.define(version: 20170701162853) do
   end
 
   add_index "tang_subscriptions", ["coupon_id"], name: "index_tang_subscriptions_on_coupon_id", using: :btree
+  add_index "tang_subscriptions", ["customer_id", "created_at"], name: "index_tang_subscriptions_on_customer_and_created_at_and_status", where: "((status)::text <> 'canceled'::text)", using: :btree
   add_index "tang_subscriptions", ["customer_id"], name: "index_tang_subscriptions_on_customer_id", using: :btree
   add_index "tang_subscriptions", ["plan_id"], name: "index_tang_subscriptions_on_plan_id", using: :btree
   add_index "tang_subscriptions", ["stripe_id"], name: "index_tang_subscriptions_on_stripe_id", unique: true, using: :btree
