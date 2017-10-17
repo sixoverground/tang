@@ -22,7 +22,6 @@ module Tang
       define_method :admin? do
         self.respond_to?(:role) && self.role == 'admin'
       end
-
     end
 
     def self.table_name
@@ -42,6 +41,10 @@ module Tang
             distinct
       end
       return customers
+    end
+
+    def stripe_enabled
+      true
     end
 
     def card

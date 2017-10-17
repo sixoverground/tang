@@ -5,17 +5,21 @@ module Tang
     before_action :set_subscription, only: [:show, :edit, :update, :destroy]
 
     def show
-      @plans = Plan.where(interval: 'month').order(:order)
+      if current_customer.stripe_enabled
+        @plans = Plan.where(interval: 'month').order(:order)
 
-      if @subscription.present? && @subscription.plan.present?
-        @next_plan = @plans.where("tang_plans.order > ?", @subscription.plan.order).first
-        @previous_plan = @plans.where("tang_plans.order < ?", @subscription.plan.order).last
+        if @subscription.present? && @subscription.plan.present?
+          @next_plan = @plans.where("tang_plans.order > ?", @subscription.plan.order).first
+          @previous_plan = @plans.where("tang_plans.order < ?", @subscription.plan.order).last
+        else
+          @next_plan = @plans.first
+          @previous_plan = nil
+        end
+
+        @receipts = current_customer.charges.order(created: :desc).limit(5)
       else
-        @next_plan = @plans.first
-        @previous_plan = nil
+        render :not_stripe
       end
-
-      @receipts = current_customer.charges.order(created: :desc).limit(5)
     end
 
     def new
