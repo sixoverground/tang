@@ -5,7 +5,7 @@ module Tang
     before_action :set_subscription, only: [:show, :edit, :update, :destroy]
 
     def show
-      if current_customer.stripe_enabled
+      if current_customer.stripe_enabled?
         @plans = Plan.where(interval: 'month').order(:order)
 
         if @subscription.present? && @subscription.plan.present?
