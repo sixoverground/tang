@@ -12,7 +12,7 @@ Feature: Begin a subscription with a free trial period
     And I complete the payment form with:
       | Cardholder name    | John               |
       | Card number        | "4242424242424242" |
-      | Expiration (MM/YY) | 12/17              |
+      | Expiration (MM/YY) | 12/18              |
       | CVC                | 123                |
       | Postal code        | 90210              |
     Then I should receive a free trial period
