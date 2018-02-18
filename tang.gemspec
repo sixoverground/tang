@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
   # s.add_dependency 'therubyracer', '~> 0.12'
   s.add_dependency 'mini_racer', '~> 0.1'
   s.add_dependency 'uglifier', '~> 2.0'
-  s.add_dependency 'bootstrap', '~> 4.0.0.alpha5'
+  s.add_dependency 'bootstrap', '~> 4.0.0'
   s.add_dependency 'rails-assets-tether', '>= 1.1'
   s.add_dependency 'aasm', '~> 4.11'
   s.add_dependency 'wicked_pdf', '~> 1.0'
