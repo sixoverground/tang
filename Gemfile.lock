@@ -10,7 +10,7 @@ PATH
       paper_trail (~> 4.2)
       rails (~> 4.2)
       rails-assets-tether (>= 1.1)
-      sass-rails (~> 5.0)
+      sass-rails (~> 5.0.4)
       stripe (~> 1.55)
       stripe_event (~> 1.5)
       uglifier (~> 2.0)
@@ -324,4 +324,4 @@ RUBY VERSION
    ruby 2.3.1p112
 
 BUNDLED WITH
-   1.15.2
+   1.16.1
