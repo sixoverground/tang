@@ -5,7 +5,8 @@ Given(/^a coupon exists$/) do
     percent_off: 50,
     duration: 'once'
   )
-  @coupon ||= FactoryGirl.create(:coupon, stripe_id: @stripe_coupon.id)
+  puts "created stripe coupon #{@stripe_coupon.id}"
+  @coupon ||= FactoryBot.create(:coupon, stripe_id: @stripe_coupon.id)
 end
 
 # When
@@ -13,6 +14,7 @@ end
 When(/^I enter a coupon code$/) do
   visit tang.account_subscription_path
   fill_in 'Coupon', with: @coupon.stripe_id
+  puts "fill in coupon #{@coupon.stripe_id}"
   click_on 'Apply discount'
 end
 
@@ -31,6 +33,7 @@ end
 # Then
 
 Then(/^I should see a reduced charge amount$/) do
+  # puts "#{page}"
   # expect(page).to have_content "You're currently paying $20.00/month $10.00/month on the Amazing Gold Plan."
   # expect(page).to have_content "#{@coupon.stripe_id}"
   expect(@customer.subscription.coupon).to eq(@coupon)

@@ -1,9 +1,9 @@
 def create_customer_attributes
-  @customer_attributes ||= FactoryGirl.attributes_for(:customer, password_confirmation: 'password')
+  @customer_attributes ||= FactoryBot.attributes_for(:customer, password_confirmation: 'password')
 end
 
 def create_admin_attributes
-  @admin_attributes ||= FactoryGirl.attributes_for(:admin, password_confirmation: 'password')
+  @admin_attributes ||= FactoryBot.attributes_for(:admin, password_confirmation: 'password')
 end
 
 # def find_customer
@@ -31,13 +31,13 @@ end
 def create_customer
   create_customer_attributes
   delete_customer
-  @customer ||= FactoryGirl.create(:customer, @customer_attributes)
+  @customer ||= FactoryBot.create(:customer, @customer_attributes)
 end
 
 def create_admin
   create_admin_attributes
   delete_admin
-  @admin ||= FactoryGirl.create(:admin, @admin_attributes)
+  @admin ||= FactoryBot.create(:admin, @admin_attributes)
 end
 
 def delete_customer

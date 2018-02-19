@@ -10,9 +10,9 @@ ENV["RAILS_ROOT"] ||= File.dirname(__FILE__) + "../../../spec/tang_app"
 
 require 'cucumber/rails'
 
-require 'factory_girl_rails'
-FactoryGirl.definition_file_paths << File.dirname(__FILE__) + "../../../spec/factories"
-FactoryGirl.find_definitions
+require 'factory_bot_rails'
+FactoryBot.definition_file_paths << File.dirname(__FILE__) + "../../../spec/factories"
+FactoryBot.find_definitions
 
 require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
@@ -55,10 +55,6 @@ end
 #     # as Cucumber::Rails::Database.javascript_strategy overrides
 #     # this setting.
 #     DatabaseCleaner.strategy = :truncation
-#   end
-#
-#   Before('~@no-txn', '~@selenium', '~@culerity', '~@celerity', '~@javascript') do
-#     DatabaseCleaner.strategy = :transaction
 #   end
 #
 

@@ -7,9 +7,9 @@ module Tang
     after { StripeMock.stop }
   
     it "creates a new charge for an invoice" do
-      plan = FactoryGirl.create(:plan)
+      plan = FactoryBot.create(:plan)
 
-      customer = FactoryGirl.create(:customer)
+      customer = FactoryBot.create(:customer)
 
       stripe_customer = Stripe::Customer.create({
         email: customer.email,
@@ -20,9 +20,9 @@ module Tang
       customer.stripe_id = stripe_customer.id
       customer.save
 
-      subscription = FactoryGirl.create(:subscription, plan: plan, customer: customer, stripe_id: stripe_customer.subscriptions.first.id)
+      subscription = FactoryBot.create(:subscription, plan: plan, customer: customer, stripe_id: stripe_customer.subscriptions.first.id)
 
-      invoice = FactoryGirl.create(:invoice, subscription: subscription, customer: customer)
+      invoice = FactoryBot.create(:invoice, subscription: subscription, customer: customer)
 
       stripe_charge = Stripe::Charge.create(amount: 100, currency: 'usd', customer: stripe_customer.id)
 

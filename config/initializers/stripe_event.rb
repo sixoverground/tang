@@ -1,4 +1,4 @@
-StripeEvent.event_retriever = lambda do |params|
+StripeEvent.event_filter = lambda do |params|
   # return nil if Rails.env.production? && !params[:livemode]
   return nil if Tang::StripeWebhook.exists?(stripe_id: params[:id])
   Tang::StripeWebhook.create!(stripe_id: params[:id])

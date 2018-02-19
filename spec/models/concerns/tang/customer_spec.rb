@@ -7,27 +7,27 @@ module Tang
     after { StripeMock.stop }
     
     it "responds to admin?" do
-      customer = FactoryGirl.create(:customer)
-      admin = FactoryGirl.create(:admin)
+      customer = FactoryBot.create(:customer)
+      admin = FactoryBot.create(:admin)
       expect(customer.admin?).to be_falsey
       expect(admin.admin?).to be_truthy
     end
 
     it "generates a password" do
-      customer = FactoryGirl.build(:customer, password: nil)
+      customer = FactoryBot.build(:customer, password: nil)
       customer.generate_password
       expect(customer.password).to_not be_nil
     end
 
     it "is subscribed to a plan" do
-      subscription = FactoryGirl.create(:subscription)
+      subscription = FactoryBot.create(:subscription)
       stripe_id = subscription.plan.stripe_id
       expect(subscription.customer.subscribed_to?(stripe_id)).to be_truthy
     end
 
     it "is not subscribed to a plan" do
-      subscription = FactoryGirl.create(:subscription)
-      plan = FactoryGirl.create(:premium_plan)
+      subscription = FactoryBot.create(:subscription)
+      plan = FactoryBot.create(:premium_plan)
       stripe_id = plan.stripe_id
       expect(subscription.customer.subscribed_to?(stripe_id)).to be_falsey
     end

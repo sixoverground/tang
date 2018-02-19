@@ -7,7 +7,7 @@ module Tang
 
     describe 'admin_dispute_created' do
       it 'should send a dispute notification' do
-        charge = FactoryGirl.create(:charge)
+        charge = FactoryBot.create(:charge)
 
         event = StripeMock.mock_webhook_event('charge.dispute.created', charge: charge.stripe_id)
 
@@ -21,7 +21,7 @@ module Tang
 
     describe 'admin_payment_succeeded' do
       it 'should send a payment succeeded notification' do
-        charge = FactoryGirl.create(:charge)
+        charge = FactoryBot.create(:charge)
         mail = StripeMailer.admin_payment_succeeded(charge)
         expect(mail.subject).to eq "Woo! Charge succeeded!"
       end
@@ -29,7 +29,7 @@ module Tang
 
     describe 'customer_payment_succeeded' do
       it 'should send a receipt' do
-        charge = FactoryGirl.create(:charge)
+        charge = FactoryBot.create(:charge)
         mail = StripeMailer.customer_payment_succeeded(charge)
         expect(mail.subject).to eq "Thank you!"
       end

@@ -13,27 +13,27 @@ RSpec.describe Tang::ApplicationHelper, :type => :helper do
 
   describe "#plan_cost" do
     it "returns a formatted cost" do
-      plan = FactoryGirl.build(:plan)
+      plan = FactoryBot.build(:plan)
       expect(helper.plan_cost(plan)).to eq('$20.00/month')
     end
   end
 
   describe "#customer_plan_cost" do
     it "returns a formatted cost" do
-      subscription = FactoryGirl.build(:subscription)
+      subscription = FactoryBot.build(:subscription)
       expect(helper.customer_plan_cost(subscription.customer, subscription.plan)).to eq('$20.00/month')
     end
 
     it "returns a percent off discounted formatted cost" do
-      subscription = FactoryGirl.build(:subscription)
-      coupon = FactoryGirl.build(:coupon)
+      subscription = FactoryBot.build(:subscription)
+      coupon = FactoryBot.build(:coupon)
       subscription.customer.coupon = coupon
       expect(helper.customer_plan_cost(subscription.customer, subscription.plan)).to eq('$10.00/month')
     end
 
     it "returns an amount off discounted formatted cost" do
-      subscription = FactoryGirl.build(:subscription)
-      coupon = FactoryGirl.build(:amount_off_coupon)
+      subscription = FactoryBot.build(:subscription)
+      coupon = FactoryBot.build(:amount_off_coupon)
       subscription.customer.coupon = coupon
       expect(helper.customer_plan_cost(subscription.customer, subscription.plan)).to eq('$15.00/month')
     end
@@ -41,7 +41,7 @@ RSpec.describe Tang::ApplicationHelper, :type => :helper do
 
   describe "#current_customer" do
     it "returns the current customer" do
-      customer = FactoryGirl.build(:customer)
+      customer = FactoryBot.build(:customer)
       assign(:current_customer, customer)
       expect(helper.current_customer).to eq(customer)
     end
@@ -49,12 +49,12 @@ RSpec.describe Tang::ApplicationHelper, :type => :helper do
 
   describe "#coupon_off" do
     it "returns a formatted percent off discount" do
-      coupon = FactoryGirl.build(:coupon)
+      coupon = FactoryBot.build(:coupon)
       expect(helper.coupon_off(coupon)).to eq("50\% off")
     end
 
     it "returns a formatted amount off discount" do
-      coupon = FactoryGirl.build(:amount_off_coupon)
+      coupon = FactoryBot.build(:amount_off_coupon)
       expect(helper.coupon_off(coupon)).to eq('$5.00 off')
     end
   end

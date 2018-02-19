@@ -13,21 +13,21 @@ gemspec
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
 
-ruby '2.3.1'
+ruby '2.3.3'
 
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 # gem 'jquery-rails'
 gem 'puma'
-gem 'pg', '~> 1.0'
+gem 'pg', '0.20'
 gem 'rails_12factor', group: :production
 gem 'devise'
 
 group :test do
   gem 'rspec-rails'
-  gem 'cucumber-rails', require: false
-  gem 'factory_girl_rails'
+  gem 'cucumber-rails', '~>1.4.4', require: false
+  gem 'factory_bot_rails'
   gem 'database_cleaner'
-  gem 'stripe-ruby-mock', '~> 2.3.1', require: 'stripe_mock'
+  gem 'stripe-ruby-mock', '~> 2.5.2', require: 'stripe_mock'
   gem 'poltergeist'
   gem "codeclimate-test-reporter", require: nil
 end

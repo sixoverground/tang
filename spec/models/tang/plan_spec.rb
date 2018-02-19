@@ -7,47 +7,47 @@ module Tang
     after { StripeMock.stop }
 
     it "has a valid factory" do
-      expect(FactoryGirl.create(:plan)).to be_valid
+      expect(FactoryBot.create(:plan)).to be_valid
     end
 
     it "is invalid without a stripe id" do
-      expect(FactoryGirl.build(:plan, stripe_id: nil)).to be_invalid
+      expect(FactoryBot.build(:plan, stripe_id: nil)).to be_invalid
     end
 
     it "is invalid without a name" do
-      expect(FactoryGirl.build(:plan, name: nil)).to be_invalid
+      expect(FactoryBot.build(:plan, name: nil)).to be_invalid
     end
 
     it "is invalid without an amount" do
-      expect(FactoryGirl.build(:plan, amount: nil)).to be_invalid
+      expect(FactoryBot.build(:plan, amount: nil)).to be_invalid
     end
 
     it "is invalid without a currency" do
-      expect(FactoryGirl.build(:plan, currency: nil)).to be_invalid
+      expect(FactoryBot.build(:plan, currency: nil)).to be_invalid
     end
 
     it "is invalid without an interval" do
-      expect(FactoryGirl.build(:plan, interval: nil)).to be_invalid
+      expect(FactoryBot.build(:plan, interval: nil)).to be_invalid
     end
 
     it "calculates period days for a day interval" do
       now = Time.now
-      expect(FactoryGirl.build(:plan, interval: 'day').period_days_from(now)).to eq(now + 1.day)
+      expect(FactoryBot.build(:plan, interval: 'day').period_days_from(now)).to eq(now + 1.day)
     end
 
     it "calculates period days for a week interval" do
       now = Time.now
-      expect(FactoryGirl.build(:plan, interval: 'week').period_days_from(now)).to eq(now + 1.week)
+      expect(FactoryBot.build(:plan, interval: 'week').period_days_from(now)).to eq(now + 1.week)
     end
 
     it "calculates period days for a month interval" do
       now = Time.now
-      expect(FactoryGirl.build(:plan, interval: 'month').period_days_from(now)).to eq(now + 1.month)
+      expect(FactoryBot.build(:plan, interval: 'month').period_days_from(now)).to eq(now + 1.month)
     end
 
     it "calculates period days for a year interval" do
       now = Time.now
-      expect(FactoryGirl.build(:plan, interval: 'year').period_days_from(now)).to eq(now + 1.year)
+      expect(FactoryBot.build(:plan, interval: 'year').period_days_from(now)).to eq(now + 1.year)
     end
   end
 end

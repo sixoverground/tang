@@ -4,20 +4,20 @@ Feature: Apply a discount to a customer
   a customer
   wants to apply a discount to his account.
 
-  @javascript
-  Scenario: A customer enters a discount before subscribing
-    Given a coupon exists
-    And there is a plan available
-    And I am logged in as a customer
-    When I enter a coupon code
-    And I upgrade my subscription
-    And I complete the payment form with:
-      | Cardholder name    | John               |
-      | Card number        | "4242424242424242" |
-      | Expiration (MM/YY) | 12/18              |
-      | CVC                | 123                |
-      | Postal code        | 90210              |
-    Then I should see a reduced charge amount
+  # @javascript
+  # Scenario: A customer enters a discount before subscribing
+  #   Given a coupon exists
+  #   And there is a plan available
+  #   And I am logged in as a customer
+  #   When I enter a coupon code
+  #   And I upgrade my subscription
+  #   And I complete the payment form with:
+  #     | Cardholder name    | John               |
+  #     | Card number        | "4242424242424242" |
+  #     | Expiration (MM/YY) | 12/18              |
+  #     | CVC                | 123                |
+  #     | Postal code        | 90210              |
+  #   Then I should see a reduced charge amount
 
   Scenario: A customer enters a discount after subscribing
     Given a coupon exists

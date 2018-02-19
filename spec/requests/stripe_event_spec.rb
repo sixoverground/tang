@@ -5,12 +5,18 @@ describe 'Stripe Events', type: :request do
   before { StripeMock.start }
   after { StripeMock.stop }
 
+  def bypass_event_signature(payload)
+    event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
+    expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
+  end
+
   describe 'charge.dispute.created' do
     it 'mocks a stripe webhook' do
-      charge = FactoryGirl.create(:charge)
+      charge = FactoryBot.create(:charge)
 
       event = StripeMock.mock_webhook_event('charge.dispute.created', charge: charge.stripe_id)
       dispute_object = event.data.object
+      bypass_event_signature(event.to_json)
 
       deliveries = Tang::StripeMailer.deliveries.length
 
@@ -28,6 +34,7 @@ describe 'Stripe Events', type: :request do
     it 'mocks a stripe webhook' do
       event = StripeMock.mock_webhook_event('charge.dispute.updated')
       dispute_object = event.data.object
+      bypass_event_signature(event.to_json)
 
       post '/stripe_event', id: event.id
       expect(response.code).to eq('200')
@@ -41,6 +48,7 @@ describe 'Stripe Events', type: :request do
     it 'mocks a stripe webhook' do
       event = StripeMock.mock_webhook_event('charge.dispute.closed')
       dispute_object = event.data.object
+      bypass_event_signature(event.to_json)
 
       post '/stripe_event', id: event.id
       expect(response.code).to eq('200')
@@ -54,6 +62,7 @@ describe 'Stripe Events', type: :request do
     it 'mocks a stripe webhook' do
       event = StripeMock.mock_webhook_event('invoice.created')
       invoice_object = event.data.object
+      bypass_event_signature(event.to_json)
 
       post '/stripe_event', id: event.id
       expect(response.code).to eq('200')
@@ -65,19 +74,19 @@ describe 'Stripe Events', type: :request do
   describe 'invoice.payment_succeeded' do
     it 'mocks a stripe webhook' do
       stripe_plan = stripe_helper.create_plan
-      customer = FactoryGirl.create(:customer)
+      customer = FactoryBot.create(:customer)
       stripe_customer = Stripe::Customer.create(
         source: stripe_helper.generate_card_token,
         plan: stripe_plan.id,
         email: customer.email
       )
-      subscription = FactoryGirl.create(:subscription, stripe_id: stripe_customer.subscriptions.first.id)
+      subscription = FactoryBot.create(:subscription, stripe_id: stripe_customer.subscriptions.first.id)
       stripe_charge = Stripe::Charge.create(
         amount: stripe_plan.amount, 
         currency: stripe_plan.currency,
         customer: stripe_customer.id
       )
-      invoice = FactoryGirl.create(:invoice, subscription: subscription)
+      invoice = FactoryBot.create(:invoice, subscription: subscription)
       
       event = StripeMock.mock_webhook_event('invoice.payment_succeeded', 
         subscription: subscription.stripe_id,
@@ -85,6 +94,7 @@ describe 'Stripe Events', type: :request do
         id: invoice.stripe_id
       )
       invoice_object = event.data.object
+      bypass_event_signature(event.to_json)
 
       deliveries = Tang::StripeMailer.deliveries.length
 
@@ -102,19 +112,19 @@ describe 'Stripe Events', type: :request do
   describe 'invoice.payment_failed' do
     it 'mocks a stripe webhook' do
       stripe_plan = stripe_helper.create_plan
-      customer = FactoryGirl.create(:customer)
+      customer = FactoryBot.create(:customer)
       stripe_customer = Stripe::Customer.create(
         source: stripe_helper.generate_card_token,
         plan: stripe_plan.id,
         email: customer.email
       )
-      subscription = FactoryGirl.create(:subscription, stripe_id: stripe_customer.subscriptions.first.id)
+      subscription = FactoryBot.create(:subscription, stripe_id: stripe_customer.subscriptions.first.id)
       stripe_charge = Stripe::Charge.create(
         amount: stripe_plan.amount, 
         currency: stripe_plan.currency,
         customer: stripe_customer.id
       )
-      invoice = FactoryGirl.create(:invoice, subscription: subscription)
+      invoice = FactoryBot.create(:invoice, subscription: subscription)
 
       event = StripeMock.mock_webhook_event('invoice.payment_failed',
         subscription: subscription.stripe_id,
@@ -122,6 +132,7 @@ describe 'Stripe Events', type: :request do
         id: invoice.stripe_id
       )
       invoice_object = event.data.object
+      bypass_event_signature(event.to_json)
 
       deliveries = Tang::StripeMailer.deliveries.length
 
@@ -138,10 +149,11 @@ describe 'Stripe Events', type: :request do
 
   describe 'customer.subscription.deleted' do
     it 'mocks a stripe webhook' do
-      subscription = FactoryGirl.create(:subscription)
+      subscription = FactoryBot.create(:subscription)
 
       event = StripeMock.mock_webhook_event('customer.subscription.deleted', id: subscription.stripe_id)
       subscription_object = event.data.object
+      bypass_event_signature(event.to_json)
 
       post '/stripe_event', id: event.id
       expect(response.code).to eq('200')

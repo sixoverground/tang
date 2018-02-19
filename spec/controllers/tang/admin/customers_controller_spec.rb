@@ -31,12 +31,12 @@ module Tang
     # adjust the attributes here as well.
     let(:valid_attributes) {
       # skip("Add a hash of attributes valid for your model")
-      FactoryGirl.attributes_for(:customer, stripe_id: SecureRandom.uuid)
+      FactoryBot.attributes_for(:customer, stripe_id: SecureRandom.uuid)
     }
 
     let(:invalid_attributes) {
       # skip("Add a hash of attributes invalid for your model")
-      FactoryGirl.attributes_for(:customer, email: nil)
+      FactoryBot.attributes_for(:customer, email: nil)
     }
 
     # This should return the minimal set of values that should be in the session
@@ -46,7 +46,7 @@ module Tang
 
     describe "GET #index" do
       it "assigns all customers as @customers" do
-        customer = FactoryGirl.create(:customer, valid_attributes)
+        customer = FactoryBot.create(:customer, valid_attributes)
         get :index, params: {}, session: valid_session
         expect(assigns(:customers)).to eq([customer])
       end
@@ -72,7 +72,7 @@ module Tang
       context "with valid params" do
         let(:new_attributes) {
           # skip("Add a hash of attributes valid for your model")
-          FactoryGirl.attributes_for(:customer, email: 'new@email.com')
+          FactoryBot.attributes_for(:customer, email: 'new@email.com')
         }
 
         it "updates the requested customer" do

@@ -1,8 +1,8 @@
 Given(/^a customer is subscribed to a plan$/) do
   @stripe_plan ||= StripeMock.create_test_helper.create_plan
-  @plan ||= FactoryGirl.create(:plan, stripe_id: @stripe_plan.id)
+  @plan ||= FactoryBot.create(:plan, stripe_id: @stripe_plan.id)
   create_customer
-  @subscription ||= FactoryGirl.create(:subscription, plan: @plan, customer: @customer)
+  @subscription ||= FactoryBot.create(:subscription, plan: @plan, customer: @customer)
   # steps( %Q(
   #   Given I am logged in as a customer
   #   And there is a plan available
