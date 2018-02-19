@@ -24,7 +24,7 @@ gem 'devise'
 
 group :test do
   gem 'rspec-rails'
-  gem 'cucumber-rails', '~>1.4.4', require: false
+  gem 'cucumber-rails', '~> 1.4.4', require: false
   gem 'factory_bot_rails'
   gem 'database_cleaner'
   gem 'stripe-ruby-mock', '~> 2.5.2', require: 'stripe_mock'
