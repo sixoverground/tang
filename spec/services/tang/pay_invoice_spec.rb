@@ -38,7 +38,7 @@ module Tang
       expect(charge.invoice.id).to eq invoice.id
 
       customer.reload
-      expected_end_time = Time.now.utc.change(usec: 0) + 1.month
+      expected_end_time = Time.now.utc.change(usec: 0) + 1.month + 1.day
       difference = customer.active_until - expected_end_time
       expect(difference.abs).to be <= 1 # difference of one second (allow for delay)
     end

@@ -27,7 +27,7 @@ module Tang
 
     def customer_payment_failed(charge)
       @charge = charge
-      if @receipt.customer.present?
+      if @charge.customer.present?
         mail(to: @charge.customer.email, subject: "Oops! Your payment could not be processed.")
       end
     end
