@@ -20,12 +20,16 @@ module Tang
 
     def customer_payment_succeeded(charge)
       @receipt = charge
-      mail(to: @receipt.customer.email, subject: "Thank you!")
+      if @receipt.customer.present?
+        mail(to: @receipt.customer.email, subject: "Thank you!")
+      end
     end
 
     def customer_payment_failed(charge)
       @charge = charge
-      mail(to: @charge.customer.email, subject: "Oops! Your payment could not be processed.")
+      if @receipt.customer.present?
+        mail(to: @charge.customer.email, subject: "Oops! Your payment could not be processed.")
+      end
     end
 
   end

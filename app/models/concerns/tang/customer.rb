@@ -72,7 +72,6 @@ module Tang
 
     # NOTE: May be causing memory bloat
     def subscribed_to?(stripe_id)
-      logger.debug "subscribed_to? #{stripe_id}"
       if self.subscription.present? && self.subscription.plan.present?
         return true if self.subscription.plan.stripe_id == stripe_id
         if Tang.plan_inheritance
