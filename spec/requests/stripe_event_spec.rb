@@ -15,6 +15,7 @@ describe 'Stripe Events', type: :request do
       charge = FactoryBot.create(:charge)
 
       event = StripeMock.mock_webhook_event('charge.dispute.created', charge: charge.stripe_id)
+      puts "EVENT: #{event}"
       dispute_object = event.data.object
       bypass_event_signature(event.to_json)
 
