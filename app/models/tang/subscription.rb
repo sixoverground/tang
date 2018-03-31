@@ -71,7 +71,11 @@ module Tang
     end
 
     def period_end
-      plan.period_days_from(period_start)
+      invoice = invoices.last
+      if invoice.present?
+        return invoice.period_end
+      end
+      return plan.period_days_from(period_start)
     end
 
     def quantity

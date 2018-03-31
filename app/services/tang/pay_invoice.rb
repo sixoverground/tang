@@ -12,7 +12,7 @@ module Tang
       end
 
       # update subscription
-      stripe_subscription = Stripe::Subscription.retrieve(stripe_invoice.subscription)
+      stripe_subscription = Stripe::Subscription.retrieve(stripe_invoice.subscription)      
       subscription = Subscription.find_by(stripe_id: stripe_invoice.subscription)
 
       # update discount

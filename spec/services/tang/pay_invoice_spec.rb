@@ -23,7 +23,6 @@ module Tang
       subscription = FactoryBot.create(:subscription, plan: plan, customer: customer, stripe_id: stripe_customer.subscriptions.first.id)
 
       invoice = FactoryBot.create(:invoice, subscription: subscription, customer: customer)
-
       stripe_charge = Stripe::Charge.create(amount: 100, currency: 'usd', customer: stripe_customer.id)
 
       event = StripeMock.mock_webhook_event('invoice.payment_succeeded', id: invoice.stripe_id, subscription: subscription.stripe_id, charge: stripe_charge.id)
@@ -38,9 +37,9 @@ module Tang
       expect(charge.invoice.id).to eq invoice.id
 
       customer.reload
-      expected_end_time = Time.now.utc.change(usec: 0) + 1.month + 1.day
+      expected_end_time = subscription.period_end
       difference = customer.active_until - expected_end_time
-      expect(difference.abs).to be <= 1 # difference of one second (allow for delay)
+      expect(difference.abs).to be <= 1.day # difference of one day (allow for delay)
     end
   end
 end

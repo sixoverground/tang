@@ -69,7 +69,7 @@ FactoryBot.define do
     subscription
     date Time.now
     period_start Time.now
-    period_end Time.now + 30.days
+    period_end Time.now + 1.month
     # amount_due 1000
     # subtotal 1000
     # tax 0
