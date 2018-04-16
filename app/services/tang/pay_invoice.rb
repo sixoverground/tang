@@ -15,14 +15,16 @@ module Tang
       stripe_subscription = Stripe::Subscription.retrieve(stripe_invoice.subscription)      
       subscription = Subscription.find_by(stripe_id: stripe_invoice.subscription)
 
-      # update discount
-      if stripe_subscription.discount.nil?
-        subscription.update(coupon: nil, coupon_start: nil)
-      end
+      if subscription.present?
+        # update discount
+        if stripe_subscription.discount.nil?
+          subscription.update(coupon: nil, coupon_start: nil)
+        end
 
-      # update customer active until
-      customer = subscription.customer
-      customer.update_subscription_end(stripe_subscription)
+        # update customer active until
+        customer = subscription.customer
+        customer.update_subscription_end(stripe_subscription)
+      end
 
       return charge
     end
