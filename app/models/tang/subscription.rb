@@ -125,13 +125,8 @@ module Tang
         old_plan_id = plan_id_was
         old_plan = Plan.find(old_plan_id) if old_plan_id.present?
         if old_plan.nil? || old_plan.order < plan.order
-          # upgrading
           self.upgraded = true
-        else
-          # downgrading
         end
-      elsif status_changed? && status == 'canceled'
-        # downgrading
       end
     end
 

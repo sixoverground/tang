@@ -50,13 +50,13 @@ module Tang
         c.brand = stripe_card.brand
         c.country = stripe_card.country
         c.cvc_check = stripe_card.cvc_check
-        c.dynamic_last4 = stripe_card.dynamic_last4
+        # c.dynamic_last4 = stripe_card.dynamic_last4
         c.exp_month = stripe_card.exp_month
         c.exp_year = stripe_card.exp_year
         c.funding = stripe_card.funding
         c.last4 = stripe_card.last4
         c.name = stripe_card.name
-        c.tokenization_method = stripe_card.tokenization_method
+        # c.tokenization_method = stripe_card.tokenization_method
       end
       card.save(validate: false) if card.new_record?
       return card

@@ -1,11 +1,25 @@
 class CreateTang < ActiveRecord::Migration
   def change
+    create_stripe_webhooks
+    create_plans
+    create_coupons
+    create_customers
+    create_subscriptions
+    create_cards
+    create_invoices
+    create_invoice_items
+    create_charges
+  end
+
+  def create_stripe_webhooks
     create_table :tang_stripe_webhooks do |t|
       t.string :stripe_id
 
       t.timestamps null: false
     end
+  end
 
+  def create_plans
     create_table :tang_plans do |t|
       t.string :stripe_id
       t.integer :amount
@@ -21,7 +35,9 @@ class CreateTang < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+  end
 
+  def create_coupons
     create_table :tang_coupons do |t|
       t.string :stripe_id
       t.string :duration
@@ -35,7 +51,9 @@ class CreateTang < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+  end
 
+  def create_customers
     add_column Tang.customer_class.to_s.downcase.pluralize, :stripe_id, :string
     add_column Tang.customer_class.to_s.downcase.pluralize, :account_balance, :integer
     add_column Tang.customer_class.to_s.downcase.pluralize, :business_vat_id, :string
@@ -46,7 +64,9 @@ class CreateTang < ActiveRecord::Migration
     add_column Tang.customer_class.to_s.downcase.pluralize, :coupon_id, :integer, index: true, foreign_key: true
     add_column Tang.customer_class.to_s.downcase.pluralize, :coupon_start, :timestamp
     add_column Tang.customer_class.to_s.downcase.pluralize, :subscription_coupon_id, :integer, index: true, foreign_key: true
+  end
 
+  def create_subscriptions
     create_table :tang_subscriptions do |t|
       t.string :stripe_id
       t.integer :customer_id, index: true
@@ -64,7 +84,9 @@ class CreateTang < ActiveRecord::Migration
       
       t.timestamps null: false
     end
+  end
 
+  def create_cards
     create_table :tang_cards do |t|
       t.integer :customer_id, index: true
 
@@ -92,7 +114,9 @@ class CreateTang < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+  end
 
+  def create_invoices
     create_table :tang_invoices do |t|
       t.string :stripe_id
       t.integer :subscription_id, index: true, foreign_key: true
@@ -111,7 +135,9 @@ class CreateTang < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+  end
 
+  def create_invoice_items
     create_table :tang_invoice_items do |t|
       t.string :stripe_id
       t.integer :amount
@@ -127,7 +153,9 @@ class CreateTang < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+  end
 
+  def create_charges
     create_table :tang_charges do |t|
       t.string :stripe_id
       t.integer :amount

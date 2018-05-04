@@ -76,9 +76,7 @@ module Tang
         return true if self.subscription.plan.stripe_id == stripe_id
         if Tang.plan_inheritance
           plan = Plan.find_by(stripe_id: stripe_id)
-          if plan.present?
-            return true if self.subscription.plan.order >= plan.order
-          end
+          return true if plan.present? && self.subscription.plan.order >= plan.order
         end
       end
       return false

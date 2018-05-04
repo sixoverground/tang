@@ -5,21 +5,21 @@ module Tang
     before_action :set_subscription, only: [:show, :edit, :update, :destroy]
 
     def show
-      if current_customer.stripe_enabled?
-        @plans = Plan.where(interval: 'month').order(:order)
-
-        if @subscription.present? && @subscription.plan.present?
-          @next_plan = @plans.where("tang_plans.order > ?", @subscription.plan.order).first
-          @previous_plan = @plans.where("tang_plans.order < ?", @subscription.plan.order).last
-        else
-          @next_plan = @plans.first
-          @previous_plan = nil
-        end
-
-        @receipts = current_customer.charges.order(created: :desc).limit(5)
-      else
-        render :not_stripe
+      if !current_customer.stripe_enabled?
+        render :not_stripe and return
       end
+
+      @plans = Plan.where(interval: 'month').order(:order)
+
+      if @subscription.present? && @subscription.plan.present?
+        @next_plan = @plans.where("tang_plans.order > ?", @subscription.plan.order).first
+        @previous_plan = @plans.where("tang_plans.order < ?", @subscription.plan.order).last
+      else
+        @next_plan = @plans.first
+        @previous_plan = nil
+      end
+
+      @receipts = current_customer.charges.order(created: :desc).limit(5)
     end
 
     def new
@@ -47,25 +47,24 @@ module Tang
     end
 
     def update
-      plan = Plan.find(params[:plan])
-      if @subscription.present?
-        @subscription = ChangeSubscription.call(
-          @subscription,
-          plan
-        )
-        if @subscription.errors.blank?
-          flash[:upgrade] = 'true' if @subscription.upgraded
-          redirect_to account_subscription_path, notice: 'Subscription was successfully changed.'
-        else
-          @plans = Plan.order(:order)
-          @next_plan = @plans.where("tang_plans.order > ?", @subscription.plan.order).first
-          @previous_plan = @plans.where("tang_plans.order < ?", @subscription.plan.order).last
-          render :show
-        end
-      else
-        redirect_to account_subscription_path, notice: 'Sorry, we could not find your subscription.'
+      if @subscription.nil?
+        redirect_to account_subscription_path, notice: 'Sorry, we could not find your subscription.' and return
       end
-      
+
+      plan = Plan.find(params[:plan])
+      @subscription = ChangeSubscription.call(
+        @subscription,
+        plan
+      )
+      if @subscription.errors.blank?
+        flash[:upgrade] = 'true' if @subscription.upgraded
+        redirect_to account_subscription_path, notice: 'Subscription was successfully changed.'
+      else
+        @plans = Plan.order(:order)
+        @next_plan = @plans.where("tang_plans.order > ?", @subscription.plan.order).first
+        @previous_plan = @plans.where("tang_plans.order < ?", @subscription.plan.order).last
+        render :show
+      end
     end
 
     def destroy

@@ -13,16 +13,11 @@ module Tang
           customer.save
 
           # import card
-          if stripe_customer.default_source.present?
-            stripe_card = stripe_customer.sources.retrieve(stripe_customer.default_source)
-            Card.from_stripe(stripe_card, customer)
-          end
+          Card.from_stripe(stripe_customer.sources.retrieve(stripe_customer.default_source), customer) if stripe_customer.default_source.present?
         end
       end
 
-      if stripe_customers.has_more
-        Tang::ImportCustomersJob.perform_now(stripe_customers.data.last.id)
-      end
+      Tang::ImportCustomersJob.perform_now(stripe_customers.data.last.id) if stripe_customers.has_more
     end
   end
 end
