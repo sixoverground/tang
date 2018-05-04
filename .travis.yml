@@ -25,8 +25,8 @@ before_install:
   - "if [ $(phantomjs --version) != '2.1.1' ]; then tar -xvf $PWD/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -C $PWD/travis_phantomjs; fi"
   - "phantomjs --version"
 env:
-  - STRIPE_PUBLISHABLE_KEY=pk_test_ufmXOx2149BsFX2Hf6i8zTTL
   global:
+    - STRIPE_PUBLISHABLE_KEY=pk_test_ufmXOx2149BsFX2Hf6i8zTTL
     - CC_TEST_REPORTER_ID=70f628f222463ae4c15e93290d92a1260d057d124c394b502779eda72db4948a
 addons:
   code_climate:
