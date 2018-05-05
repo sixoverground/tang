@@ -8,13 +8,13 @@ body, p, ol, ul, td {
 
 pre {
   background-color: #eee;
-  padding: 10px;
   font-size: 11px;
+  padding: 10px;
 }
 
 a { color: #000; }
 a:visited { color: #666; }
-a:hover { color: #fff; background-color:#000; }
+a:hover { background-color:#000; color: #fff; }
 
 .field, .actions {
   margin-bottom: 10px;
@@ -25,18 +25,18 @@ a:hover { color: #fff; background-color:#000; }
 }
 
 .field_with_errors {
-  padding: 2px;
   background-color: red;
   display: table;
+  padding: 2px;
 }
 
 #error_explanation {
-  width: 450px;
+  background-color: #f0f0f0;
   border: 2px solid red;
+  margin-bottom: 20px;
   padding: 7px;
   padding-bottom: 0;
-  margin-bottom: 20px;
-  background-color: #f0f0f0;
+  width: 450px;
 }
 
 /*

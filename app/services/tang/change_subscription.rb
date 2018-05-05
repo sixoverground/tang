@@ -1,10 +1,8 @@
 module Tang
   class ChangeSubscription
     def self.call(subscription, plan)
-      if !subscription.valid?
-        return subscription
-      end
-
+      return subscription if !subscription.valid?
+        
       begin
         stripe_sub = Stripe::Subscription.retrieve(subscription.stripe_id)
         stripe_sub.plan = plan.stripe_id

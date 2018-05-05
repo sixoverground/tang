@@ -4,8 +4,7 @@ module Tang
       subscription = Subscription.new(
         plan: plan, 
         customer: customer, 
-        coupon: customer.subscription_coupon #,
-        # status: 'active'
+        coupon: customer.subscription_coupon
       )
       return subscription if plan.nil? || customer.nil?
 
@@ -22,20 +21,16 @@ module Tang
         # Subscribe
         stripe_sub = create_stripe_subscription(customer, plan)
 
-        # Remove temporary coupon
-        customer.subscription_coupon = nil
-
         # Save the subscription
         subscription.stripe_id = stripe_sub.id
         subscription.trial_end = DateTime.strptime(stripe_sub.trial_end.to_s, '%s') if stripe_sub.trial_end.present?
         subscription.activate!
 
-        # Save subscription data to customer
-        customer.update_subscription_end(stripe_sub)
-
         # Save the payment method
         stripe_card = stripe_customer.sources.retrieve(stripe_customer.default_source)
-        customer.update_card_from_stripe(stripe_card)
+
+        # Finalize customer with subscription and payment method
+        finalize_customer(customer, stripe_sub, stripe_card)
 
       rescue Stripe::StripeError => e
         subscription.errors[:base] << e.message
@@ -83,6 +78,15 @@ module Tang
         )
       end
       return stripe_sub
+    end
+
+    def self.finalize_customer(customer, stripe_sub, stripe_card)
+      # Remove temporary coupon
+      customer.subscription_coupon = nil
+      # Save subscription data to customer
+      customer.update_subscription_end(stripe_sub)
+      # Save the payment method
+      customer.update_card_from_stripe(stripe_card)
     end
   end
 end

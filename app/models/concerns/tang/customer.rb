@@ -72,14 +72,19 @@ module Tang
 
     # NOTE: May be causing memory bloat
     def subscribed_to?(stripe_id)
-      if self.subscription.present? && self.subscription.plan.present?
-        return true if self.subscription.plan.stripe_id == stripe_id
+      if self.plan.present?
+        return true if self.plan.stripe_id == stripe_id
         if Tang.plan_inheritance
-          plan = Plan.find_by(stripe_id: stripe_id)
-          return true if plan.present? && self.subscription.plan.order >= plan.order
+          other_plan = Plan.find_by(stripe_id: stripe_id)
+          return true if other_plan.present? && self.plan.order >= other_plan.order
         end
       end
       return false
+    end
+
+    def plan
+      return self.subscription.plan if self.subscription.present?
+      return nil
     end
 
     def coupon_end

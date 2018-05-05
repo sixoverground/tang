@@ -51,7 +51,6 @@ module Tang
         i.total = stripe_invoice.total
         i.amount_due = stripe_invoice.amount_due
 
-        # TODO: coupons should probably be hard coded
         if stripe_invoice.discount.present?
           # coupon = Coupon.from_stripe(stripe_invoice.discount.coupon)
           coupon = Coupon.find_by(stripe_id: stripe_invoice.discount.coupon.id)

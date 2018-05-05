@@ -122,11 +122,8 @@ module Tang
 
     def check_for_upgrade
       if plan_id_changed?
-        old_plan_id = plan_id_was
-        old_plan = Plan.find(old_plan_id) if old_plan_id.present?
-        if old_plan.nil? || old_plan.order < plan.order
-          self.upgraded = true
-        end
+        old_plan = Plan.find(plan_id_was) if plan_id_was.present?
+        self.upgraded = true if old_plan.nil? || old_plan.order < plan.order
       end
     end
 
