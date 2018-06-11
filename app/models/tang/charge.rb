@@ -80,26 +80,30 @@ module Tang
     end
 
     def set_source(source)
-      self.card_stripe_id = source.id
-      self.card_address_city = source.address_city
-      self.card_address_country = source.address_country
-      self.card_address_line1 = source.address_line1
-      self.card_address_line1_check = source.address_line1_check
-      self.card_address_line2 = source.address_line2
-      self.card_address_state = source.address_state
-      self.card_address_zip = source.address_zip
-      self.card_address_zip_check = source.address_zip_check
-      self.card_brand = source.brand
-      self.card_country = source.country
-      self.card_cvc_check = source.cvc_check
-      # self.card_dynamic_last4 = source.dynamic_last4
-      self.card_exp_month = source.exp_month
-      self.card_exp_year = source.exp_year
-      self.card_fingerprint = source.fingerprint
-      self.card_funding = source.funding
-      self.card_last4 = source.last4
-      self.card_name = source.name
-      # self.card_tokenization_method = source.tokenization_method
+      begin
+        self.card_stripe_id = source.id
+        self.card_address_city = source.address_city if source.has_attribute?()
+        self.card_address_country = source.address_country
+        self.card_address_line1 = source.address_line1
+        self.card_address_line1_check = source.address_line1_check
+        self.card_address_line2 = source.address_line2
+        self.card_address_state = source.address_state
+        self.card_address_zip = source.address_zip
+        self.card_address_zip_check = source.address_zip_check
+        self.card_brand = source.brand
+        self.card_country = source.country
+        self.card_cvc_check = source.cvc_check
+        # self.card_dynamic_last4 = source.dynamic_last4
+        self.card_exp_month = source.exp_month
+        self.card_exp_year = source.exp_year
+        self.card_fingerprint = source.fingerprint
+        self.card_funding = source.funding
+        self.card_last4 = source.last4
+        self.card_name = source.name
+        # self.card_tokenization_method = source.tokenization_method
+      rescue NoMethodError
+        logger.debug "could not save a valid source"
+      end
     end
   end
 end
