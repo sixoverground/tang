@@ -12,6 +12,8 @@ module Tang
     # validates :address_zip, format: { with: /\A\d{5}(-\d{4})?\z/ }
     validates :address_zip, presence: true
 
+    before_destroy :delete_stripe_card
+
     def update_from_stripe(stripe_card)
       self.stripe_id = stripe_card.id
       self.address_city = stripe_card.address_city
@@ -60,6 +62,12 @@ module Tang
       end
       card.save(validate: false) if card.new_record?
       return card
+    end
+
+    private
+
+    def delete_stripe_card
+      DeleteCard.call(self)
     end
   end
 end

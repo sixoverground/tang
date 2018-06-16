@@ -24,7 +24,7 @@ Tang::Engine.routes.draw do
 
   namespace :account do
     resource :subscription
-    resource :card, only: [:show, :new, :create]
+    resource :card, only: [:show, :new, :create, :destroy]
     resource :coupon, only: [:create]
     resources :receipts, only: [:index, :show]
   end
