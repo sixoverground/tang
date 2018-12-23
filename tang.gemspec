@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'coffee-rails', '~> 4.2'
   s.add_dependency 'sass-rails', '~> 5.0'
   # s.add_dependency 'therubyracer', '~> 0.12'
-  s.add_dependency 'mini_racer', '~> 0.1'
+  s.add_dependency 'mini_racer', '~> 0.2'
   s.add_dependency 'uglifier', '~> 2.0'
   s.add_dependency 'bootstrap', '~> 4.0'
   s.add_dependency 'rails-assets-tether', '>= 1.1'
