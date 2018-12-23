@@ -3,7 +3,7 @@ PATH
   specs:
     tang (0.0.7)
       aasm (~> 4.11)
-      bootstrap (~> 4.0)
+      bootstrap (~> 4.1)
       coffee-rails (~> 4.2)
       jquery-rails (~> 4.2)
       mini_racer (~> 0.2)
