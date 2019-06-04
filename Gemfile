@@ -20,7 +20,7 @@ gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'puma'
 gem 'pg', '0.20'
 gem 'rails_12factor', group: :production
-gem 'devise'
+gem 'devise', '>= 4.6.0'
 
 group :test do
   gem 'rspec-rails'
