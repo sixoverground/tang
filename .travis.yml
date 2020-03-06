@@ -9,6 +9,9 @@ before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
+install:
+  - gem uninstall bundler
+  - gem install bundler --version '1.17.2'
 script:
   - bundle exec rake
 after_script:
