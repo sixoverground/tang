@@ -5,7 +5,7 @@ module Tang
     def index
       @invoices = current_customer.invoices.
                                    paginate(page: params[:page]).
-                                   order(date: :desc)
+                                   order(period_start: :desc)
     end
   end
 end
