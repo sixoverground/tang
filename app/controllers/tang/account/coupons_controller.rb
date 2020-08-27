@@ -6,10 +6,11 @@ module Tang
       @coupon = Coupon.find_by(stripe_id: params[:coupon][:stripe_id])
       if @coupon.present?
         if current_customer.subscription.present?
-          ApplySubscriptionDiscount.call(
+          subscription = ApplySubscriptionDiscount.call(
             current_customer.subscription,
             @coupon
           )
+          logger.debug "applied coupon: #{subscription.coupon}"
         else
           current_customer.subscription_coupon = @coupon
           current_customer.save
