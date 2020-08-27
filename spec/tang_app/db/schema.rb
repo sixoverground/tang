@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170731010913) do
+ActiveRecord::Schema.define(version: 20200827001523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,6 +135,7 @@ ActiveRecord::Schema.define(version: 20170731010913) do
     t.integer  "amount_due"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.string   "invoice_pdf"
   end
 
   add_index "tang_invoices", ["coupon_id"], name: "index_tang_invoices_on_coupon_id", using: :btree
@@ -211,7 +212,6 @@ ActiveRecord::Schema.define(version: 20170731010913) do
     t.datetime "locked_at"
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
-    t.string   "role"
     t.string   "stripe_id"
     t.integer  "account_balance"
     t.string   "business_vat_id"
@@ -222,6 +222,7 @@ ActiveRecord::Schema.define(version: 20170731010913) do
     t.integer  "coupon_id"
     t.datetime "coupon_start"
     t.integer  "subscription_coupon_id"
+    t.string   "role"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

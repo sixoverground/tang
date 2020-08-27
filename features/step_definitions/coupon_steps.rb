@@ -5,7 +5,6 @@ Given(/^a coupon exists$/) do
     percent_off: 50,
     duration: 'once'
   )
-  puts "created stripe coupon #{@stripe_coupon.id}"
   @coupon ||= FactoryBot.create(:coupon, stripe_id: @stripe_coupon.id)
 end
 
@@ -14,7 +13,6 @@ end
 When(/^I enter a coupon code$/) do
   visit tang.account_subscription_path
   fill_in 'Coupon', with: @coupon.stripe_id
-  puts "fill in coupon #{@coupon.stripe_id}"
   click_on 'Apply discount'
 end
 
@@ -30,12 +28,14 @@ When(/^I create a new coupon with:$/) do |table|
   click_on "Create Coupon"
 end
 
+When(/^I remove the coupon$/) do
+  visit tang.account_subscription_path
+  click_on 'Remove discount'
+end
+
 # Then
 
 Then(/^I should see a reduced charge amount$/) do
-  # puts "#{page}"
-  # expect(page).to have_content "You're currently paying $20.00/month $10.00/month on the Amazing Gold Plan."
-  # expect(page).to have_content "#{@coupon.stripe_id}"
   expect(@customer.subscription.coupon).to eq(@coupon)
 end
 
@@ -47,4 +47,8 @@ Then(/^I should see the following coupon:$/) do |table|
   table.rows_hash.each do |field, value|
     expect(page).to have_content value
   end
+end
+
+Then(/^I should see the full charge amount$/) do
+  expect(page).to have_selector(:link_or_button, "Apply discount")
 end

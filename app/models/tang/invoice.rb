@@ -50,6 +50,7 @@ module Tang
         i.tax = stripe_invoice.tax
         i.total = stripe_invoice.total
         i.amount_due = stripe_invoice.amount_due
+        i.invoice_pdf = stripe_invoice.invoice_pdf
 
         if stripe_invoice.discount.present?
           # coupon = Coupon.from_stripe(stripe_invoice.discount.coupon)

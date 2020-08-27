@@ -13,9 +13,6 @@ Bundler.require(*Rails.groups)
 require 'dotenv'
 Dotenv.load(File.expand_path('../../../../.env', __FILE__))
 
-# require 'pdfkit'
-# require 'wicked_pdf'
-
 require "tang"
 
 module TangApp
@@ -34,10 +31,6 @@ module TangApp
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
-
-
-    # config.middleware.use PDFKit::Middleware
-    # config.middleware.use WickedPdf::Middleware
 
     config.action_mailer.preview_path = File.expand_path('../../../../spec/mailers/previews', __FILE__)
   end

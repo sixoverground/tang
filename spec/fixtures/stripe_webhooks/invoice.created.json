@@ -67,7 +67,8 @@
       "metadata": {},
       "description": null,
       "tax_percent": 0,
-      "tax": 0
+      "tax": 0,
+      "invoice_pdf": "pdf_url"
     }
   }
 }
