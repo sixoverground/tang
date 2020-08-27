@@ -10,9 +10,9 @@ module Tang
             current_customer.subscription,
             @coupon
           )
-          logger.debug "applied coupon: #{subscription.coupon}"
-          subscription.errors.full_messages.each do |message|
-            logger.error "subscription error: #{message}"
+          if subscription.errors.any?
+            redirect_to account_subscription_path, alert: 'Coupon could not be applied.'
+            return
           end
         else
           current_customer.subscription_coupon = @coupon
