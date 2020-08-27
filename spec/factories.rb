@@ -76,6 +76,7 @@ FactoryBot.define do
     total 1000
     # ending_balance 0
     currency 'usd'
+    invoice_pdf 'invoice_url'
   end
 
   factory :invoice_item, class: 'Tang::InvoiceItem' do

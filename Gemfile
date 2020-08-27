@@ -13,7 +13,7 @@ gemspec
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
 
-ruby '2.3.3'
+ruby '2.5.8'
 
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 # gem 'jquery-rails'

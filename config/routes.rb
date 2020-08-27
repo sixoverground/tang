@@ -26,7 +26,7 @@ Tang::Engine.routes.draw do
     resource :subscription
     resource :card, only: [:show, :new, :create, :destroy]
     resource :coupon, only: [:create]
-    resources :receipts, only: [:index, :show]
+    resources :receipts, only: [:index]
   end
 
   # get 'pricing', to: 'plans#index'
