@@ -11,7 +11,9 @@ module Tang
             @coupon
           )
           logger.debug "applied coupon: #{subscription.coupon}"
-          logger.debug "subscrition errors: #{subscription.errors}"
+          subscription.errors.full_messages.each do |message|
+            logger.error "subscription error: #{message}"
+          end
         else
           current_customer.subscription_coupon = @coupon
           current_customer.save
