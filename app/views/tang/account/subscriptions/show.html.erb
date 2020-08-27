@@ -95,6 +95,7 @@
   <% if current_customer.subscription.coupon.present? %>
     <h4>Discount</h4>
     <p><%= "#{current_customer.subscription.coupon.stripe_id} - #{coupon_off(current_customer.subscription.coupon)} #{current_customer.subscription.coupon.formatted_duration}" %></p>
+    <%= link_to 'Remove discount', account_coupon_path, method: :delete, class: 'btn btn-danger' %>
   <% else %>
     <h4>Redeem coupon</h4>
     <%= form_for current_customer.subscription.build_coupon, url: tang.account_coupon_path, html: { class: 'form-inline' } do |f| %>
@@ -109,6 +110,7 @@
   <% if current_customer.subscription_coupon.present? %>
     <h4>Discount</h4>
     <p><%= "#{current_customer.subscription_coupon.stripe_id} - #{coupon_off(current_customer.subscription_coupon)} #{current_customer.subscription_coupon.formatted_duration}" %></p>
+    <%= link_to 'Remove discount', account_coupon_path, method: :delete, class: 'btn btn-danger' %>
   <% else %>
     <h4>Redeem coupon</h4>
     <%= form_for current_customer.build_subscription_coupon, url: tang.account_coupon_path, html: { class: 'form-inline' } do |f| %>

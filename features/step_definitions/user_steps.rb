@@ -34,6 +34,12 @@ def create_customer
   @customer ||= FactoryBot.create(:customer, @customer_attributes)
 end
 
+def create_customer_with_coupon
+  create_customer_attributes
+  delete_customer
+  @customer ||= FactoryBot.create(:customer, @customer_attributes.merge(subscription_coupon: @coupon))
+end
+
 def create_admin
   create_admin_attributes
   delete_admin
@@ -95,6 +101,12 @@ end
 Given /^I am logged in as a customer$/ do
   sign_out
   create_customer
+  sign_in_customer
+end
+
+Given /^I am logged in as a customer with a coupon$/ do
+  sign_out
+  create_customer_with_coupon
   sign_in_customer
 end
 
