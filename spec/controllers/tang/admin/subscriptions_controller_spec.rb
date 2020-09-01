@@ -57,7 +57,7 @@ module Tang
       it "assigns the requested subscription as @subscription" do
         # subscription = Subscription.create! valid_attributes
         subscription = FactoryBot.create(:subscription)
-        get :show, {id: subscription.to_param}, session: valid_session
+        get :show, params: {id: subscription.to_param}, session: valid_session
         expect(assigns(:subscription)).to eq(subscription)
       end
     end
@@ -66,7 +66,7 @@ module Tang
       it "assigns the requested subscription as @subscription" do
         # subscription = Subscription.create! valid_attributes
         subscription = FactoryBot.create(:subscription)
-        get :edit, {id: subscription.to_param}, session: valid_session
+        get :edit, params: {id: subscription.to_param}, session: valid_session
         expect(assigns(:subscription)).to eq(subscription)
       end
     end
@@ -81,7 +81,7 @@ module Tang
         it "updates the requested subscription" do
           # subscription = Subscription.create! valid_attributes
           subscription = FactoryBot.create(:subscription)
-          put :update, {id: subscription.to_param, subscription: new_attributes}, session: valid_session
+          put :update, params: {id: subscription.to_param, subscription: new_attributes}, session: valid_session
           subscription.reload
           # skip("Add assertions for updated state")
           expect(subscription.quantity).to eq(2)
@@ -90,14 +90,14 @@ module Tang
         it "assigns the requested subscription as @subscription" do
           # subscription = Subscription.create! valid_attributes
           subscription = FactoryBot.create(:subscription)
-          put :update, {id: subscription.to_param, subscription: valid_attributes}, session: valid_session
+          put :update, params: {id: subscription.to_param, subscription: valid_attributes}, session: valid_session
           expect(assigns(:subscription)).to eq(subscription)
         end
 
         it "redirects to the subscription" do
           # subscription = Subscription.create! valid_attributes
           subscription = FactoryBot.create(:subscription)
-          put :update, {id: subscription.to_param, subscription: valid_attributes}, session: valid_session
+          put :update, params: {id: subscription.to_param, subscription: valid_attributes}, session: valid_session
           expect(response).to redirect_to(admin_subscription_url(subscription))
         end
       end
@@ -106,14 +106,14 @@ module Tang
         it "assigns the subscription as @subscription" do
           # subscription = Subscription.create! valid_attributes
           subscription = FactoryBot.create(:subscription)
-          put :update, {id: subscription.to_param, subscription: invalid_attributes}, session: valid_session
+          put :update, params: {id: subscription.to_param, subscription: invalid_attributes}, session: valid_session
           expect(assigns(:subscription)).to eq(subscription)
         end
 
         it "re-renders the 'edit' template" do
           # subscription = Subscription.create! valid_attributes
           subscription = FactoryBot.create(:subscription)
-          put :update, {id: subscription.to_param, subscription: invalid_attributes}, session: valid_session
+          put :update, params: {id: subscription.to_param, subscription: invalid_attributes}, session: valid_session
           expect(response).to render_template("edit")
         end
       end
@@ -124,14 +124,14 @@ module Tang
         # subscription = Subscription.create! valid_attributes
         subscription = FactoryBot.create(:subscription)
         expect {
-          delete :destroy, {id: subscription.to_param}, session: valid_session
+          delete :destroy, params: {id: subscription.to_param}, session: valid_session
         }.to change(Subscription.where.not(status: :canceled), :count).by(-1)
       end
 
       it "redirects to the subscriptions list" do
         # subscription = Subscription.create! valid_attributes
         subscription = FactoryBot.create(:subscription)
-        delete :destroy, {id: subscription.to_param}, session: valid_session
+        delete :destroy, params: {id: subscription.to_param}, session: valid_session
         expect(response).to redirect_to(admin_subscriptions_url)
       end
     end

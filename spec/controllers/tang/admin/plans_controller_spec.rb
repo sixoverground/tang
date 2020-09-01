@@ -55,7 +55,7 @@ module Tang
     describe "GET #show" do
       it "assigns the requested plan as @plan" do
         plan = Plan.create! valid_attributes
-        get :show, {id: plan.to_param}, session: valid_session
+        get :show, params: {id: plan.to_param}, session: valid_session
         expect(assigns(:plan)).to eq(plan)
       end
     end
@@ -70,7 +70,7 @@ module Tang
     describe "GET #edit" do
       it "assigns the requested plan as @plan" do
         plan = Plan.create! valid_attributes
-        get :edit, {id: plan.to_param}, session: valid_session
+        get :edit, params: {id: plan.to_param}, session: valid_session
         expect(assigns(:plan)).to eq(plan)
       end
     end
@@ -79,30 +79,30 @@ module Tang
       context "with valid params" do
         it "creates a new Plan" do
           expect {
-            post :create, {plan: valid_attributes}, session: valid_session
+            post :create, params: {plan: valid_attributes}, session: valid_session
           }.to change(Plan, :count).by(1)
         end
 
         it "assigns a newly created plan as @plan" do
-          post :create, {plan: valid_attributes}, session: valid_session
+          post :create, params: {plan: valid_attributes}, session: valid_session
           expect(assigns(:plan)).to be_a(Plan)
           expect(assigns(:plan)).to be_persisted
         end
 
         it "redirects to the created plan" do
-          post :create, {plan: valid_attributes}, session: valid_session
+          post :create, params: {plan: valid_attributes}, session: valid_session
           expect(response).to redirect_to(admin_plan_url(Plan.last))
         end
       end
 
       context "with invalid params" do
         it "assigns a newly created but unsaved plan as @plan" do
-          post :create, {plan: invalid_attributes}, session: valid_session
+          post :create, params: {plan: invalid_attributes}, session: valid_session
           expect(assigns(:plan)).to be_a_new(Plan)
         end
 
         it "re-renders the 'new' template" do
-          post :create, {plan: invalid_attributes}, session: valid_session
+          post :create, params: {plan: invalid_attributes}, session: valid_session
           expect(response).to render_template("new")
         end
       end
@@ -117,7 +117,7 @@ module Tang
 
         it "updates the requested plan" do
           plan = Plan.create! valid_attributes
-          put :update, {id: plan.to_param, plan: new_attributes}, session: valid_session
+          put :update, params: {id: plan.to_param, plan: new_attributes}, session: valid_session
           plan.reload
           # skip("Add assertions for updated state")
           expect(plan.name).to eq('Changed Plan')
@@ -125,13 +125,13 @@ module Tang
 
         it "assigns the requested plan as @plan" do
           plan = Plan.create! valid_attributes
-          put :update, {id: plan.to_param, plan: valid_attributes}, session: valid_session
+          put :update, params: {id: plan.to_param, plan: valid_attributes}, session: valid_session
           expect(assigns(:plan)).to eq(plan)
         end
 
         it "redirects to the plan" do
           plan = Plan.create! valid_attributes
-          put :update, {id: plan.to_param, plan: valid_attributes}, session: valid_session
+          put :update, params: {id: plan.to_param, plan: valid_attributes}, session: valid_session
           expect(response).to redirect_to(admin_plan_url(plan))
         end
       end
@@ -139,13 +139,13 @@ module Tang
       context "with invalid params" do
         it "assigns the plan as @plan" do
           plan = Plan.create! valid_attributes
-          put :update, {id: plan.to_param, plan: invalid_attributes}, session: valid_session
+          put :update, params: {id: plan.to_param, plan: invalid_attributes}, session: valid_session
           expect(assigns(:plan)).to eq(plan)
         end
 
         it "re-renders the 'edit' template" do
           plan = Plan.create! valid_attributes
-          put :update, {id: plan.to_param, plan: invalid_attributes}, session: valid_session
+          put :update, params: {id: plan.to_param, plan: invalid_attributes}, session: valid_session
           expect(response).to render_template("edit")
         end
       end
@@ -155,13 +155,13 @@ module Tang
       it "destroys the requested plan" do
         plan = Plan.create! valid_attributes
         expect {
-          delete :destroy, {id: plan.to_param}, session: valid_session
+          delete :destroy, params: {id: plan.to_param}, session: valid_session
         }.to change(Plan, :count).by(-1)
       end
 
       it "redirects to the plans list" do
         plan = Plan.create! valid_attributes
-        delete :destroy, {id: plan.to_param}, session: valid_session
+        delete :destroy, params: {id: plan.to_param}, session: valid_session
         expect(response).to redirect_to(admin_plans_url)
       end
     end

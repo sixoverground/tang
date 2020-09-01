@@ -20,7 +20,7 @@ describe 'Stripe Events', type: :request do
 
       deliveries = Tang::StripeMailer.deliveries.length
 
-      post '/stripe_event', id: event.id
+      post '/stripe_event', params: { id: event.id }
       expect(response.code).to eq('200')
 
       expect(Tang::StripeMailer.deliveries.length).to eq(deliveries + 1)
@@ -36,7 +36,7 @@ describe 'Stripe Events', type: :request do
       dispute_object = event.data.object
       bypass_event_signature(event.to_json)
 
-      post '/stripe_event', id: event.id
+      post '/stripe_event', params: { id: event.id }
       expect(response.code).to eq('200')
 
       expect(dispute_object.id).to_not be_nil
@@ -50,7 +50,7 @@ describe 'Stripe Events', type: :request do
       dispute_object = event.data.object
       bypass_event_signature(event.to_json)
 
-      post '/stripe_event', id: event.id
+      post '/stripe_event', params: { id: event.id }
       expect(response.code).to eq('200')
 
       expect(dispute_object.id).to_not be_nil
@@ -64,7 +64,7 @@ describe 'Stripe Events', type: :request do
       invoice_object = event.data.object
       bypass_event_signature(event.to_json)
 
-      post '/stripe_event', id: event.id
+      post '/stripe_event', params: { id: event.id }
       expect(response.code).to eq('200')
 
       expect(invoice_object.id).to_not be_nil
@@ -98,7 +98,7 @@ describe 'Stripe Events', type: :request do
 
       deliveries = Tang::StripeMailer.deliveries.length
 
-      post '/stripe_event', id: event.id
+      post '/stripe_event', params: { id: event.id }
       expect(response.code).to eq('200')
 
       expect(Tang::StripeMailer.deliveries.length).to eq(deliveries + 2)
@@ -136,7 +136,7 @@ describe 'Stripe Events', type: :request do
 
       deliveries = Tang::StripeMailer.deliveries.length
 
-      post '/stripe_event', id: event.id
+      post '/stripe_event', params: { id: event.id }
       expect(response.code).to eq('200')
 
       expect(Tang::StripeMailer.deliveries.length).to eq(deliveries + 2)
@@ -155,7 +155,7 @@ describe 'Stripe Events', type: :request do
       subscription_object = event.data.object
       bypass_event_signature(event.to_json)
 
-      post '/stripe_event', id: event.id
+      post '/stripe_event', params: { id: event.id }
       expect(response.code).to eq('200')
 
       expect(subscription_object.id).to_not be_nil

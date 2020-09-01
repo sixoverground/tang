@@ -15,19 +15,23 @@ gemspec
 
 ruby '2.5.8'
 
-gem 'dotenv-rails', require: 'dotenv/rails-now'
+gem 'dotenv-rails', '~> 2.7', require: 'dotenv/rails-now'
 # gem 'jquery-rails'
 gem 'puma'
 gem 'pg', '0.20'
 gem 'rails_12factor', group: :production
-gem 'devise', '>= 4.6.0'
+gem 'devise', '~> 4.7'
 
 group :test do
-  gem 'rspec-rails'
-  gem 'cucumber-rails', '~> 1.4.4', require: false
+  gem 'rspec-rails', '~> 4.0.1'
+  gem 'cucumber-rails', '~> 2.1', require: false
   gem 'factory_bot_rails'
   gem 'database_cleaner'
   gem 'stripe-ruby-mock', '~> 2.5.2', require: 'stripe_mock'
   gem 'poltergeist'
-  gem "codeclimate-test-reporter", require: nil
+  gem 'codeclimate-test-reporter', require: nil
+
+  # assigns is deprecated - TODO: move to request specs
+  # see https://stackoverflow.com/questions/42001517/rspec-rails-controller-testing-with-assertions-and-assigns
+  gem 'rails-controller-testing' 
 end
