@@ -62,8 +62,6 @@ When(/^I complete the payment form with:$/) do |table|
     address_zip: address_zip
   )
 
-  puts "TOKEN = #{token}"
-
   page.execute_script "window.testStripeToken = '#{token}';"
 
   click_on "Submit Payment"

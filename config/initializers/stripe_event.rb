@@ -7,7 +7,6 @@ end
 
 StripeEvent.configure do |events|
   events.all do |event|
-    # puts "stripe_event: #{event}"
   end
 
   # Disputes
