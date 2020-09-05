@@ -4,7 +4,7 @@ module Tang
     belongs_to :customer, class_name: Tang.customer_class.to_s
     has_many :charges, dependent: :destroy
     has_many :invoice_items, dependent: :destroy
-    belongs_to :coupon
+    belongs_to :coupon, optional: true
 
     validates :customer, presence: true
     validates :stripe_id, presence: true, uniqueness: true

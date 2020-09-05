@@ -5,8 +5,8 @@ module Tang
     extend ActiveSupport::Concern
 
     included do
-      belongs_to :coupon, class_name: 'Tang::Coupon'
-      belongs_to :subscription_coupon, class_name: 'Tang::Coupon'
+      belongs_to :coupon, class_name: 'Tang::Coupon', optional: true
+      belongs_to :subscription_coupon, class_name: 'Tang::Coupon', optional: true
       has_many :cards, class_name: 'Tang::Card', foreign_key: 'customer_id', dependent: :destroy
       has_many :subscriptions, class_name: 'Tang::Subscription', foreign_key: 'customer_id', dependent: :destroy
       has_many :invoices, class_name: 'Tang::Invoice', foreign_key: 'customer_id', dependent: :destroy
