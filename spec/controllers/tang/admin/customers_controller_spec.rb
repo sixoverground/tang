@@ -55,7 +55,7 @@ module Tang
     describe "GET #show" do
       it "assigns the requested customer as @customer" do
         customer = User.create! valid_attributes
-        get :show, {id: customer.to_param}, session: valid_session
+        get :show, params: {id: customer.to_param}, session: valid_session
         expect(assigns(:customer)).to eq(customer)
       end
     end
@@ -63,7 +63,7 @@ module Tang
     describe "GET #edit" do
       it "assigns the requested customer as @customer" do
         customer = User.create! valid_attributes
-        get :edit, {id: customer.to_param}, session: valid_session
+        get :edit, params: {id: customer.to_param}, session: valid_session
         expect(assigns(:customer)).to eq(customer)
       end
     end
@@ -77,7 +77,7 @@ module Tang
 
         it "updates the requested customer" do
           customer = User.create! valid_attributes
-          put :update, {id: customer.to_param, user: new_attributes}, session: valid_session
+          put :update, params: {id: customer.to_param, user: new_attributes}, session: valid_session
           customer.reload
           # skip("Add assertions for updated state")
           expect(customer.email).to eq('new@email.com')
@@ -85,13 +85,13 @@ module Tang
 
         it "assigns the requested customer as @customer" do
           customer = User.create! valid_attributes
-          put :update, {id: customer.to_param, user: valid_attributes}, session: valid_session
+          put :update, params: {id: customer.to_param, user: valid_attributes}, session: valid_session
           expect(assigns(:customer)).to eq(customer)
         end
 
         it "redirects to the customer" do
           customer = User.create! valid_attributes
-          put :update, {id: customer.to_param, user: valid_attributes}, session: valid_session
+          put :update, params: {id: customer.to_param, user: valid_attributes}, session: valid_session
           expect(response).to redirect_to(admin_customer_url(customer))
         end
       end
@@ -99,13 +99,13 @@ module Tang
       context "with invalid params" do
         it "assigns the customer as @customer" do
           customer = User.create! valid_attributes
-          put :update, {id: customer.to_param, user: invalid_attributes}, session: valid_session
+          put :update, params: {id: customer.to_param, user: invalid_attributes}, session: valid_session
           expect(assigns(:customer)).to eq(customer)
         end
 
         it "re-renders the 'edit' template" do
           customer = User.create! valid_attributes
-          put :update, {id: customer.to_param, user: invalid_attributes}, session: valid_session
+          put :update, params: {id: customer.to_param, user: invalid_attributes}, session: valid_session
           expect(response).to render_template("edit")
         end
       end
@@ -115,13 +115,13 @@ module Tang
       it "destroys the requested customer" do
         customer = User.create! valid_attributes
         expect {
-          delete :destroy, {id: customer.to_param}, session: valid_session
+          delete :destroy, params: {id: customer.to_param}, session: valid_session
         }.to change(User, :count).by(-1)
       end
 
       it "redirects to the customers list" do
         customer = User.create! valid_attributes
-        delete :destroy, {id: customer.to_param}, session: valid_session
+        delete :destroy, params: {id: customer.to_param}, session: valid_session
         expect(response).to redirect_to(admin_customers_url)
       end
     end

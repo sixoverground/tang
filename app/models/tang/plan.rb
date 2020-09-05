@@ -11,10 +11,10 @@ module Tang
     validates :amount, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
     validates :currency, length: { is: 3 }
     validates :interval, inclusion: { in: %w(day week month year) }
-    validates :interval_count, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 1 }, allow_nil: true, if: "interval == 'year'"
-    validates :interval_count, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 12 }, allow_nil: true, if: "interval == 'month'"
-    validates :interval_count, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 52 }, allow_nil: true, if: "interval == 'week'"
-    validates :interval_count, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 365 }, allow_nil: true, if: "interval == 'day'"
+    validates :interval_count, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 1 }, allow_nil: true, if: -> { interval == 'year' }
+    validates :interval_count, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 12 }, allow_nil: true, if: -> { interval == 'month' }
+    validates :interval_count, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 52 }, allow_nil: true, if: -> { interval == 'week' }
+    validates :interval_count, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 365 }, allow_nil: true, if: -> { interval == 'day' }
     validates :trial_period_days, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true
     validates :statement_descriptor, length: { maximum: 22 }, format: { without: /[<>"']/ }, allow_nil: true
 

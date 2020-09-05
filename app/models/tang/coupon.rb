@@ -11,12 +11,12 @@ module Tang
     validates :stripe_id, uniqueness: true # , if: "deleted_at.nil?"
     validates :duration, inclusion: { in: %w(once repeating forever) }
     validates :amount_off, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true
-    validates :currency, presence: true, if: "amount_off.present?"
+    validates :currency, presence: true, if: -> { amount_off.present? }
     validates :duration_in_months, presence: true, numericality: { only_integer: true, greater_than: 0 }, if: :repeating?
     validates :max_redemptions, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true
     validates :percent_off, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100 },
-                            presence: true, if: "amount_off.nil?"
-    validates :redeem_by, future: true, if: "redeem_by.present?"
+                            presence: true, if: -> { amount_off.nil? }
+    validates :redeem_by, future: true, if: -> { redeem_by.present? }
 
     before_create :create_stripe_coupon
     before_update :update_stripe_coupon
