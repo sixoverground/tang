@@ -29,7 +29,7 @@ module Tang
 
     belongs_to :customer, class_name: Tang.customer_class.to_s
     belongs_to :plan
-    belongs_to :coupon
+    belongs_to :coupon, optional: true
     has_many :invoices, dependent: :destroy
 
     validates :customer, presence: true
