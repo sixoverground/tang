@@ -19,20 +19,16 @@ Gem::Specification.new do |s|
   s.test_files = Dir["spec/**/*"]
   
   s.add_dependency "rails", "~> 5.1.7"
-  s.add_dependency 'stripe', '~> 3.9'
+  s.add_dependency 'stripe', '~> 5.25'
   s.add_dependency 'stripe_event', '~> 2.1'
   s.add_dependency 'paper_trail', '~> 10.3'
-  s.add_dependency 'jquery-rails', '~> 4.2'
-  s.add_dependency 'coffee-rails', '~> 4.2'
-  s.add_dependency 'sass-rails', '~> 5.0'
-  # s.add_dependency 'therubyracer', '~> 0.12'
-  s.add_dependency 'mini_racer', '~> 0.3'
-  s.add_dependency 'uglifier', '~> 2.0'
-  s.add_dependency 'bootstrap', '~> 4.1'
-  s.add_dependency 'rails-assets-tether', '>= 1.1'
+  # s.add_dependency 'jquery-rails', '~> 4.2'
+  # s.add_dependency 'coffee-rails', '~> 4.2'
+  # s.add_dependency 'mini_racer', '~> 0.3'
+  # s.add_dependency 'uglifier', '~> 2.0'
+  # s.add_dependency 'rails-assets-tether', '>= 1.1'
   s.add_dependency 'aasm', '~> 4.11'
   s.add_dependency 'will_paginate', '~> 3.1'
-  # s.add_dependency 'paranoia', '~> 2.2'
 
   s.add_development_dependency 'rails_best_practices', '~> 1.17'
   s.add_development_dependency 'brakeman', '~> 3.3'

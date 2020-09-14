@@ -1,7 +1,7 @@
 require "tang/engine"
-require 'jquery-rails'
-require 'bootstrap'
-require 'rails-assets-tether'
+# require 'jquery-rails'
+# require 'bootstrap'
+# require 'rails-assets-tether'
 require 'will_paginate'
 # require 'paranoia'
 
