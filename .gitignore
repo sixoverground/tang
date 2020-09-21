@@ -51,3 +51,6 @@ spec/tang_app/.sass-cache
 spec/tang_app/public/assets
 
 /*.gem
+
+node_modules
+.vscode

@@ -14,7 +14,7 @@
 </div>
 
 <%= link_to 'Use a new card', new_account_card_path, class: 'btn btn-secondary' %>
-<% if @can_delete_card? %>
+<% if @can_delete_card %>
   <%= link_to 'Remove card', account_card_path, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
 <% end %>
 <%= link_to 'Cancel', account_subscription_path, class: 'btn btn-secondary' %>

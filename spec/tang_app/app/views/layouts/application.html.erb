@@ -3,12 +3,13 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Tang</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+  <%#= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <script type="text/javascript" src="https://js.stripe.com/v3/"></script>
   <script type="text/javascript">
-    Stripe.setPublishableKey('<%= ENV["STRIPE_PUBLISHABLE_KEY"] %>');
+    // Stripe.setPublishableKey('<%= ENV["STRIPE_PUBLISHABLE_KEY"] %>');
   </script>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%#= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= javascript_pack_tag 'application', defer: true %>
   <%= csrf_meta_tags %>
 </head>
 <body>

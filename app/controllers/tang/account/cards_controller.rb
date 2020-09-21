@@ -29,6 +29,19 @@ module Tang
       end
     end
 
+    def update
+      @card = SaveCard.call(
+        current_customer,
+        params[:stripe_token]
+      )
+
+      if @card.errors.blank?
+        redirect_to account_card_path, notice: 'Card was successfully created.'
+      else
+        render :new
+      end
+    end
+
     def destroy
       if current_customer.subscription.nil?
         @card.destroy 
@@ -41,6 +54,7 @@ module Tang
     private
 
     def set_card
+      logger.debug "SET CARD CALLED"
       @card = current_customer.card
     end
   end
