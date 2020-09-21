@@ -1,11 +1,11 @@
+<% if false %>
 <span class="payment-errors"></span>
 
 <div class="payment-row">
   <label for="name">
     <span>Cardholder name</span>
   </label>
-    <input id="name" type="text" data-stripe="name" autocomplete="cc-name" placeholder="Full Name" required class="form-control">
-
+  <input id="name" type="text" data-stripe="name" autocomplete="cc-name" placeholder="Full Name" required class="form-control">
   <label for="number">
     <span>Card number</span>
   </label>
@@ -28,3 +28,16 @@
     <input type="text" data-stripe="address_zip" autocomplete="postal-code" placeholder="•••••" required class="form-control">
   </label>
 </div>
+<% end %>
+
+<div class="payment-row">
+  <label for="name">Cardholder name</label>
+  <input id="name" type="text" autocomplete="cc-name" placeholder="Full Name" required class="form-control">
+</div>
+
+<div class="payment-row">
+  <label for="card-element">Credit or debit card</label>
+  <div id="card-element"></div>
+</div>
+
+<div id="card-errors" role="alert"></div>

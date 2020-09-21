@@ -23,6 +23,7 @@ gem 'rails_12factor', group: :production
 gem 'devise', '~> 4.7'
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap', '~> 4.1'
+gem 'webpacker', '~> 4.x'
 
 group :test do
   gem 'rspec-rails', '~> 4.0.1'
