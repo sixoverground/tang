@@ -15,7 +15,7 @@
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-import { registerElements } from 'tang'
+import { registerElements } from '@sixoverground/tang'
 
 console.log('Hello World from Webpacker 1')
 
