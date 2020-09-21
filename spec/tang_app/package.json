@@ -8,5 +8,8 @@
   },
   "devDependencies": {
     "webpack-dev-server": "^3.11.0"
+  },
+  "scripts": {
+    "build": "RAILS_ENV=development NODE_ENV=development bin/webpack --watch"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@sixoverground/tang",
-  "version": "0.0.10",
+  "version": "0.0.12",
   "main": "lib/js/index.js",
   "repository": "https://github.com/sixoverground/tang.git",
   "author": "Craig Phares <hello@sixoverground.com>",
