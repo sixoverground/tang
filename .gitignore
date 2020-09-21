@@ -54,3 +54,4 @@ spec/tang_app/public/assets
 
 node_modules
 .vscode
+coverage
