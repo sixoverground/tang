@@ -12,7 +12,7 @@ Stripe subscriptions
 ```
 gem build tang.gemspec
 gem push tang-x.x.x.gem
-npm publish --access public
+npm publish
 ```
 
 
