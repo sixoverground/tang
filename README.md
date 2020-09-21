@@ -7,4 +7,12 @@ Stripe subscriptions
 [![Test Coverage](https://codeclimate.com/github/sixoverground/tang/badges/coverage.svg)](https://codeclimate.com/github/sixoverground/tang/coverage)
 [![Issue Count](https://codeclimate.com/github/sixoverground/tang/badges/issue_count.svg)](https://codeclimate.com/github/sixoverground/tang)
 
+## Publishing
+
+```
+gem build tang.gemspec
+gem push tang-x.x.x.gem
+npm publish --access public
+```
+
 
