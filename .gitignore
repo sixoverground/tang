@@ -53,3 +53,4 @@ spec/tang_app/public/assets
 /*.gem
 
 node_modules
+.vscode
