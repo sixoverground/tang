@@ -2,8 +2,10 @@ module Tang
   class DeleteCard
     def self.call(card)
       begin
-        customer = Stripe::Customer.retrieve(card.customer.stripe_id)
-        customer.sources.retrieve(card.stripe_id).delete
+        Stripe::Customer.delete_source(
+          card.customer.stripe_id,
+          card.stripe_id,
+        )
       rescue Stripe::StripeError => e
         card.errors[:base] << e.message
       end

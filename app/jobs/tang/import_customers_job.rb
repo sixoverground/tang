@@ -16,7 +16,13 @@ module Tang
         customer = update_customer(customer, stripe_customer)
 
         # import card
-        Card.from_stripe(stripe_customer.sources.retrieve(stripe_customer.default_source), customer) if stripe_customer.default_source.present?
+        if stripe_customer.default_source.present?
+          stripe_card = Stripe::Customer.retrieve_source(
+            stripe_customer.id,
+            stripe_customer.default_source,
+          )
+          Card.from_stripe(stripe_card, customer)
+        end
       end
     end
 

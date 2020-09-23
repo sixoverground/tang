@@ -22,7 +22,10 @@ module Tang
         end
 
         # Save the payment method
-        stripe_card = cu.sources.retrieve(cu.default_source)
+        stripe_card = Stripe::Customer.retrieve_source(
+          cu.id,
+          cu.default_source,
+        )
         card.update_from_stripe(stripe_card)
 
       rescue Stripe::StripeError => e

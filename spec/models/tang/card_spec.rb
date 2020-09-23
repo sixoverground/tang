@@ -39,7 +39,10 @@ module Tang
 
       stripe_customer = Stripe::Customer.create(id: 'test_customer_sub')
       card_token = stripe_helper.generate_card_token(last4: "1123", exp_month: 11, exp_year: 2017, address_zip: '90210')
-      stripe_card = stripe_customer.sources.create(source: card_token)
+      stripe_card = Stripe::Customer.create_source(
+        stripe_customer.id,
+        {source: card_token},
+      )
 
       card.update_from_stripe(stripe_card)
       expect(card.last4).to eq(stripe_card.last4)

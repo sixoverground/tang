@@ -31,7 +31,10 @@ module Tang
         subscription.activate!
 
         # Save the payment method
-        stripe_card = stripe_customer.sources.retrieve(stripe_customer.default_source)
+        stripe_card = Stripe::Customer.retrieve_source(
+          stripe_customer.id,
+          stripe_customer.default_source,
+        )
 
         # Finalize customer with subscription and payment method
         finalize_customer(customer, stripe_sub, stripe_card)
