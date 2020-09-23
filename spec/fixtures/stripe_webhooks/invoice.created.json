@@ -6,7 +6,7 @@
   "object": "event",
   "data": {
     "object": {
-      "date": 1380674206,
+      "created": 1380674206,
       "id": "in_00000000000000",
       "period_start": 1378082075,
       "period_end": 1380674075,
@@ -66,7 +66,6 @@
       "subscription": "sub_00000000000000",
       "metadata": {},
       "description": null,
-      "tax_percent": 0,
       "tax": 0,
       "invoice_pdf": "pdf_url"
     }

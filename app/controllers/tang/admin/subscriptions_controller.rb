@@ -67,7 +67,7 @@ module Tang
 
       # Only allow a trusted parameter "white list" through.
       def subscription_params
-        params.require(:subscription).permit(:plan_id, :quantity, :trial_end, :tax_percent)
+        params.require(:subscription).permit(:plan_id, :quantity, :trial_end)
       end
   end
 end

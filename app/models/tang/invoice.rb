@@ -46,7 +46,7 @@ module Tang
         i.date = stripe_invoice.created # changed from date
         i.currency = stripe_invoice.currency
         i.subtotal = stripe_invoice.subtotal
-        i.tax_percent = stripe_invoice.tax_percent
+        # i.tax_percent = stripe_invoice.tax_percent # removed from api, replaced with tax rates
         i.tax = stripe_invoice.tax
         i.total = stripe_invoice.total
         i.amount_due = stripe_invoice.amount_due

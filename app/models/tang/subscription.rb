@@ -37,8 +37,8 @@ module Tang
     validates :stripe_id, presence: true, uniqueness: true
     validates :application_fee_percent, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
     validates :quantity, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
-    validates :tax_percent, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true,
-                            format: { with: /\A\d+(?:\.\d{0,4})?\z/ }
+    # validates :tax_percent, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true,
+    #                         format: { with: /\A\d+(?:\.\d{0,4})?\z/ }
 
     # before_save :nil_if_blank
     before_update :update_stripe_subscription
@@ -54,7 +54,7 @@ module Tang
         s.plan = plan
         s.application_fee_percent = stripe_subscription.application_fee_percent
         s.quantity = stripe_subscription.quantity
-        s.tax_percent = stripe_subscription.tax_percent
+        # s.tax_percent = stripe_subscription.tax_percent # removed from api in favor of tax rates
         s.trial_end = stripe_subscription.trial_end
         s.coupon = Coupon.find_by(stripe_id: stripe_subscription.discount.coupon.id) if stripe_subscription.discount.present?
         s.status = stripe_subscription.status
