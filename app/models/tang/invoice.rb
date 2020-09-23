@@ -43,7 +43,7 @@ module Tang
         i.customer = customer
         i.period_start = stripe_invoice.period_start
         i.period_end = stripe_invoice.period_end
-        i.date = stripe_invoice.date
+        i.date = stripe_invoice.created # changed from date
         i.currency = stripe_invoice.currency
         i.subtotal = stripe_invoice.subtotal
         i.tax_percent = stripe_invoice.tax_percent
