@@ -1,7 +1,8 @@
 module Tang
   class FailInvoice
     def self.call(stripe_invoice)
-      invoice = Invoice.find_by(stripe_id: stripe_invoice.id)
+      # invoice = Invoice.find_by(stripe_id: stripe_invoice.id)
+      invoice = Invoice.from_stripe(stripe_invoice)
 
       # create charge
       charge = nil

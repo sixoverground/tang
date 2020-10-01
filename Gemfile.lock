@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tang (0.0.11)
+    tang (0.0.12)
       aasm (~> 4.11)
       paper_trail (~> 10.3)
       rails (~> 5.1.7)
