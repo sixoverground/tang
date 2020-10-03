@@ -13,8 +13,10 @@ module Tang
 
       # update subscription
       subscription = Subscription.find_by(stripe_id: stripe_invoice.subscription)
-      subscription.fail! if !subscription.past_due?
-
+      if subscription.present?
+        subscription.fail! if !subscription.past_due?
+      end
+      
       return charge
     end
   end
