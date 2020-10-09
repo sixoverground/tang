@@ -16,6 +16,7 @@ module Tang
       if subscription.nil?
         stripe_subscription = Stripe::Subscription.retrieve(stripe_invoice.subscription)
         subscription = Subscription.from_stripe(stripe_subscription)
+        invoice.update(subscription: subscription)
       end
       if subscription.present?
         subscription.fail! if !subscription.past_due?
