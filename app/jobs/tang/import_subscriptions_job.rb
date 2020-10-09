@@ -19,11 +19,8 @@ module Tang
     end
 
     def import_subscription(stripe_subscription)
-      customer = Tang.customer_class.find_by(stripe_id: stripe_subscription.customer)
-      plan = Plan.find_by(stripe_id: stripe_subscription.plan.id)
-      if customer.present? && plan.present?
-        subscription = Subscription.from_stripe(stripe_subscription, customer, plan)
-
+      subscription = Subscription.from_stripe(stripe_subscription)
+      if subscription.present?
         # Handle removed discounts
         subscription.update(coupon: nil, coupon_start: nil) if stripe_subscription.discount.nil?
       end

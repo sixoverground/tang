@@ -48,7 +48,18 @@ module Tang
 
     STATUSES = ['trialing', 'active', 'past_due', 'canceled', 'unpaid']
 
-    def self.from_stripe(stripe_subscription, customer, plan)
+    def self.from_stripe(stripe_subscription)
+      customer = Tang.customer_class.find_by(stripe_id: stripe_subscription.customer)
+      plan = Plan.find_by(stripe_id: stripe_subscription.plan.id)
+      if customer.present? && plan.present?
+        subscription = Subscription.from_stripe(stripe_subscription, customer, plan)
+        subscription.update(coupon: nil, coupon_start: nil) if stripe_subscription.discount.nil?
+        return subscription
+      end
+      return nil
+    end
+
+    def self.build(stripe_subscription, customer, plan)
       subscription = Subscription.find_or_create_by(stripe_id: stripe_subscription.id) do |s|
         s.customer = customer
         s.plan = plan
