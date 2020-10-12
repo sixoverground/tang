@@ -69,12 +69,12 @@ module Tang
     def update_from_stripe(stripe_invoice)
       changed = false
 
-      if self.period_start != stripe_invoice.period_start
+      if self[:period_start] != stripe_invoice.period_start
         self.period_start = stripe_invoice.period_start
         changed = true
       end
 
-      if self.period_end != stripe_invoice.period_end
+      if self[:period_end] != stripe_invoice.period_end
         self.period_end = stripe_invoice.period_end
         changed = true
       end

@@ -8,7 +8,8 @@ module Tang
   
     it "creates a new charge for an invoice" do
       plan = FactoryBot.create(:plan)
-      stripe_plan = stripe_helper.create_plan(id: plan.stripe_id, amount: plan.amount)
+      stripe_product = stripe_helper.create_product
+      stripe_plan = stripe_helper.create_plan(id: plan.stripe_id, amount: plan.amount, product: stripe_product.id)
 
       customer = FactoryBot.create(:customer)
 

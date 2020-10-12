@@ -14,9 +14,11 @@ end
 
 Given(/^I am subscribed to one of (\d+) plans$/) do |arg1|
   Tang::Plan.destroy_all
-  @stripe_plan ||= StripeMock.create_test_helper.create_plan(id: 'gold')
+  stripe_product ||= StripeMock.create_test_helper.create_product(id: 'gold')
+  @stripe_plan ||= StripeMock.create_test_helper.create_plan(id: 'gold', product: stripe_product.id)
   @plan ||= FactoryBot.create(:plan, stripe_id: @stripe_plan.id, order: 1)
-  @stripe_premium_plan ||= StripeMock.create_test_helper.create_plan(id: 'diamond')
+  stripe_premium_product ||= StripeMock.create_test_helper.create_product(id: 'diamond')
+  @stripe_premium_plan ||= StripeMock.create_test_helper.create_plan(id: 'diamond', product: stripe_premium_product.id)
   @premium_plan ||= FactoryBot.create(:premium_plan, stripe_id: @stripe_premium_plan.id, order: 2)
 
   token = StripeMock.create_test_helper.generate_card_token(address_zip: '90210')
@@ -25,7 +27,8 @@ end
 
 Given(/^I am subscribed to a plan$/) do
   Tang::Plan.destroy_all
-  @stripe_plan ||= StripeMock.create_test_helper.create_plan
+  stripe_product ||= StripeMock.create_test_helper.create_product
+  @stripe_plan ||= StripeMock.create_test_helper.create_plan(product: stripe_product.id)
   @plan ||= FactoryBot.create(:plan, stripe_id: @stripe_plan.id)
 
   token = StripeMock.create_test_helper.generate_card_token(address_zip: '90210')
