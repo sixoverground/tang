@@ -76,7 +76,7 @@ module Tang
         c.duration = stripe_coupon.duration
         c.duration_in_months = stripe_coupon.duration_in_months
         c.max_redemptions = stripe_coupon.max_redemptions
-        c.redeem_by = stripe_coupon.redeem_by
+        c.redeem_by = DateTime.strptime(stripe_coupon.redeem_by.to_s, '%s') if stripe_coupon.redeem_by.present?
       end
 
       return coupon

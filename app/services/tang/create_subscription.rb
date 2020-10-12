@@ -37,7 +37,7 @@ module Tang
         )
 
         # Finalize customer with subscription and payment method
-        finalize_customer(customer, stripe_sub, stripe_card)
+        finalize_customer(customer, subscription, stripe_card)
 
       rescue Stripe::StripeError => e
         subscription.errors[:base] << e.message
@@ -87,11 +87,11 @@ module Tang
       return stripe_sub
     end
 
-    def self.finalize_customer(customer, stripe_sub, stripe_card)
+    def self.finalize_customer(customer, subscription, stripe_card)
       # Remove temporary coupon
       customer.subscription_coupon = nil
       # Save subscription data to customer
-      customer.update_subscription_end(stripe_sub)
+      customer.update_subscription_end(subscription)
       # Save the payment method
       customer.update_card_from_stripe(stripe_card)
     end

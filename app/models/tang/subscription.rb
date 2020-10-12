@@ -52,7 +52,7 @@ module Tang
       customer = Tang.customer_class.find_by(stripe_id: stripe_subscription.customer)
       plan = Plan.find_by(stripe_id: stripe_subscription.plan.id)
       if customer.present? && plan.present?
-        subscription = Subscription.from_stripe(stripe_subscription, customer, plan)
+        subscription = Subscription.build(stripe_subscription, customer, plan)
         subscription.update(coupon: nil, coupon_start: nil) if stripe_subscription.discount.nil?
         return subscription
       end
@@ -66,7 +66,7 @@ module Tang
         s.application_fee_percent = stripe_subscription.application_fee_percent
         s.quantity = stripe_subscription.quantity
         # s.tax_percent = stripe_subscription.tax_percent # removed from api in favor of tax rates
-        s.trial_end = stripe_subscription.trial_end
+        s.trial_end = DateTime.strptime(stripe_subscription.trial_end.to_s, '%s') if stripe_subscription.trial_end.present?
         s.coupon = Coupon.find_by(stripe_id: stripe_subscription.discount.coupon.id) if stripe_subscription.discount.present?
         s.status = stripe_subscription.status
       end
@@ -74,7 +74,7 @@ module Tang
     end
 
     def period_start
-      invoice = invoices.last
+      invoice = invoices.order(:period_start).last
       if invoice.present?
         return invoice.period_start
       end
@@ -82,7 +82,7 @@ module Tang
     end
 
     def period_end
-      invoice = invoices.last
+      invoice = invoices.order(:period_start).last
       if invoice.present?
         return invoice.period_end
       end

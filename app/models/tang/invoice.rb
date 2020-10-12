@@ -49,9 +49,9 @@ module Tang
       invoice = Invoice.find_or_create_by(stripe_id: stripe_invoice.id) do |i|
         i.subscription = subscription
         i.customer = customer
-        i.period_start = stripe_invoice.period_start
-        i.period_end = stripe_invoice.period_end
-        i.date = stripe_invoice.created # changed from date
+        i.period_start = DateTime.strptime(stripe_invoice.period_start.to_s, '%s')
+        i.period_end = DateTime.strptime(stripe_invoice.period_end.to_s, '%s')
+        i.date = DateTime.strptime(stripe_invoice.created.to_s, '%s') # changed from date
         i.currency = stripe_invoice.currency
         i.subtotal = stripe_invoice.subtotal
         # i.tax_percent = stripe_invoice.tax_percent # removed from api, replaced with tax rates
@@ -77,18 +77,21 @@ module Tang
     def update_from_stripe(stripe_invoice)
       changed = false
 
-      if self[:period_start] != stripe_invoice.period_start
-        self.period_start = stripe_invoice.period_start
+      stripe_period_start = DateTime.strptime(stripe_invoice.period_start.to_s, '%s')
+      if self.period_start != stripe_period_start
+        self.period_start = stripe_period_start
         changed = true
       end
 
-      if self[:period_end] != stripe_invoice.period_end
-        self.period_end = stripe_invoice.period_end
+      stripe_period_end = DateTime.strptime(stripe_invoice.period_end.to_s, '%s')
+      if self.period_end != stripe_period_end
+        self.period_end = stripe_period_end
         changed = true
       end
 
-      if self.date != stripe_invoice.created
-        self.date = stripe_invoice.created
+      stripe_created = DateTime.strptime(stripe_invoice.created.to_s, '%s')
+      if self.date != stripe_created
+        self.date = stripe_created
         changed = true
       end
 

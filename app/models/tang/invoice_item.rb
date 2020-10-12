@@ -27,10 +27,8 @@ module Tang
         ii.amount = stripe_invoice_item.amount
         ii.currency = stripe_invoice_item.currency
 
-        period_start = stripe_invoice_item.period.start.to_s
-        ii.period_start = DateTime.strptime(period_start, '%s')
-        period_end = stripe_invoice_item.period.end.to_s
-        ii.period_end = DateTime.strptime(period_end, '%s')
+        ii.period_start = DateTime.strptime(stripe_invoice_item.period.start.to_s, '%s')
+        ii.period_end = DateTime.strptime(stripe_invoice_item.period.end.to_s, '%s')
 
         ii.plan = plan
         ii.proration = stripe_invoice_item.proration

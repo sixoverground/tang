@@ -64,9 +64,8 @@ module Tang
       my_card.update_from_stripe(stripe_card)
     end
 
-    def update_subscription_end(stripe_sub)
-      timestamp = stripe_sub.current_period_end.to_s
-      self.active_until = DateTime.strptime(timestamp, '%s')
+    def update_subscription_end(subscription)
+      self.active_until = subscription.period_end
       self.save!
     end
 

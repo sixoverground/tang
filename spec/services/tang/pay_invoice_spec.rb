@@ -28,17 +28,20 @@ module Tang
       stripe_charge = Stripe::Charge.create(amount: 100, currency: 'usd', customer: stripe_customer.id)
 
       event = StripeMock.mock_webhook_event('invoice.payment_succeeded', id: invoice.stripe_id, subscription: subscription.stripe_id, charge: stripe_charge.id)
-      stripe_charge = event.data.object
+      stripe_invoice = event.data.object
       
       count = Charge.count
       
-      charge = PayInvoice.call(stripe_charge)
+      charge = PayInvoice.call(stripe_invoice)
 
       expect(Charge.count).to eq count + 1
 
       expect(charge.invoice.id).to eq invoice.id
 
       customer.reload
+      invoice.reload
+      subscription.reload
+
       expected_end_time = subscription.period_end
       difference = customer.active_until - expected_end_time
       expect(difference.abs).to be <= 1.day # difference of one day (allow for delay)
