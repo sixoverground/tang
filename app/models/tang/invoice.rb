@@ -19,12 +19,20 @@ module Tang
       self[:period_start] || created_at
     end
 
+    def period_start=(val)
+      self[:period_start] = val
+    end
+
     def period_end
       if subscription.present?
         self[:period_end] || subscription.plan.period_days_from(period_start)
       else
         self.period_start
       end
+    end
+
+    def period_end=(val)
+      self[:period_end] = val
     end
 
     def status
