@@ -15,7 +15,7 @@
   <tbody>
     <% @subscriptions.each do |subscription| %>
       <tr>
-        <td><%= link_to subscription.customer.email, tang.admin_subscription_path(subscription) %></td>
+        <td><%= link_to subscription.customer.email, tang.admin_subscription_path(subscription) if subscription.customer.present? %></td>
         <td><%= subscription.status %></td>
         <td>
           <%= subscription.plan.name %>

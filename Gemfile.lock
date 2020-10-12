@@ -5,8 +5,8 @@ PATH
       aasm (~> 4.11)
       paper_trail (~> 10.3)
       rails (~> 5.1.7)
-      stripe (~> 5.25)
-      stripe_event (~> 2.1)
+      stripe (~> 5.26)
+      stripe_event (~> 2.3)
       will_paginate (~> 3.1)
 
 GEM
@@ -285,11 +285,11 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    stripe (5.25.0)
-    stripe-ruby-mock (2.5.8)
+    stripe (5.26.0)
+    stripe-ruby-mock (3.0.1)
       dante (>= 0.2.0)
       multi_json (~> 1.0)
-      stripe (>= 2.0.3)
+      stripe (> 5, < 6)
     stripe_event (2.3.1)
       activesupport (>= 3.1)
       stripe (>= 2.8, < 6)
@@ -333,7 +333,7 @@ DEPENDENCIES
   rails_best_practices (~> 1.17)
   rspec-rails (~> 4.0.1)
   sass-rails (~> 5.0)
-  stripe-ruby-mock (~> 2.5.2)
+  stripe-ruby-mock (~> 3.0.1)
   tang!
   webpacker (~> 4.x)
 

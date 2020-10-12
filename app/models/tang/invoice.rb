@@ -57,9 +57,39 @@ module Tang
           coupon = Coupon.find_by(stripe_id: stripe_invoice.discount.coupon.id)
           i.coupon = coupon
         end
-      
       end
+
+      if invoice.update_from_stripe(stripe_invoice)
+        invoice.save
+      end
+
       return invoice
+    end
+
+    def update_from_stripe(stripe_invoice)
+      changed = false
+
+      if self.period_start != stripe_invoice.period_start
+        self.period_start = stripe_invoice.period_start
+        changed = true
+      end
+
+      if self.period_end != stripe_invoice.period_end
+        self.period_end = stripe_invoice.period_end
+        changed = true
+      end
+
+      if self.date != stripe_invoice.created
+        self.date = stripe_invoice.created
+        changed = true
+      end
+
+      if self.invoice_pdf != stripe_invoice.invoice_pdf
+        self.invoice_pdf = stripe_invoice.invoice_pdf
+        changed = true
+      end
+
+      return changed
     end
 
     def self.search(query)

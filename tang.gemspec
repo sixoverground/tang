@@ -19,8 +19,8 @@ Gem::Specification.new do |s|
   s.test_files = Dir["spec/**/*"]
   
   s.add_dependency "rails", "~> 5.1.7"
-  s.add_dependency 'stripe', '~> 5.25'
-  s.add_dependency 'stripe_event', '~> 2.1'
+  s.add_dependency 'stripe', '~> 5.26'
+  s.add_dependency 'stripe_event', '~> 2.3'
   s.add_dependency 'paper_trail', '~> 10.3'
   s.add_dependency 'aasm', '~> 4.11'
   s.add_dependency 'will_paginate', '~> 3.1'

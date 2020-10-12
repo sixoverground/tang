@@ -61,7 +61,9 @@ describe 'Stripe Events', type: :request do
   describe 'invoice.created' do
     it 'mocks a stripe webhook' do
       event = StripeMock.mock_webhook_event('invoice.created')
+      puts "event: #{event}"
       invoice_object = event.data.object
+      puts "invoice_object: #{invoice_object}"
       bypass_event_signature(event.to_json)
 
       post '/stripe_event', params: { id: event.id }
@@ -73,7 +75,8 @@ describe 'Stripe Events', type: :request do
 
   describe 'invoice.payment_succeeded' do
     it 'mocks a stripe webhook' do
-      stripe_plan = stripe_helper.create_plan
+      stripe_product = stripe_helper.create_product
+      stripe_plan = stripe_helper.create_plan(product: stripe_product.id)
       customer = FactoryBot.create(:customer)
       stripe_customer = Stripe::Customer.create(
         source: stripe_helper.generate_card_token,
@@ -111,7 +114,8 @@ describe 'Stripe Events', type: :request do
 
   describe 'invoice.payment_failed' do
     it 'mocks a stripe webhook' do
-      stripe_plan = stripe_helper.create_plan
+      stripe_product = stripe_helper.create_product
+      stripe_plan = stripe_helper.create_plan(product: stripe_product.id)
       customer = FactoryBot.create(:customer)
       stripe_customer = Stripe::Customer.create(
         source: stripe_helper.generate_card_token,

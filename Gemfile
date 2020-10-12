@@ -30,7 +30,7 @@ group :test do
   gem 'cucumber-rails', '~> 2.1', require: false
   gem 'factory_bot_rails'
   gem 'database_cleaner'
-  gem 'stripe-ruby-mock', '~> 2.5.2', require: 'stripe_mock'
+  gem 'stripe-ruby-mock', '~> 3.0.1', require: 'stripe_mock'
   gem 'poltergeist'
   gem 'codeclimate-test-reporter', require: nil
 

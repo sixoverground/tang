@@ -3,7 +3,9 @@
   "livemode": false,
   "id": "evt_00000000000000",
   "type": "invoice.created",
+  "status": "paid",
   "object": "event",
+  "api_version": "2020-08-27",
   "data": {
     "object": {
       "created": 1380674206,
@@ -30,7 +32,6 @@
             "quantity": 1,
             "plan": {
               "interval": "month",
-              "name": "Member's Club",
               "amount": 100,
               "currency": "usd",
               "id": "fkx0AFo",
@@ -38,11 +39,11 @@
               "livemode": false,
               "interval_count": 1,
               "trial_period_days": null,
+              "product": "pr_00000000000000",
               "metadata": {}
             },
             "description": null,
-            "metadata": null,
-            "subscription": "su_00000000000000"
+            "metadata": null
           }
         ]
       },
@@ -66,8 +67,8 @@
       "subscription": "sub_00000000000000",
       "metadata": {},
       "description": null,
-      "tax": 0,
-      "invoice_pdf": "pdf_url"
+      "invoice_pdf": "https://pay.stripe.com/invoice/acct_00000000000000/invst_00000000000000/pdf",
+      "tax": null
     }
   }
 }
