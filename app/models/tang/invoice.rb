@@ -78,13 +78,13 @@ module Tang
       changed = false
 
       stripe_period_start = DateTime.strptime(stripe_invoice.period_start.to_s, '%s')
-      if self.period_start != stripe_period_start
+      if self[:period_start] != stripe_period_start
         self.period_start = stripe_period_start
         changed = true
       end
 
       stripe_period_end = DateTime.strptime(stripe_invoice.period_end.to_s, '%s')
-      if self.period_end != stripe_period_end
+      if self[:period_end] != stripe_period_end
         self.period_end = stripe_period_end
         changed = true
       end
