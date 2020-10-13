@@ -74,7 +74,7 @@ module Tang
     end
 
     def period_start
-      invoice = invoices.order(:period_start).last
+      invoice = invoices.order(:date).last
       if invoice.present?
         # return invoice.period_start
         return invoice.date
