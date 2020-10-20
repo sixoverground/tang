@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
 
   s.test_files = Dir["spec/**/*"]
   
-  s.add_dependency "rails", "~> 5.2"
+  s.add_dependency "rails", "~> 6.0"
   s.add_dependency 'stripe', '~> 5.26'
   s.add_dependency 'stripe_event', '~> 2.3'
   s.add_dependency 'paper_trail', '~> 10.3'
