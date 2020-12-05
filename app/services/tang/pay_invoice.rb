@@ -7,6 +7,9 @@ module Tang
       subscription = Subscription.find_by(stripe_id: stripe_invoice.subscription)
       if subscription.nil?
         subscription = Subscription.from_stripe(stripe_subscription)
+      elsif stripe_subscription.discount.nil?
+        # update discount
+        subscription.update(coupon: nil, coupon_start: nil)
       end
 
       # create the invoice
@@ -17,11 +20,6 @@ module Tang
       if stripe_invoice.charge.present?
         stripe_charge = Stripe::Charge.retrieve(stripe_invoice.charge)
         charge = Charge.from_stripe(stripe_charge, invoice)
-      end
-
-      # update discount
-      if stripe_subscription.discount.nil?
-        subscription.update(coupon: nil, coupon_start: nil)
       end
 
       # update customer active until
