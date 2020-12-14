@@ -23,8 +23,10 @@ module Tang
       end
 
       # update customer active until
-      customer = subscription.customer
-      customer.update_subscription_end(subscription)
+      if subscription.present?
+        customer = subscription.customer
+        customer.update_subscription_end(subscription)
+      end
 
       return charge
     end
