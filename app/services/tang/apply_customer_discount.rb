@@ -11,7 +11,7 @@ module Tang
           start_timestamp = DateTime.strptime(start, '%s')
           customer.update(coupon: coupon, coupon_start: start_timestamp)
         rescue Stripe::StripeError => e
-          customer.errors[:base] << e.message
+          customer.errors.add(:base, :invalid, message: e.message)
         end
       end
 

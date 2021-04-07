@@ -9,7 +9,7 @@ module Tang
           c = populate_customer(c, customer)
           c.save
         rescue Stripe::StripeError => e
-          customer.errors[:base] << e.message
+          customer.errors.add(:base, :invalid, message: e.message)
         end
       end
 

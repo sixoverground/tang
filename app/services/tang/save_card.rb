@@ -29,7 +29,7 @@ module Tang
         card.update_from_stripe(stripe_card)
 
       rescue Stripe::StripeError => e
-        card.errors[:base] << e.message
+        card.errors.add(:base, :invalid, message: e.message)
       end
       return card
     end

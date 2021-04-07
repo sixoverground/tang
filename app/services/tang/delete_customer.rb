@@ -6,7 +6,7 @@ module Tang
           c = Stripe::Customer.retrieve(customer.stripe_id)
           c.delete
         rescue Stripe::StripeError => e
-          customer.errors[:base] << e.message
+          customer.errors.add(:base, :invalid, message: e.message)
         end
       end
       return customer

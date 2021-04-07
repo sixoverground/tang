@@ -5,7 +5,7 @@ module Tang
         p = Stripe::Plan.retrieve(plan.stripe_id)
         p.delete
       rescue Stripe::StripeError => e
-        plan.errors[:base] << e.message
+        plan.errors.add(:base, :invalid, message: e.message)
       end
       return plan
     end

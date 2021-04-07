@@ -5,7 +5,7 @@ module Tang
         c = Stripe::Coupon.retrieve(coupon.stripe_id)
         c.delete        
       rescue Stripe::StripeError => e
-        coupon.errors[:base] << e.message
+        coupon.errors.add(:base, :invalid, message: e.message)
       end
       return coupon
     end

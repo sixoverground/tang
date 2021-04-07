@@ -18,7 +18,7 @@ ruby '2.5.8'
 gem 'dotenv-rails', '~> 2.7', require: 'dotenv/rails-now'
 # gem 'jquery-rails'
 gem 'puma'
-gem 'pg', '0.20'
+gem 'pg', '~> 1.2'
 gem 'rails_12factor', group: :production
 gem 'devise', '~> 4.7'
 gem 'sass-rails', '~> 5.0'

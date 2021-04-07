@@ -17,7 +17,7 @@ module Tang
           statement_descriptor: plan.statement_descriptor,
         )
       rescue Stripe::StripeError => e
-        plan.errors[:base] << e.message
+        plan.errors.add(:base, :invalid, message: e.message)
         return plan
       end
 

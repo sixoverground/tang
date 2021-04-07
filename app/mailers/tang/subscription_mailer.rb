@@ -1,6 +1,6 @@
 module Tang
   class SubscriptionMailer < ApplicationMailer
-    add_template_helper(Tang::ApplicationHelper)
+    helper Tang::ApplicationHelper
     default from: Tang.admin_email
 
     def upgraded(subscription)

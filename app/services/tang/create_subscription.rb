@@ -40,7 +40,7 @@ module Tang
         finalize_customer(customer, subscription, stripe_card)
 
       rescue Stripe::StripeError => e
-        subscription.errors[:base] << e.message
+        subscription.errors.add(:base, :invalid, message: e.message)
       end
       return subscription
     end

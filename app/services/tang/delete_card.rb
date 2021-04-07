@@ -7,7 +7,7 @@ module Tang
           card.stripe_id,
         )
       rescue Stripe::StripeError => e
-        card.errors[:base] << e.message
+        card.errors.add(:base, :invalid, message: e.message)
       end
       return card
     end

@@ -14,7 +14,7 @@ module Tang
         s.coupon = subscription.coupon.stripe_id if subscription.coupon.present?
         s.save
       rescue Stripe::StripeError => e
-        subscription.errors[:base] << e.message
+        subscription.errors.add(:base, :invalid, message: e.message)
       end
 
       return subscription

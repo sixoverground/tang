@@ -4,7 +4,7 @@ module Tang
       begin
         Stripe::Subscription.retrieve(subscription.stripe_id).delete_discount()
       rescue Stripe::StripeError => e
-        subscription.errors[:base] << e.message
+        subscription.errors.add(:base, :invalid, message: e.message)
       end
 
       subscription.update(coupon: nil, coupon_start: nil)

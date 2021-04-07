@@ -17,7 +17,7 @@ module Tang
           redeem_by: (coupon.redeem_by.present? ? coupon.redeem_by.to_i : nil)
         )
       rescue Stripe::StripeError => e
-        coupon.errors[:base] << e.message
+        coupon.errors.add(:base, :invalid, message: e.message)
         return coupon
       end
 

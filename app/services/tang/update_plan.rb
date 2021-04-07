@@ -10,7 +10,7 @@ module Tang
         p.name = plan.name
         p.save
       rescue Stripe::StripeError => e
-        plan.errors[:base] << e.message
+        plan.errors.add(:base, :invalid, message: e.message)
       end
 
       return plan

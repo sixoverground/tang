@@ -3,7 +3,7 @@ PATH
   specs:
     tang (0.2.0)
       aasm (~> 4.11)
-      paper_trail (~> 10.3)
+      paper_trail (~> 12.0)
       rails (~> 6.0)
       stripe (~> 5.26)
       stripe_event (~> 2.3)
@@ -185,10 +185,10 @@ GEM
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
     orm_adapter (0.5.0)
-    paper_trail (10.3.1)
-      activerecord (>= 4.2)
+    paper_trail (12.0.0)
+      activerecord (>= 5.2)
       request_store (~> 1.1)
-    pg (0.20.0)
+    pg (1.2.0)
     poltergeist (1.18.1)
       capybara (>= 2.1, < 4)
       cliver (~> 0.3.1)
@@ -353,7 +353,7 @@ DEPENDENCIES
   devise (~> 4.7)
   dotenv-rails (~> 2.7)
   factory_bot_rails
-  pg (= 0.20)
+  pg (~> 1.2)
   poltergeist
   puma
   rails-controller-testing

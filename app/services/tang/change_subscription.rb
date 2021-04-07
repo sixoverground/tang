@@ -10,7 +10,7 @@ module Tang
         subscription.plan = plan
         subscription.save!
       rescue Stripe::StripeError => e
-        subscription.errors[:base] << e.message
+        subscription.errors.add(:base, :invalid, message: e.message)
       end
 
       return subscription
