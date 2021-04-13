@@ -15,8 +15,6 @@ Gem::Specification.new do |s|
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "LICENSE", "Rakefile", "README.md"]
-
-  s.test_files = Dir["spec/**/*"]
   
   s.add_dependency "rails", "~> 6.0"
   s.add_dependency 'stripe', '~> 5.26'
