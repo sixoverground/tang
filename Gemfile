@@ -24,6 +24,7 @@ gem 'devise', '~> 4.7'
 gem 'sass-rails', '~> 6.0'
 gem 'bootstrap', '~> 4.1'
 gem 'webpacker', '~> 4.x'
+gem 'rubocop', require: false
 
 group :test do
   gem 'rspec-rails', '~> 4.0.1'
