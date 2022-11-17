@@ -12,7 +12,7 @@ module Tang
           p.interval = stripe_plan.interval
           p.interval_count = stripe_plan.interval_count
           p.name = stripe_plan.product.name
-          p.statement_descriptor = stripe_plan.statement_descriptor
+          # p.statement_descriptor = stripe_plan.statement_descriptor
           p.trial_period_days = stripe_plan.trial_period_days
         end
       end

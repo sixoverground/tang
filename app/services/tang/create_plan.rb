@@ -14,8 +14,8 @@ module Tang
           amount: plan.amount,
           interval: plan.interval,
           interval_count: plan.interval_count,
-          trial_period_days: plan.trial_period_days,
-          statement_descriptor: plan.statement_descriptor
+          trial_period_days: plan.trial_period_days
+          # statement_descriptor: plan.statement_descriptor
         )
       rescue Stripe::StripeError => e
         plan.errors.add(:base, :invalid, message: e.message)
