@@ -1,4 +1,4 @@
-class CreateTangCards < ActiveRecord::Migration
+class CreateTangCards < ActiveRecord::Migration[4.2]
   def change
     create_table :tang_cards do |t|
       t.integer :customer_id, index: true

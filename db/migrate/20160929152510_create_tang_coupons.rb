@@ -1,4 +1,4 @@
-class CreateTangCoupons < ActiveRecord::Migration
+class CreateTangCoupons < ActiveRecord::Migration[4.2]
   def change
     create_table :tang_coupons do |t|
       t.string :stripe_id

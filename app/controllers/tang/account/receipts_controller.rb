@@ -7,5 +7,11 @@ module Tang
                                    paginate(page: params[:page]).
                                    order(date: :desc)
     end
+
+    def download
+      invoice = Invoice.find(params[:id])
+      invoice = RefreshInvoicePdf.call(invoice)
+      redirect_to invoice.invoice_pdf
+    end
   end
 end

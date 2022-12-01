@@ -1,6 +1,6 @@
 <li class="list-group-item">
   <div class="float-xs-right">
-    <%= link_to 'Download PDF', invoice.invoice_pdf, class: 'btn btn-secondary', target: '_blank' %>
+    <%= link_to 'Download PDF', download_account_receipt_path(invoice) %>
   </div>
   <h5 class="list-group-item-heading"><%= number_to_currency(invoice.total.to_f / 100.0) %></h5>
   <p class="list-group-item-text">Date <%= invoice.date.strftime('%b %d, %Y') %></p>

@@ -1,4 +1,4 @@
-class CreateTangPlans < ActiveRecord::Migration
+class CreateTangPlans < ActiveRecord::Migration[4.2]
   def change
     create_table :tang_plans do |t|
       t.string :stripe_id

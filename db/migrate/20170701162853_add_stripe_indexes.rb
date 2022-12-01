@@ -1,4 +1,4 @@
-class AddStripeIndexes < ActiveRecord::Migration
+class AddStripeIndexes < ActiveRecord::Migration[4.2]
   def change
     add_index Tang.customer_class.to_s.downcase.pluralize, :stripe_id, unique: true
     add_index :tang_cards, :stripe_id, unique: true
