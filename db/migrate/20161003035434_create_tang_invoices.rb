@@ -1,4 +1,4 @@
-class CreateTangInvoices < ActiveRecord::Migration
+class CreateTangInvoices < ActiveRecord::Migration[4.2]
   def change
     create_table :tang_invoices do |t|
       t.string :stripe_id

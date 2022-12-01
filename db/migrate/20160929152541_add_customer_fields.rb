@@ -1,4 +1,4 @@
-class AddCustomerFields < ActiveRecord::Migration
+class AddCustomerFields < ActiveRecord::Migration[4.2]
   def change
     add_column Tang.customer_class.to_s.downcase.pluralize, :stripe_id, :string
     add_column Tang.customer_class.to_s.downcase.pluralize, :account_balance, :integer
