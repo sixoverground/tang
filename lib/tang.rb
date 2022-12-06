@@ -30,7 +30,7 @@ module Tang
     Tang.admin_layout = 'application'
     Tang.pricing_layout = 'application'
     Tang.delayed_email = false
-    Tang.admin_payment_succeeded_enabled = false
+    Tang.admin_payment_succeeded_enabled = true
     Tang.admin_payment_failed_enabled = false
   end
 
