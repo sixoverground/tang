@@ -17,6 +17,8 @@ module Tang
   mattr_accessor :admin_layout
   mattr_accessor :pricing_layout
   mattr_accessor :delayed_email
+  mattr_accessor :admin_payment_succeeded_enabled
+  mattr_accessor :admin_payment_failed_enabled
 
   class << self
     Tang.default_currency = 'usd'
@@ -28,6 +30,8 @@ module Tang
     Tang.admin_layout = 'application'
     Tang.pricing_layout = 'application'
     Tang.delayed_email = false
+    Tang.admin_payment_succeeded_enabled = false
+    Tang.admin_payment_failed_enabled = false
   end
 
   def self.setup #(&block)

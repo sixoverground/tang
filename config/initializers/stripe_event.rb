@@ -48,10 +48,14 @@ StripeEvent.configure do |events|
     if charge.present?
       if Tang.delayed_email
         Tang::StripeMailer.customer_payment_succeeded(charge).deliver_later
-        Tang::StripeMailer.admin_payment_succeeded(charge).deliver_later
+        if Tang.admin_payment_succeeded_enabled
+          Tang::StripeMailer.admin_payment_succeeded(charge).deliver_later
+        end
       else
         Tang::StripeMailer.customer_payment_succeeded(charge).deliver_now
+        if Tang.admin_payment_succeeded_enabled
         Tang::StripeMailer.admin_payment_succeeded(charge).deliver_now
+        end
       end
     end
   end
@@ -64,10 +68,14 @@ StripeEvent.configure do |events|
     if charge.present?
       if Tang.delayed_email
         Tang::StripeMailer.customer_payment_failed(charge).deliver_later
+        if Tang.admin_payment_failed_enabled
         Tang::StripeMailer.admin_payment_failed(charge).deliver_later
+        end
       else
         Tang::StripeMailer.customer_payment_failed(charge).deliver_now
+        if Tang.admin_payment_failed_enabled
         Tang::StripeMailer.admin_payment_failed(charge).deliver_now
+        end
       end
     end
   end
