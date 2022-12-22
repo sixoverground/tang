@@ -43,24 +43,23 @@ StripeEvent.configure do |events|
   # end
 
   events.subscribe('invoice.payment_succeeded') do |event|
-    logger.debug "invoice.payment_succeeded hit"
+    puts "invoice.payment_succeeded hit"
     invoice = event.data.object
     charge = Tang::PayInvoice.call(invoice)
-    Tang::StripeMailer.admin_payment_succeeded(charge).deliver_now
-    # if charge.present?
-    #   logger.debug "admin email deliver now hit"
-    #   if Tang.delayed_email
-    #     Tang::StripeMailer.customer_payment_succeeded(charge).deliver_later
-    #     if Tang.admin_payment_succeeded_enabled
-    #       Tang::StripeMailer.admin_payment_succeeded(charge).deliver_later
-    #     end
-    #   else
-    #     Tang::StripeMailer.customer_payment_succeeded(charge).deliver_now
-    #     if Tang.admin_payment_succeeded_enabled
-    #     Tang::StripeMailer.admin_payment_succeeded(charge).deliver_now
-    #     end
-    #   end
-    # end
+    if charge.present?
+      puts "admin email deliver now hit"
+      if Tang.delayed_email
+        Tang::StripeMailer.customer_payment_succeeded(charge).deliver_later
+        if Tang.admin_payment_succeeded_enabled
+          Tang::StripeMailer.admin_payment_succeeded(charge).deliver_later
+        end
+      else
+        Tang::StripeMailer.customer_payment_succeeded(charge).deliver_now
+        if Tang.admin_payment_succeeded_enabled
+        Tang::StripeMailer.admin_payment_succeeded(charge).deliver_now
+        end
+      end
+    end
   end
 
   # Subscription lifecycle errors
