@@ -56,7 +56,7 @@ StripeEvent.configure do |events|
       else
         Tang::StripeMailer.customer_payment_succeeded(charge).deliver_now
         if Tang.admin_payment_succeeded_enabled
-          put "admin_payment_succeeded_enabled: #{admin_payment_succeeded_enabled}"
+          puts "admin_payment_succeeded_enabled: #{admin_payment_succeeded_enabled}"
         Tang::StripeMailer.admin_payment_succeeded(charge).deliver_now
         end
       end
