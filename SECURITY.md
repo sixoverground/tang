@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-The following Tang versions are currently being supported with security updates.
+The following versions are currently being supported with security updates.
 
 | Version | Supported          |
 | ------- | ------------------ |
@@ -11,4 +11,5 @@ The following Tang versions are currently being supported with security updates.
 
 ## Reporting a Vulnerability
 
-If you believe you have found a security vulnerability in Tang, we encourage you to let us know right away. We will investigate all legitimate reports and do our best to quickly fix the problem.
+If you believe you have found a security vulnerability, we encourage you to let us know right away. 
+We will investigate all legitimate reports and do our best to quickly fix the problem.
