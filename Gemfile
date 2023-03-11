@@ -27,7 +27,7 @@ gem 'webpacker', '~> 5.x'
 
 group :test do
   gem 'codeclimate-test-reporter', require: nil
-  gem 'cucumber-rails', '~> 2.5', require: false
+  gem 'cucumber-rails', require: false
   gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'poltergeist'

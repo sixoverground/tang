@@ -98,7 +98,7 @@ GEM
       sexp_processor
     codeclimate-test-reporter (1.0.9)
       simplecov (<= 0.13)
-    concurrent-ruby (1.1.10)
+    concurrent-ruby (1.2.2)
     crass (1.0.6)
     cucumber (7.1.0)
       builder (~> 3.2, >= 3.2.4)
@@ -126,9 +126,9 @@ GEM
     cucumber-html-formatter (17.0.0)
       cucumber-messages (~> 17.1, >= 17.1.0)
     cucumber-messages (17.1.1)
-    cucumber-rails (2.5.1)
+    cucumber-rails (2.6.1)
       capybara (>= 2.18, < 4)
-      cucumber (>= 3.2, < 8)
+      cucumber (>= 3.2, < 9)
       mime-types (~> 3.3)
       nokogiri (~> 1.10)
       railties (>= 5.0, < 8)
@@ -180,7 +180,7 @@ GEM
     method_source (1.0.0)
     mime-types (3.4.1)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2022.0105)
+    mime-types-data (3.2023.0218.1)
     mini_mime (1.1.2)
     mini_portile2 (2.6.1)
     minitest (5.15.0)
@@ -270,7 +270,7 @@ GEM
       thor (~> 1.0)
     rainbow (3.1.1)
     rake (13.0.6)
-    regexp_parser (2.5.0)
+    regexp_parser (2.7.0)
     request_store (1.5.1)
       rack (>= 1.4)
     require_all (3.0.0)
@@ -345,7 +345,7 @@ GEM
     thor (1.2.1)
     tilt (2.0.10)
     timeout (0.3.1)
-    tzinfo (2.0.5)
+    tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.3.0)
     warden (1.2.9)
@@ -355,14 +355,14 @@ GEM
       rack-proxy (>= 0.6.1)
       railties (>= 5.2)
       semantic_range (>= 2.3.0)
-    webrick (1.7.0)
+    webrick (1.8.1)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     will_paginate (3.3.1)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.6)
+    zeitwerk (2.6.7)
 
 PLATFORMS
   ruby
@@ -371,7 +371,7 @@ DEPENDENCIES
   bootstrap (~> 4.1)
   brakeman (~> 3.3)
   codeclimate-test-reporter
-  cucumber-rails (~> 2.5)
+  cucumber-rails
   database_cleaner
   devise (~> 4.7)
   dotenv-rails (~> 2.7)
