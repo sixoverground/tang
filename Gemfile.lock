@@ -98,7 +98,7 @@ GEM
       sexp_processor
     codeclimate-test-reporter (1.0.9)
       simplecov (<= 0.13)
-    concurrent-ruby (1.1.10)
+    concurrent-ruby (1.2.2)
     crass (1.0.6)
     cucumber (7.1.0)
       builder (~> 3.2, >= 3.2.4)
@@ -149,9 +149,9 @@ GEM
     diff-lcs (1.5.0)
     digest (3.1.1)
     docile (1.1.5)
-    dotenv (2.7.6)
-    dotenv-rails (2.7.6)
-      dotenv (= 2.7.6)
+    dotenv (2.8.1)
+    dotenv-rails (2.8.1)
+      dotenv (= 2.8.1)
       railties (>= 3.2)
     erubi (1.12.0)
     erubis (2.7.0)
@@ -345,7 +345,7 @@ GEM
     thor (1.2.1)
     tilt (2.0.10)
     timeout (0.3.1)
-    tzinfo (2.0.5)
+    tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.3.0)
     warden (1.2.9)
@@ -362,7 +362,7 @@ GEM
     will_paginate (3.3.1)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.6)
+    zeitwerk (2.6.7)
 
 PLATFORMS
   ruby
@@ -374,7 +374,7 @@ DEPENDENCIES
   cucumber-rails (~> 2.5)
   database_cleaner
   devise (~> 4.7)
-  dotenv-rails (~> 2.7)
+  dotenv-rails (~> 2.8)
   factory_bot_rails
   pg (~> 1.2)
   poltergeist
