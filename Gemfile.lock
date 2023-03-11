@@ -83,7 +83,7 @@ GEM
       autoprefixer-rails (>= 9.1.0)
       popper_js (>= 1.14.3, < 2)
       sassc-rails (>= 2.0.0)
-    brakeman (3.7.2)
+    brakeman (5.4.1)
     builder (3.2.4)
     capybara (3.35.3)
       addressable
@@ -369,7 +369,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootstrap (~> 4.1)
-  brakeman (~> 3.3)
+  brakeman (~> 5.4)
   codeclimate-test-reporter
   cucumber-rails
   database_cleaner

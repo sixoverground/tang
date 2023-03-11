@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'stripe_event', '~> 2.3'
   s.add_dependency 'will_paginate', '~> 3.1'
 
-  s.add_development_dependency 'brakeman', '~> 3.3'
+  s.add_development_dependency 'brakeman', '~> 5.4'
   s.add_development_dependency 'rails_best_practices', '~> 1.17'
   s.metadata['rubygems_mfa_required'] = 'true'
 end
