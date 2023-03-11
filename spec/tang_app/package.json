@@ -7,7 +7,7 @@
     "@rails/webpacker": "^5.4.4"
   },
   "devDependencies": {
-    "webpack-dev-server": "^4.11.0"
+    "webpack-dev-server": "^4.11.1"
   },
   "scripts": {
     "build": "RAILS_ENV=development NODE_ENV=development bin/webpack --watch"
