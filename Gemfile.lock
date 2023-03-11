@@ -149,9 +149,9 @@ GEM
     diff-lcs (1.5.0)
     digest (3.1.1)
     docile (1.1.5)
-    dotenv (2.7.6)
-    dotenv-rails (2.7.6)
-      dotenv (= 2.7.6)
+    dotenv (2.8.1)
+    dotenv-rails (2.8.1)
+      dotenv (= 2.8.1)
       railties (>= 3.2)
     erubi (1.12.0)
     erubis (2.7.0)
@@ -374,7 +374,7 @@ DEPENDENCIES
   cucumber-rails
   database_cleaner
   devise (~> 4.7)
-  dotenv-rails (~> 2.7)
+  dotenv-rails (~> 2.8)
   factory_bot_rails
   pg (~> 1.2)
   poltergeist
