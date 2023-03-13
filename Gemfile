@@ -16,7 +16,7 @@ gemspec
 ruby '2.5.8'
 
 gem 'bootstrap', '~> 4.1'
-gem 'devise', '~> 4.7'
+gem 'devise', '~> 4.9'
 gem 'dotenv-rails', '~> 2.8', require: 'dotenv/rails-now'
 gem 'pg', '~> 1.4'
 gem 'puma'
