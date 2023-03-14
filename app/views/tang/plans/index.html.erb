@@ -11,7 +11,7 @@
     <% if user_signed_in? %>
       <% if current_user.subscription.present? %>
         <% # downgrade to free %>
-        <%= link_to 'Choose Plan', account_subscription_path, method: :delete, data: { confirm: 'Are you sure you want to cancel your current plan?' }, class: 'pricing__action' %>
+        <%= link_to 'Choose Plan', account_subscription_path, method: :delete, data: { confirm: 'Are you sure you want to cancel your current plan?', turbo_confirm: 'Are you sure you want to cancel your current plan?', turbo_method: :delete }, class: 'pricing__action' %>
       <% else %>
         <% # already on free plan %>
         <%= button_tag 'Selected', class: 'pricing__action', disabled: 'disabled' %>

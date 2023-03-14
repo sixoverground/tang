@@ -130,7 +130,7 @@
         <%= link_to 'Change Coupon', tang.admin_customer_coupon_path(@customer), class: 'nav-link' %>
       </li>
       <li class="nav-item">
-        <%= link_to 'Remove Coupon', tang.admin_customer_coupon_path(@customer), method: :delete, data: { confirm: 'Are you sure?' }, class: 'nav-link' %>
+        <%= link_to 'Remove Coupon', tang.admin_customer_coupon_path(@customer), method: :delete, data: { confirm: 'Are you sure?', turbo_confirm: 'Are you sure?', turbo_method: :delete }, class: 'nav-link' %>
       </li>
     <% else %>
       <li class="nav-item">
@@ -152,6 +152,6 @@
 
 <hr>
 
-<p><%= link_to 'Delete Customer', tang.admin_customer_path(@customer), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger float-md-right' %></p>
+<p><%= link_to 'Delete Customer', tang.admin_customer_path(@customer), method: :delete, data: { confirm: 'Are you sure?', turbo_confirm: 'Are you sure?', turbo_method: :delete }, class: 'btn btn-danger float-md-right' %></p>
 
 <%= render 'footer' %>

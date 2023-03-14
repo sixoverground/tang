@@ -3,6 +3,17 @@
 
 <% if @subscription.present? %>
 
+  <% if @subscription.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <h4 class="alert-heading"><%= pluralize(@subscription.errors.count, "error") %> prohibited this subscription from being saved:</h4>
+      <ul class="mb-0">
+        <% @subscription.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
   <% if @next_plan.present? %>
     <div class="alert alert-info">
       <h4 class="alert-heading">Upgrade to the <%= @next_plan.name %> Plan</h4>
@@ -34,7 +45,7 @@
       <%= link_to 'Downgrade', account_subscription_path(plan: @previous_plan), method: :patch, class: 'btn btn-secondary' %>
     <% end %>
 
-    <%= link_to 'Cancel Plan', account_subscription_path, method: :delete, data: { confirm: 'Are you sure you want to cancel your current plan?' }, class: 'btn btn-secondary' %>
+    <%= link_to 'Cancel Plan', account_subscription_path, method: :delete, data: { confirm: 'Are you sure you want to cancel your current plan?', turbo_confirm: 'Are you sure you want to cancel your current plan?', turbo_method: :delete }, class: 'btn btn-secondary' %>
   </div>
 
   <br>
@@ -95,7 +106,7 @@
   <% if current_customer.subscription.coupon.present? %>
     <h4>Discount</h4>
     <p><%= "#{current_customer.subscription.coupon.stripe_id} - #{coupon_off(current_customer.subscription.coupon)} #{current_customer.subscription.coupon.formatted_duration}" %></p>
-    <%= link_to 'Remove discount', account_coupon_path, method: :delete, class: 'btn btn-danger' %>
+    <%= link_to 'Remove discount', account_coupon_path, data: { turbo_method: :delete }, method: :delete, class: 'btn btn-danger' %>
   <% else %>
     <h4>Redeem coupon</h4>
     <%= form_for current_customer.subscription.build_coupon, url: tang.account_coupon_path, html: { class: 'form-inline' } do |f| %>
@@ -110,7 +121,7 @@
   <% if current_customer.subscription_coupon.present? %>
     <h4>Discount</h4>
     <p><%= "#{current_customer.subscription_coupon.stripe_id} - #{coupon_off(current_customer.subscription_coupon)} #{current_customer.subscription_coupon.formatted_duration}" %></p>
-    <%= link_to 'Remove discount', account_coupon_path, method: :delete, class: 'btn btn-danger' %>
+    <%= link_to 'Remove discount', account_coupon_path, data: { turbo_method: :delete }, method: :delete, class: 'btn btn-danger' %>
   <% else %>
     <h4>Redeem coupon</h4>
     <%= form_for current_customer.build_subscription_coupon, url: tang.account_coupon_path, html: { class: 'form-inline' } do |f| %>

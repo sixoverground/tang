@@ -63,6 +63,7 @@ module Tang
         @plans = Plan.order(:order)
         @next_plan = @plans.where("tang_plans.order > ?", @subscription.plan.order).first
         @previous_plan = @plans.where("tang_plans.order < ?", @subscription.plan.order).last
+        @receipts = current_customer.charges.order(created: :desc).limit(5)
         render :show
       end
     end

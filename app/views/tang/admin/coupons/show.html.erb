@@ -60,6 +60,6 @@
 </div>
 
 <hr>
-<%= link_to 'Delete Coupon', tang.admin_coupon_path(@coupon), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger float-md-right' %>
+<%= link_to 'Delete Coupon', tang.admin_coupon_path(@coupon), method: :delete, data: { confirm: 'Are you sure?', turbo_confirm: 'Are you sure?', turbo_method: :delete }, class: 'btn btn-danger float-md-right' %>
 
 <%= render 'footer' %>

@@ -18,6 +18,8 @@
 import registerElements from '@sixoverground/tang'
 import '@sixoverground/tang/lib/css/main.css'
 
+require("@rails/ujs").start()
+
 console.log('Hello World from Webpacker 1')
 
 registerElements()

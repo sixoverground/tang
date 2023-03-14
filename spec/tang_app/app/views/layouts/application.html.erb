@@ -29,7 +29,7 @@
             <% end %>
             <%= link_to 'Account', tang.account_subscription_path, class: 'dropdown-item' %>
 
-            <%= link_to 'Sign out', main_app.destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
+            <%= link_to 'Sign out', main_app.destroy_user_session_path, data: { turbo_method: :delete }, method: :delete, class: 'dropdown-item' %>
           </div>
         </li>
       <% else %>
