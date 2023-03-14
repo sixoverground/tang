@@ -23,7 +23,7 @@ gem 'puma'
 gem 'rails_12factor', group: :production
 gem 'rubocop', require: false
 gem 'sass-rails', '~> 6.0'
-gem 'webpacker', '~> 5.x'
+gem 'webpacker', '~> 6.rc'
 
 group :test do
   gem 'codeclimate-test-reporter', require: nil
