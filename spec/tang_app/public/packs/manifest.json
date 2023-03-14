@@ -1,14 +1,24 @@
 {
-  "application.js": "/packs/js/application-67d08d8fa52b14f84a2b.js",
-  "application.js.map": "/packs/js/application-67d08d8fa52b14f84a2b.js.map",
+  "application.css": "http://localhost:3000/packs/css/application.css",
+  "application.js": "http://localhost:3000/packs/js/application.js",
+  "css/application.css.map": "http://localhost:3000/packs/css/application.css.map",
   "entrypoints": {
     "application": {
-      "js": [
-        "/packs/js/application-67d08d8fa52b14f84a2b.js"
-      ],
-      "js.map": [
-        "/packs/js/application-67d08d8fa52b14f84a2b.js.map"
-      ]
+      "assets": {
+        "js": [
+          "http://localhost:3000/packs/js/runtime.js",
+          "http://localhost:3000/packs/js/vendors-node_modules_rails_ujs_lib_assets_compiled_rails-ujs_js-node_modules_sixoverground_ta-bc65ed.js",
+          "http://localhost:3000/packs/js/application.js"
+        ],
+        "css": [
+          "http://localhost:3000/packs/css/application.css"
+        ]
+      }
     }
-  }
+  },
+  "js/application.js.map": "http://localhost:3000/packs/js/application.js.map",
+  "js/runtime.js.map": "http://localhost:3000/packs/js/runtime.js.map",
+  "js/vendors-node_modules_rails_ujs_lib_assets_compiled_rails-ujs_js-node_modules_sixoverground_ta-bc65ed.js": "http://localhost:3000/packs/js/vendors-node_modules_rails_ujs_lib_assets_compiled_rails-ujs_js-node_modules_sixoverground_ta-bc65ed.js",
+  "js/vendors-node_modules_rails_ujs_lib_assets_compiled_rails-ujs_js-node_modules_sixoverground_ta-bc65ed.js.map": "http://localhost:3000/packs/js/vendors-node_modules_rails_ujs_lib_assets_compiled_rails-ujs_js-node_modules_sixoverground_ta-bc65ed.js.map",
+  "runtime.js": "http://localhost:3000/packs/js/runtime.js"
 }

@@ -5,12 +5,24 @@
   "license": "MIT",
   "dependencies": {
     "@rails/ujs": "^7.0.4-3",
-    "@rails/webpacker": "^5.4.4",
+    "@rails/webpacker": "^6.0.0-rc.6",
     "@sixoverground/tang": "^0.2.1",
-    "jquery": "^3.6.4"
+    "babel-plugin-macros": "^3.1.0",
+    "jquery": "^3.6.4",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0"
   },
   "devDependencies": {
+    "@webpack-cli/serve": "^2.0.1",
+    "css-loader": "^6.7.3",
+    "mini-css-extract-plugin": "^2.7.3",
+    "style-loader": "^3.3.2",
     "webpack-dev-server": "^4.11.1"
+  },
+  "babel": {
+    "presets": [
+      "./node_modules/@rails/webpacker/package/babel/preset.js"
+    ]
   },
   "scripts": {
     "build": "RAILS_ENV=development NODE_ENV=development bin/webpack --watch"
