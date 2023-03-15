@@ -81,7 +81,7 @@ class CreateTang < ActiveRecord::Migration
       t.timestamp :coupon_start
 
       t.string :status
-      
+
       t.timestamps null: false
     end
   end

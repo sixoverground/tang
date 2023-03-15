@@ -6,9 +6,9 @@ class User < ActiveRecord::Base
 
   include Tang::Customer
 
-  ROLES = %i[admin]
+  ROLES = %i[admin].freeze
 
   def admin?
-    self.role == 'admin'
+    role == 'admin'
   end
 end

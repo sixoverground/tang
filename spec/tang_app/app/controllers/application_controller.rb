@@ -6,8 +6,8 @@ class ApplicationController < ActionController::Base
   before_action :set_paper_trail_whodunnit
 
   def ensure_plan!(plan)
-    unless current_user.subscribed_to? plan
-      redirect_to '/', alert: 'You do not have access to that.'
-    end
+    return if current_user.subscribed_to? plan
+
+    redirect_to '/', alert: 'You do not have access to that.'
   end
 end

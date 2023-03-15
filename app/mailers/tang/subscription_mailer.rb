@@ -5,7 +5,10 @@ module Tang
 
     def upgraded(subscription)
       @subscription = subscription
-      mail(to: @subscription.customer.email, subject: "Oh, wow! Excited to have you on our #{@subscription.plan.name} plan!")
+      mail(
+        to: @subscription.customer.email,
+        subject: "Oh, wow! Excited to have you on our #{@subscription.plan.name} plan!"
+      )
     end
   end
 end

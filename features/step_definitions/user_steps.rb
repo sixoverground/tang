@@ -48,12 +48,12 @@ end
 
 def delete_customer
   @customer ||= Tang.customer_class.where(email: @customer_attributes[:email]).first
-  @customer.destroy unless @customer.nil?
+  @customer&.destroy
 end
 
 def delete_admin
   @admin ||= Tang.customer_class.where(email: @admin_attributes[:email]).first
-  @admin.destroy unless @admin.nil?
+  @admin&.destroy
 end
 
 # def sign_up_customer
@@ -94,23 +94,23 @@ def sign_in_admin
   click_button 'Log in'
 end
 
-Given /^I am not logged in$/ do
+Given(/^I am not logged in$/) do
   sign_out
 end
 
-Given /^I am logged in as a customer$/ do
+Given(/^I am logged in as a customer$/) do
   sign_out
   create_customer
   sign_in_customer
 end
 
-Given /^I am logged in as a customer with a coupon$/ do
+Given(/^I am logged in as a customer with a coupon$/) do
   sign_out
   create_customer_with_coupon
   sign_in_customer
 end
 
-Given /^I am logged in as an admin$/ do
+Given(/^I am logged in as an admin$/) do
   sign_out
   create_admin
   sign_in_admin

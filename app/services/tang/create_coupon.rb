@@ -1,9 +1,7 @@
 module Tang
   class CreateCoupon
     def self.call(coupon)
-      if !coupon.valid?
-        return coupon
-      end
+      return coupon unless coupon.valid?
 
       begin
         Stripe::Coupon.create(
@@ -21,7 +19,7 @@ module Tang
         return coupon
       end
 
-      return coupon
+      coupon
     end
   end
 end

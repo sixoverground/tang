@@ -1,4 +1,4 @@
-require_dependency "tang/application_controller"
+require_dependency 'tang/application_controller'
 
 module Tang
   class Admin::CouponsController < Admin::ApplicationController
@@ -6,14 +6,13 @@ module Tang
 
     # GET /coupons
     def index
-      @coupons = Coupon.all.
-                        paginate(page: params[:page]).
-                        order(:stripe_id)
+      @coupons = Coupon.all
+                       .paginate(page: params[:page])
+                       .order(:stripe_id)
     end
 
     # GET /coupons/1
-    def show
-    end
+    def show; end
 
     # GET /coupons/new
     def new
@@ -38,14 +37,19 @@ module Tang
     end
 
     private
-      # Use callbacks to share common setup or constraints between actions.
-      def set_coupon
-        @coupon = Coupon.find(params[:id])
-      end
 
-      # Only allow a trusted parameter "white list" through.
-      def coupon_params
-        params.require(:coupon).permit(:stripe_id, :duration, :amount_off, :currency, :duration_in_months, :max_redemptions, :percent_off, :redeem_by)
-      end
+    # Use callbacks to share common setup or constraints between actions.
+    def set_coupon
+      @coupon = Coupon.find(params[:id])
+    end
+
+    # Only allow a trusted parameter "white list" through.
+    def coupon_params
+      params.require(:coupon)
+            .permit(
+              :stripe_id, :duration, :amount_off, :currency,
+              :duration_in_months, :max_redemptions, :percent_off, :redeem_by
+            )
+    end
   end
 end

@@ -1,4 +1,4 @@
-require_dependency "tang/application_controller"
+require_dependency 'tang/application_controller'
 
 module Tang
   class Admin::CustomersController < Admin::ApplicationController
@@ -6,18 +6,17 @@ module Tang
 
     # GET /customers
     def index
-      @customers = Tang.customer_class.where.not(stripe_id: nil).
-                        paginate(page: params[:page]).
-                        order(:email)
+      @customers = Tang.customer_class
+                       .where.not(stripe_id: nil)
+                       .paginate(page: params[:page])
+                       .order(:email)
     end
 
     # GET /customers/1
-    def show
-    end
+    def show; end
 
     # GET /customers/1/edit
-    def edit
-    end
+    def edit; end
 
     # PATCH/PUT /customers/1
     def update
@@ -53,14 +52,15 @@ module Tang
     end
 
     private
-      # Use callbacks to share common setup or constraints between actions.
-      def set_customer
-        @customer = Tang.customer_class.find(params[:id])
-      end
 
-      # Only allow a trusted parameter "white list" through.
-      def customer_params
-        params.require(Tang.customer_class.to_s.downcase).permit(:email, :account_balance)
-      end
+    # Use callbacks to share common setup or constraints between actions.
+    def set_customer
+      @customer = Tang.customer_class.find(params[:id])
+    end
+
+    # Only allow a trusted parameter "white list" through.
+    def customer_params
+      params.require(Tang.customer_class.to_s.downcase).permit(:email, :account_balance)
+    end
   end
 end

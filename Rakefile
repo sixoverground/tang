@@ -14,7 +14,7 @@ RDoc::Task.new(:rdoc) do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-APP_RAKEFILE = File.expand_path("../spec/tang_app/Rakefile", __FILE__)
+APP_RAKEFILE = File.expand_path('../spec/tang_app/Rakefile', __FILE__)
 load 'rails/tasks/engine.rake'
 
 load 'rails/tasks/statistics.rake'
@@ -26,7 +26,7 @@ load './lib/tasks/tang_tasks.rake'
 begin
   require 'rspec/core/rake_task'
   RSpec::Core::RakeTask.new(spec: 'app:db:test:prepare')
-  task :cucumber => 'app:cucumber'
+  task cucumber: 'app:cucumber'
   task default: [:spec, :cucumber]
 rescue LoadError
   puts 'rspec/core/rake_task not required'
@@ -53,5 +53,5 @@ namespace :rails do
     Dir.chdir('spec/tang_app') do
       system('rails c')
     end
-  end 
+  end
 end

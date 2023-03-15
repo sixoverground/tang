@@ -1,8 +1,8 @@
-Before do |scenario|
+Before do
   StripeMock.toggle_debug(true)
   StripeMock.start
 end
 
-After do |scenario|
+After do
   StripeMock.stop
 end

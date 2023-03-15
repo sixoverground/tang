@@ -12,7 +12,7 @@ module Tang
     # scope :paid, -> { joins(:charge) }
 
     def charge
-      self.charges.order(:created_at).last
+      charges.order(:created_at).last
     end
 
     def period_start
@@ -27,7 +27,7 @@ module Tang
       if subscription.present?
         self[:period_end] || subscription.plan.period_days_from(period_start)
       else
-        self.period_start
+        period_start
       end
     end
 
@@ -67,11 +67,8 @@ module Tang
         end
       end
 
-      if invoice.update_from_stripe(stripe_invoice)
-        invoice.save
-      end
-
-      return invoice
+      invoice.save if invoice.update_from_stripe(stripe_invoice)
+      invoice
     end
 
     def update_from_stripe(stripe_invoice)
@@ -90,17 +87,17 @@ module Tang
       end
 
       stripe_created = DateTime.strptime(stripe_invoice.created.to_s, '%s')
-      if self.date != stripe_created
+      if date != stripe_created
         self.date = stripe_created
         changed = true
       end
 
-      if self.invoice_pdf != stripe_invoice.invoice_pdf
+      if invoice_pdf != stripe_invoice.invoice_pdf
         self.invoice_pdf = stripe_invoice.invoice_pdf
         changed = true
       end
 
-      return changed
+      changed
     end
 
     def self.search(query)
@@ -108,14 +105,16 @@ module Tang
       if query.present?
         q = "%#{query.downcase}%"
         customer_table = connection.quote_table_name(Customer.table_name)
-        invoices = Invoice.joins("left join tang_charges on tang_invoices.id = tang_charges.invoice_id").
-            joins("left join tang_subscriptions on tang_subscriptions.id = tang_invoices.subscription_id").
-            joins("left join #{customer_table} on #{customer_table}.id = tang_invoices.customer_id").
-            where("lower(tang_charges.stripe_id) like ? or lower(tang_subscriptions.stripe_id) like ? or lower(#{customer_table}.stripe_id) like ?", 
-                q, q, q).
-            distinct
+        invoices = Invoice.joins('left join tang_charges on tang_invoices.id = tang_charges.invoice_id')
+                          .joins('left join tang_subscriptions on tang_subscriptions.id = tang_invoices.subscription_id')
+                          .joins("left join #{customer_table} on #{customer_table}.id = tang_invoices.customer_id")
+                          .where(
+                            "lower(tang_charges.stripe_id) like ? or lower(tang_subscriptions.stripe_id) like ? or lower(#{customer_table}.stripe_id) like ?",
+                            q, q, q
+                          )
+                          .distinct
       end
-      return invoices
+      invoices
     end
   end
 end

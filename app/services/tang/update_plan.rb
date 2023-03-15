@@ -1,9 +1,7 @@
 module Tang
   class UpdatePlan
     def self.call(plan)
-      if !plan.valid?
-        return plan
-      end
+      return plan unless plan.valid?
 
       begin
         p = Stripe::Plan.retrieve(plan.stripe_id)
@@ -13,7 +11,7 @@ module Tang
         plan.errors.add(:base, :invalid, message: e.message)
       end
 
-      return plan
+      plan
     end
   end
 end

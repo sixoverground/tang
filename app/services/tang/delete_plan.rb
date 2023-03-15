@@ -7,7 +7,7 @@ module Tang
       rescue Stripe::StripeError => e
         plan.errors.add(:base, :invalid, message: e.message)
       end
-      return plan
+      plan
     end
   end
 end

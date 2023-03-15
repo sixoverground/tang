@@ -10,7 +10,7 @@ module Tang
 
       customer.update(coupon: nil, coupon_start: nil)
 
-      return customer
+      customer
     end
   end
 end

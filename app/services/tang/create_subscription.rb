@@ -2,14 +2,14 @@ module Tang
   class CreateSubscription
     def self.call(plan, customer, token)
       subscription = Subscription.new(
-        plan: plan, 
-        customer: customer, 
+        plan: plan,
+        customer: customer,
         coupon: customer.subscription_coupon
       )
       return subscription if plan.nil? || customer.nil?
 
-      # TODO: Check for token presence. 
-      # A nil token will throw an error when calling create_stripe_subscription 
+      # TODO: Check for token presence.
+      # A nil token will throw an error when calling create_stripe_subscription
       # because the customer does not have a payment method.
 
       begin
@@ -33,32 +33,30 @@ module Tang
         # Save the payment method
         stripe_card = Stripe::Customer.retrieve_source(
           stripe_customer.id,
-          stripe_customer.default_source,
+          stripe_customer.default_source
         )
 
         # Finalize customer with subscription and payment method
         finalize_customer(customer, subscription, stripe_card)
-
       rescue Stripe::StripeError => e
         subscription.errors.add(:base, :invalid, message: e.message)
       end
-      return subscription
+      subscription
     end
 
     def self.create_stripe_customer(customer, token)
       if customer.coupon.present?
-        stripe_customer = Stripe::Customer.create(
+        Stripe::Customer.create(
           source: token,
           email: customer.email,
           coupon: customer.coupon.stripe_id
         )
       else
-        stripe_customer = Stripe::Customer.create(
+        Stripe::Customer.create(
           source: token,
           email: customer.email
         )
       end
-      return stripe_customer
     end
 
     def self.update_stripe_customer(customer, token)
@@ -68,23 +66,22 @@ module Tang
         stripe_customer.source = token
         stripe_customer.save
       end
-      return stripe_customer
+      stripe_customer
     end
 
     def self.create_stripe_subscription(customer, plan)
       if customer.subscription_coupon.present?
-        stripe_sub = Stripe::Subscription.create(
+        Stripe::Subscription.create(
           customer: customer.stripe_id,
           plan: plan.stripe_id,
           coupon: customer.subscription_coupon.stripe_id
         )
       else
-        stripe_sub = Stripe::Subscription.create(
+        Stripe::Subscription.create(
           customer: customer.stripe_id,
           plan: plan.stripe_id
         )
       end
-      return stripe_sub
     end
 
     def self.finalize_customer(customer, subscription, stripe_card)

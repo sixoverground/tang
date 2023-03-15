@@ -1,7 +1,6 @@
 module Tang
   class PayInvoice
     def self.call(stripe_invoice)
-
       # ensure the subscription exists
       stripe_subscription = Stripe::Subscription.retrieve(stripe_invoice.subscription)
       subscription = Subscription.find_by(stripe_id: stripe_invoice.subscription)
@@ -28,7 +27,7 @@ module Tang
         customer.update_subscription_end(subscription)
       end
 
-      return charge
+      charge
     end
   end
 end

@@ -20,13 +20,13 @@ end
 When(/^I create a new plan with:$/) do |table|
   visit tang.new_admin_plan_path
   table.rows_hash.each do |field, value|
-    if ['Currency', 'Interval'].include? field
+    if %w[Currency Interval].include? field
       select value, from: field
     else
       fill_in field, with: value
     end
   end
-  click_on "Create Plan"
+  click_on 'Create Plan'
 end
 
 When(/^I change a subscription to the new plan$/) do
@@ -37,21 +37,21 @@ When(/^I change a subscription to the new plan$/) do
 end
 
 Then(/^I should see a plan created success message$/) do
-  expect(page).to have_content "Plan was successfully created."
+  expect(page).to have_content 'Plan was successfully created.'
 end
 
 Then(/^I should see the following plan:$/) do |table|
-  table.rows_hash.each do |field, value|
+  table.rows_hash.each do |_field, value|
     expect(page).to have_content value
   end
 end
 
 Then(/^I should see a subscription updated success message$/) do
-  expect(page).to have_content "Subscription was successfully updated."
+  expect(page).to have_content 'Subscription was successfully updated.'
 end
 
 Then(/^I should see the following subscription:$/) do |table|
-  table.rows_hash.each do |field, value|
+  table.rows_hash.each do |_field, value|
     expect(page).to have_content value
   end
 end

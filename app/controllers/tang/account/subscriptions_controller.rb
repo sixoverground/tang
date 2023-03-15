@@ -1,19 +1,17 @@
-require_dependency "tang/application_controller"
+require_dependency 'tang/application_controller'
 
 module Tang
   class Account::SubscriptionsController < Account::ApplicationController
     before_action :set_subscription, only: [:show, :edit, :update, :destroy]
 
     def show
-      if !current_customer.stripe_enabled?
-        render :not_stripe and return
-      end
+      render :not_stripe and return unless current_customer.stripe_enabled?
 
       @plans = Plan.where(interval: 'month').order(:order)
 
       if @subscription.present? && @subscription.plan.present?
-        @next_plan = @plans.where("tang_plans.order > ?", @subscription.plan.order).first
-        @previous_plan = @plans.where("tang_plans.order < ?", @subscription.plan.order).last
+        @next_plan = @plans.where('tang_plans.order > ?', @subscription.plan.order).first
+        @previous_plan = @plans.where('tang_plans.order < ?', @subscription.plan.order).last
       else
         @next_plan = @plans.first
         @previous_plan = nil
@@ -61,8 +59,8 @@ module Tang
         redirect_to account_subscription_path, notice: 'Subscription was successfully changed.'
       else
         @plans = Plan.order(:order)
-        @next_plan = @plans.where("tang_plans.order > ?", @subscription.plan.order).first
-        @previous_plan = @plans.where("tang_plans.order < ?", @subscription.plan.order).last
+        @next_plan = @plans.where('tang_plans.order > ?', @subscription.plan.order).first
+        @previous_plan = @plans.where('tang_plans.order < ?', @subscription.plan.order).last
         @receipts = current_customer.charges.order(created: :desc).limit(5)
         render :show
       end

@@ -1,4 +1,4 @@
-require_dependency "tang/application_controller"
+require_dependency 'tang/application_controller'
 
 module Tang
   class Admin::SubscriptionsController < Admin::ApplicationController
@@ -6,19 +6,17 @@ module Tang
 
     # GET /subscriptions
     def index
-      @subscriptions = Subscription.includes(:customer).
-                                    where.not(status: :canceled).
-                                    paginate(page: params[:page]).
-                                    order("#{Customer.table_name}.email")
+      @subscriptions = Subscription.includes(:customer)
+                                   .where.not(status: :canceled)
+                                   .paginate(page: params[:page])
+                                   .order("#{Customer.table_name}.email")
     end
 
     # GET /subscriptions/1
-    def show
-    end
+    def show; end
 
     # GET /subscriptions/1/edit
-    def edit
-    end
+    def edit; end
 
     # PATCH/PUT /subscriptions/1
     def update
@@ -60,14 +58,15 @@ module Tang
     end
 
     private
-      # Use callbacks to share common setup or constraints between actions.
-      def set_subscription
-        @subscription = Subscription.find(params[:id])
-      end
 
-      # Only allow a trusted parameter "white list" through.
-      def subscription_params
-        params.require(:subscription).permit(:plan_id, :quantity, :trial_end)
-      end
+    # Use callbacks to share common setup or constraints between actions.
+    def set_subscription
+      @subscription = Subscription.find(params[:id])
+    end
+
+    # Only allow a trusted parameter "white list" through.
+    def subscription_params
+      params.require(:subscription).permit(:plan_id, :quantity, :trial_end)
+    end
   end
 end

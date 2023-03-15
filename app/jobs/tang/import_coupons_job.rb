@@ -9,9 +9,9 @@ module Tang
         Coupon.from_stripe(stripe_coupon)
       end
 
-      if stripe_coupons.has_more
-        Tang::ImportCouponsJob.perform_now(stripe_coupons.data.last.id)
-      end
+      return unless stripe_coupons.has_more
+
+      Tang::ImportCouponsJob.perform_now(stripe_coupons.data.last.id)
     end
   end
 end

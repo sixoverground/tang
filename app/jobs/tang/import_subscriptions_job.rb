@@ -20,10 +20,10 @@ module Tang
 
     def import_subscription(stripe_subscription)
       subscription = Subscription.from_stripe(stripe_subscription)
-      if subscription.present?
-        # Handle removed discounts
-        subscription.update(coupon: nil, coupon_start: nil) if stripe_subscription.discount.nil?
-      end
+      return unless subscription.present?
+
+      # Handle removed discounts
+      subscription.update(coupon: nil, coupon_start: nil) if stripe_subscription.discount.nil?
     end
   end
 end

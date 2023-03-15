@@ -2,11 +2,6 @@ require 'will_paginate/view_helpers/action_view'
 
 module Tang
   module ApplicationHelper
-
-    # def created_date(date)
-    #   date.strftime('%Y/%m/%d')
-    # end
-
     def created_datetime(date)
       date.strftime('%Y/%m/%d %H:%M')
     end
@@ -39,28 +34,24 @@ module Tang
     end
 
     def will_paginate(collection_or_options = nil, options = {})
-      if collection_or_options.is_a? Hash
-        options, collection_or_options = collection_or_options, nil
-      end
-      unless options[:renderer]
-        options = options.merge renderer: BootstrapLinkRenderer
-      end
+      options, collection_or_options = collection_or_options, nil if collection_or_options.is_a? Hash
+      options = options.merge renderer: BootstrapLinkRenderer unless options[:renderer]
       super(*[collection_or_options, options].compact)
     end
 
     class BootstrapLinkRenderer < WillPaginate::ActionView::LinkRenderer
-      ELLIPSIS = "&hellip;"
+      ELLIPSIS = '&hellip;'.freeze
 
       def to_html
         list_items = pagination.map do |item|
           case item
-            when Fixnum
-              page_number(item)
-            else
-              send(item)
+          when Integer
+            page_number(item)
+          else
+            send(item)
           end
         end.join(@options[:link_separator])
-        tag("ul", list_items, class: ul_class)
+        tag('ul', list_items, class: ul_class)
       end
 
       def container_attributes
@@ -73,41 +64,44 @@ module Tang
         link_options = @options[:link_options] || {}
 
         if page == current_page
-          tag("li", tag('span', page.to_s + ' <span class="sr-only">(current)</span>', class: 'page-link'), class: "page-item active")
+          tag(
+            'li',
+            tag('span', "#{page} <span class=\"sr-only\">(current)</span>", class: 'page-link'),
+            class: 'page-item active'
+          )
         else
-          tag("li", link(page, page, link_options.merge(rel: rel_value(page), class: 'page-link')), class: 'page-item')
+          tag('li', link(page, page, link_options.merge(rel: rel_value(page), class: 'page-link')), class: 'page-item')
         end
       end
 
       def previous_or_next_page(page, text, classname)
         link_options = @options[:link_options] || {}
         if page
-          tag("li", link(text, page, link_options.merge(class: 'page-link')), class: "%s page-item" % classname)
+          tag('li', link(text, page, link_options.merge(class: 'page-link')), class: format('%s page-item', classname))
         else
-          tag("li", tag('span', text, class: 'page-link'), class: "%s page-item disabled" % classname)
+          tag('li', tag('span', text, class: 'page-link'), class: format('%s page-item disabled', classname))
         end
       end
 
       def gap
-        tag("li", tag("span", ELLIPSIS), class: "page-item disabled")
+        tag('li', tag('span', ELLIPSIS), class: 'page-item disabled')
       end
 
       def previous_page
         @options[:previous_label] = '<span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span>'
-        num = @collection.current_page > 1 && @collection.current_page - 1
-        previous_or_next_page(num, @options[:previous_label], "prev")
+        num = @collection.current_page > 1 && (@collection.current_page - 1)
+        previous_or_next_page(num, @options[:previous_label], 'prev')
       end
 
       def next_page
         @options[:next_label] = '<span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span>'
-        num = @collection.current_page < @collection.total_pages && @collection.current_page + 1
-        previous_or_next_page(num, @options[:next_label], "next")
+        num = @collection.current_page < @collection.total_pages && (@collection.current_page + 1)
+        previous_or_next_page(num, @options[:next_label], 'next')
       end
 
       def ul_class
-        [@options[:class]].compact.join(" ")
+        [@options[:class]].compact.join(' ')
       end
     end
-
   end
 end

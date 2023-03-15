@@ -1,20 +1,19 @@
 require File.expand_path('../boot', __FILE__)
 
 # Pick the frameworks you want:
-require "active_record/railtie"
-require "action_controller/railtie"
-require "action_mailer/railtie"
-require "action_view/railtie"
-require "sprockets/railtie"
-# require "rails/test_unit/railtie"
-require "sass-rails"
+require 'active_record/railtie'
+require 'action_controller/railtie'
+require 'action_mailer/railtie'
+require 'action_view/railtie'
+require 'sprockets/railtie'
+require 'sass-rails'
 
 Bundler.require(*Rails.groups)
 
 require 'dotenv'
 Dotenv.load(File.expand_path('../../../../.env', __FILE__))
 
-require "tang"
+require 'tang'
 
 module TangApp
   class Application < Rails::Application
@@ -36,4 +35,3 @@ module TangApp
     config.action_mailer.preview_path = File.expand_path('../../../../spec/mailers/previews', __FILE__)
   end
 end
-

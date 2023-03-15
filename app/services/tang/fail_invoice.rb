@@ -18,11 +18,10 @@ module Tang
         subscription = Subscription.from_stripe(stripe_subscription)
         invoice.update(subscription: subscription)
       end
-      if subscription.present?
-        subscription.fail! if !subscription.past_due?
-      end
-      
-      return charge
+
+      subscription.fail! if subscription.present? && !subscription.past_due?
+
+      charge
     end
   end
 end

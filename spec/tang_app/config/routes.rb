@@ -3,5 +3,5 @@ Rails.application.routes.draw do
   get :diamond, to: 'diamond#index'
   get :gold, to: 'gold#index'
   root 'home#index'
-  mount Tang::Engine => "/"
+  mount Tang::Engine => '/'
 end

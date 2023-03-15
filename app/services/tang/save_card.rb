@@ -1,11 +1,11 @@
 module Tang
   class SaveCard
     def self.call(customer, token)
-      if customer.card.present?
-        card = customer.card
-      else
-        card = Card.new(customer: customer)
-      end
+      card = if customer.card.present?
+               customer.card
+             else
+               Card.new(customer: customer)
+             end
 
       begin
         if customer.stripe_id.present?
@@ -24,14 +24,13 @@ module Tang
         # Save the payment method
         stripe_card = Stripe::Customer.retrieve_source(
           cu.id,
-          cu.default_source,
+          cu.default_source
         )
         card.update_from_stripe(stripe_card)
-
       rescue Stripe::StripeError => e
         card.errors.add(:base, :invalid, message: e.message)
       end
-      return card
+      card
     end
   end
 end

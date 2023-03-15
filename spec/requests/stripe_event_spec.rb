@@ -83,13 +83,14 @@ describe 'Stripe Events', type: :request do
       )
       subscription = FactoryBot.create(:subscription, stripe_id: stripe_customer.subscriptions.first.id)
       stripe_charge = Stripe::Charge.create(
-        amount: stripe_plan.amount, 
+        amount: stripe_plan.amount,
         currency: stripe_plan.currency,
         customer: stripe_customer.id
       )
       invoice = FactoryBot.create(:invoice, subscription: subscription)
-      
-      event = StripeMock.mock_webhook_event('invoice.payment_succeeded', 
+
+      event = StripeMock.mock_webhook_event(
+        'invoice.payment_succeeded',
         subscription: subscription.stripe_id,
         charge: stripe_charge.id,
         id: invoice.stripe_id
@@ -122,13 +123,14 @@ describe 'Stripe Events', type: :request do
       )
       subscription = FactoryBot.create(:subscription, stripe_id: stripe_customer.subscriptions.first.id)
       stripe_charge = Stripe::Charge.create(
-        amount: stripe_plan.amount, 
+        amount: stripe_plan.amount,
         currency: stripe_plan.currency,
         customer: stripe_customer.id
       )
       invoice = FactoryBot.create(:invoice, subscription: subscription)
 
-      event = StripeMock.mock_webhook_event('invoice.payment_failed',
+      event = StripeMock.mock_webhook_event(
+        'invoice.payment_failed',
         subscription: subscription.stripe_id,
         charge: stripe_charge.id,
         id: invoice.stripe_id

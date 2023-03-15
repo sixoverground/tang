@@ -1,4 +1,4 @@
-require_dependency "tang/application_controller"
+require_dependency 'tang/application_controller'
 
 module Tang
   class PlansController < ApplicationController

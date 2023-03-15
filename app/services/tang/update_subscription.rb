@@ -1,9 +1,7 @@
 module Tang
   class UpdateSubscription
     def self.call(subscription)
-      if !subscription.valid?
-        return subscription
-      end
+      return subscription unless subscription.valid?
 
       begin
         s = Stripe::Subscription.retrieve(subscription.stripe_id)
@@ -17,7 +15,7 @@ module Tang
         subscription.errors.add(:base, :invalid, message: e.message)
       end
 
-      return subscription
+      subscription
     end
   end
 end

@@ -46,7 +46,9 @@ module Tang
     before_save :check_for_upgrade
     after_save :handle_upgrade
 
-    STATUSES = ['trialing', 'active', 'past_due', 'canceled', 'unpaid']
+    attr_writer :end_trial_now, :upgraded
+
+    STATUSES = %w[trialing active past_due canceled unpaid].freeze
 
     def self.from_stripe(stripe_subscription)
       customer = Tang.customer_class.find_by(stripe_id: stripe_subscription.customer)
@@ -56,38 +58,35 @@ module Tang
         subscription.update(coupon: nil, coupon_start: nil) if stripe_subscription.discount.nil?
         return subscription
       end
-      return nil
+      nil
     end
 
     def self.build(stripe_subscription, customer, plan)
-      subscription = Subscription.find_or_create_by(stripe_id: stripe_subscription.id) do |s|
+      Subscription.find_or_create_by(stripe_id: stripe_subscription.id) do |s|
         s.customer = customer
         s.plan = plan
         s.application_fee_percent = stripe_subscription.application_fee_percent
         s.quantity = stripe_subscription.quantity
         # s.tax_percent = stripe_subscription.tax_percent # removed from api in favor of tax rates
-        s.trial_end = DateTime.strptime(stripe_subscription.trial_end.to_s, '%s') if stripe_subscription.trial_end.present?
-        s.coupon = Coupon.find_by(stripe_id: stripe_subscription.discount.coupon.id) if stripe_subscription.discount.present?
+        if stripe_subscription.trial_end.present?
+          s.trial_end = DateTime.strptime(stripe_subscription.trial_end.to_s, '%s')
+        end
+        if stripe_subscription.discount.present?
+          s.coupon = Coupon.find_by(stripe_id: stripe_subscription.discount.coupon.id)
+        end
         s.status = stripe_subscription.status
       end
-      return subscription
     end
 
     def period_start
       invoice = invoices.order(:date).last
-      if invoice.present?
-        # return invoice.period_start
-        return invoice.date
-      end
-      return created_at
+      return invoice.date if invoice.present?
+
+      created_at
     end
 
     def period_end
-      # invoice = invoices.order(:period_start).last
-      # if invoice.present?
-      #   return invoice.period_end
-      # end
-      return plan.period_days_from(period_start)
+      plan.period_days_from(period_start)
     end
 
     def quantity
@@ -95,35 +94,28 @@ module Tang
     end
 
     def stripe_trial_end
-      return 'now' if self.end_trial_now
-      return self.trial_end.to_i if self.trial_end.present?
-      return nil
+      return 'now' if end_trial_now
+      return trial_end.to_i if trial_end.present?
+
+      nil
     end
 
     def end_trial_now
       @end_trial_now || false
     end
 
-    def end_trial_now=(val)
-      @end_trial_now = val
-    end
-
     def upgraded
       @upgraded || false
     end
 
-    def upgraded=(val)
-      @upgraded = val
-    end
-
     def discount_for_plan(plan)
       amount_off = 0
-      if self.coupon.percent_off.present?
-        amount_off = (self.coupon.percent_off.to_f / 100.0) * plan.amount.to_f
-      elsif self.coupon.amount_off.present?
-        amount_off = self.coupon.amount_off
+      if coupon.percent_off.present?
+        amount_off = (coupon.percent_off.to_f / 100.0) * plan.amount.to_f
+      elsif coupon.amount_off.present?
+        amount_off = coupon.amount_off
       end
-      return amount_off
+      amount_off
     end
 
     private
@@ -133,19 +125,19 @@ module Tang
     # end
 
     def check_for_upgrade
-      if plan_id_changed?
-        old_plan = Plan.find(plan_id_was) if plan_id_was.present?
-        self.upgraded = true if old_plan.nil? || old_plan.order < plan.order
-      end
+      return unless plan_id_changed?
+
+      old_plan = Plan.find(plan_id_was) if plan_id_was.present?
+      self.upgraded = true if old_plan.nil? || old_plan.order < plan.order
     end
 
     def handle_upgrade
-      if self.upgraded
-        if Tang.delayed_email
-          SubscriptionMailer.upgraded(self).deliver_later
-        else
-          SubscriptionMailer.upgraded(self).deliver_now
-        end
+      return unless upgraded
+
+      if Tang.delayed_email
+        SubscriptionMailer.upgraded(self).deliver_later
+      else
+        SubscriptionMailer.upgraded(self).deliver_now
       end
     end
 

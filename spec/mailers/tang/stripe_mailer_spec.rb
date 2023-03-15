@@ -1,4 +1,4 @@
-require "rails_helper"
+require 'rails_helper'
 
 module Tang
   RSpec.describe StripeMailer, type: :mailer do
@@ -23,7 +23,7 @@ module Tang
       it 'should send a payment succeeded notification' do
         charge = FactoryBot.create(:charge)
         mail = StripeMailer.admin_payment_succeeded(charge)
-        expect(mail.subject).to eq "Woo! Charge succeeded!"
+        expect(mail.subject).to eq 'Woo! Charge succeeded!'
       end
     end
 
@@ -31,10 +31,8 @@ module Tang
       it 'should send a receipt' do
         charge = FactoryBot.create(:charge)
         mail = StripeMailer.customer_payment_succeeded(charge)
-        expect(mail.subject).to eq "Thank you!"
+        expect(mail.subject).to eq 'Thank you!'
       end
     end
-
-
   end
 end

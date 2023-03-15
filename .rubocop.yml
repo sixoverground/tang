@@ -5,3 +5,7 @@ Style/Documentation:
   Enabled: false
 Style/FrozenStringLiteralComment:
   Enabled: false
+Style/ClassAndModuleChildren:
+  Enabled: false
+Style/SymbolArray:
+  Enabled: false

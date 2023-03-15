@@ -11,7 +11,7 @@ module Tang
         end
       end
 
-      return invoice
+      invoice
     end
   end
 end

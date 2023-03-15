@@ -12,25 +12,27 @@ module Tang
 
     def import_customer(stripe_customer)
       customer = Tang.customer_class.find_by(email: stripe_customer.email)
-      if customer.present?
-        customer = update_customer(customer, stripe_customer)
+      return unless customer.present?
 
-        # import card
-        if stripe_customer.default_source.present?
-          stripe_card = Stripe::Customer.retrieve_source(
-            stripe_customer.id,
-            stripe_customer.default_source,
-          )
-          Card.from_stripe(stripe_card, customer)
-        end
-      end
+      customer = update_customer(customer, stripe_customer)
+
+      # import card
+      return unless stripe_customer.default_source.present?
+
+      stripe_card = Stripe::Customer.retrieve_source(
+        stripe_customer.id,
+        stripe_customer.default_source
+      )
+      Card.from_stripe(stripe_card, customer)
     end
 
     def update_customer(customer, stripe_customer)
       customer.stripe_id = stripe_customer.id if customer.stripe_id.nil?
-      customer.coupon = Coupon.find_by(stripe_id: stripe_customer.discount.coupon.id) if stripe_customer.discount.present?
+      if stripe_customer.discount.present?
+        customer.coupon = Coupon.find_by(stripe_id: stripe_customer.discount.coupon.id)
+      end
       customer.save
-      return customer
+      customer
     end
   end
 end

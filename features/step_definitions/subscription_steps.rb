@@ -12,7 +12,7 @@ Given(/^there is a trial plan available$/) do
   @plan ||= FactoryBot.create(:plan, stripe_id: @stripe_plan.id, trial_period_days: 30)
 end
 
-Given(/^I am subscribed to one of (\d+) plans$/) do |arg1|
+Given(/^I am subscribed to one of (\d+) plans$/) do |_plan_count|
   Tang::Plan.destroy_all
   stripe_product ||= StripeMock.create_test_helper.create_product(id: 'gold')
   @stripe_plan ||= StripeMock.create_test_helper.create_plan(id: 'gold', product: stripe_product.id)
@@ -53,12 +53,10 @@ When(/^I complete the payment form with:$/) do |table|
   cvc = find_field('CVC').value
   address_zip = find_field('Postal code').value
 
-  if number == '4000 0000 0000 0002'
-    StripeMock.prepare_card_error(:card_declined, :new_customer)
-  end
+  StripeMock.prepare_card_error(:card_declined, :new_customer) if number == '4000 0000 0000 0002'
 
   token = StripeMock.create_test_helper.generate_card_token(
-    name: name, 
+    name: name,
     number: number,
     exp: exp,
     cvc: cvc,
@@ -67,7 +65,7 @@ When(/^I complete the payment form with:$/) do |table|
 
   page.execute_script "window.testStripeToken = '#{token}';"
 
-  click_on "Submit Payment"
+  click_on 'Submit Payment'
   # sleep 3
 end
 
@@ -79,7 +77,7 @@ end
 # Then
 
 Then(/^I should see a subscription created success message$/) do
-  expect(page).to have_content "Subscription was successfully created."
+  expect(page).to have_content 'Subscription was successfully created.'
 end
 
 Then(/^I should see my current subscription$/) do
@@ -100,16 +98,13 @@ Then(/^I should receive a free trial period$/) do
 end
 
 Then(/^I should see a subscription changed success message$/) do
-  expect(page).to have_content "Subscription was successfully changed."
+  expect(page).to have_content 'Subscription was successfully changed.'
 end
 
 Then(/^I should see a subscription cancelled success message$/) do
-  expect(page).to have_content "Subscription was successfully cancelled."
+  expect(page).to have_content 'Subscription was successfully cancelled.'
 end
 
 Then(/^I should see my free subscription$/) do
   expect(page).to have_content "You're currently on the Free Plan."
 end
-
-
-

@@ -9,7 +9,7 @@ module Tang
     it 'creates a new charge for an invoice' do
       plan = FactoryBot.build(:plan)
       stripe_product = stripe_helper.create_product
-      stripe_plan = stripe_helper.create_plan(id: plan.stripe_id, amount: plan.amount, product: stripe_product.id)
+      stripe_helper.create_plan(id: plan.stripe_id, amount: plan.amount, product: stripe_product.id)
 
       customer = FactoryBot.create(:customer)
 
@@ -28,8 +28,12 @@ module Tang
       invoice = FactoryBot.create(:invoice, subscription: subscription, customer: customer)
       stripe_charge = Stripe::Charge.create(amount: 100, currency: 'usd', customer: stripe_customer.id)
 
-      event = StripeMock.mock_webhook_event('invoice.payment_succeeded', id: invoice.stripe_id,
-                                                                         subscription: subscription.stripe_id, charge: stripe_charge.id)
+      event = StripeMock.mock_webhook_event(
+        'invoice.payment_succeeded',
+        id: invoice.stripe_id,
+        subscription: subscription.stripe_id,
+        charge: stripe_charge.id
+      )
       stripe_invoice = event.data.object
 
       count = Charge.count

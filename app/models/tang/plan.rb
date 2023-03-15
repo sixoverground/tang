@@ -10,11 +10,27 @@ module Tang
     validates :name, presence: true
     validates :amount, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
     validates :currency, length: { is: 3 }
-    validates :interval, inclusion: { in: %w(day week month year) }
-    validates :interval_count, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 1 }, allow_nil: true, if: -> { interval == 'year' }
-    validates :interval_count, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 12 }, allow_nil: true, if: -> { interval == 'month' }
-    validates :interval_count, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 52 }, allow_nil: true, if: -> { interval == 'week' }
-    validates :interval_count, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 365 }, allow_nil: true, if: -> { interval == 'day' }
+    validates :interval, inclusion: { in: %w[day week month year] }
+    validates :interval_count, numericality: {
+      only_integer: true,
+      greater_than: 0,
+      less_than_or_equal_to: 1
+    }, allow_nil: true, if: -> { interval == 'year' }
+    validates :interval_count, numericality: {
+      only_integer: true,
+      greater_than: 0,
+      less_than_or_equal_to: 12
+    }, allow_nil: true, if: -> { interval == 'month' }
+    validates :interval_count, numericality: {
+      only_integer: true,
+      greater_than: 0,
+      less_than_or_equal_to: 52
+    }, allow_nil: true, if: -> { interval == 'week' }
+    validates :interval_count, numericality: {
+      only_integer: true,
+      greater_than: 0,
+      less_than_or_equal_to: 365
+    }, allow_nil: true, if: -> { interval == 'day' }
     validates :trial_period_days, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true
     validates :statement_descriptor, length: { maximum: 22 }, format: { without: /[<>"']/ }, allow_nil: true
 
@@ -23,17 +39,16 @@ module Tang
     before_update :update_stripe_plan
     before_destroy :delete_stripe_plan # should be soft delete
 
-    INTERVALS = ['day', 'week', 'month', 'year']
+    INTERVALS = %w[day week month year].freeze
 
     def period_days_from(date)
-      if interval == 'week'
-        return date + interval_count.weeks
-      elsif interval == 'month'
-        return date + interval_count.months
-      elsif interval == 'year'
-        return date + interval_count.years
-      end
-      return date + interval_count.days
+      return date + interval_count.weeks if interval == 'week'
+
+      return date + interval_count.months if interval == 'month'
+
+      return date + interval_count.years if interval == 'year'
+
+      date + interval_count.days
     end
 
     def interval_count
@@ -43,8 +58,8 @@ module Tang
     private
 
     def default_values
-      self.currency = Tang.default_currency if self.currency.nil?
-      self.order = 0 if self.order.nil?
+      self.currency = Tang.default_currency if currency.nil?
+      self.order = 0 if order.nil?
     end
 
     def create_stripe_plan

@@ -3,11 +3,11 @@ module Tang
     def self.call(coupon)
       begin
         c = Stripe::Coupon.retrieve(coupon.stripe_id)
-        c.delete        
+        c.delete
       rescue Stripe::StripeError => e
         coupon.errors.add(:base, :invalid, message: e.message)
       end
-      return coupon
+      coupon
     end
   end
 end

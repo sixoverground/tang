@@ -1,9 +1,7 @@
 module Tang
   class UpdateCoupon
     def self.call(coupon)
-      if !coupon.valid?
-        return coupon
-      end
+      return coupon unless coupon.valid?
 
       begin
         c = Stripe::Coupon.retrieve(coupon.stripe_id)
@@ -13,7 +11,7 @@ module Tang
         coupon.errors.add(:base, :invalid, message: e.message)
       end
 
-      return coupon
+      coupon
     end
   end
 end

@@ -1,7 +1,7 @@
 module Tang
   class UpdateCustomer
     def self.call(customer)
-      return customer if !customer.valid?
+      return customer unless customer.valid?
 
       if customer.stripe_id.present?
         begin
@@ -13,7 +13,7 @@ module Tang
         end
       end
 
-      return customer
+      customer
     end
 
     def self.populate_customer(stripe_customer, customer)
@@ -22,7 +22,7 @@ module Tang
       stripe_customer.business_vat_id = customer.business_vat_id if customer.business_vat_id.present?
       stripe_customer.description = customer.description
       stripe_customer.coupon = customer.coupon.stripe_id if customer.coupon.present?
-      return stripe_customer
+      stripe_customer
     end
   end
 end

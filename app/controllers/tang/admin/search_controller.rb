@@ -1,4 +1,4 @@
-require_dependency "tang/application_controller"
+require_dependency 'tang/application_controller'
 
 module Tang
   class Admin::SearchController < Admin::ApplicationController
@@ -18,41 +18,42 @@ module Tang
     private
 
     def search_charges
-      return Charge.search(@query)
+      Charge.search(@query)
     end
 
     def search_customers
-      return Customer.search(@query)
+      Customer.search(@query)
     end
 
     def search_plans
       plans = Plan.none
       if @query.present?
         q = "%#{@query.downcase}%"
-        plans = Plan.where("lower(tang_plans.stripe_id) like ? or lower(tang_plans.name) like ?",
-                q, q).
-            distinct
+        plans = Plan.where('lower(tang_plans.stripe_id) like ? or lower(tang_plans.name) like ?',
+                           q,
+                           q)
+                    .distinct
       end
-      return plans
+      plans
     end
 
     def search_coupons
       coupons = Coupon.none
       if @query.present?
         q = "%#{@query.downcase}%"
-        coupons = Coupon.where("lower(tang_coupons.stripe_id) like ?",
-                q).
-            distinct
+        coupons = Coupon.where('lower(tang_coupons.stripe_id) like ?',
+                               q)
+                        .distinct
       end
-      return coupons
+      coupons
     end
 
     def search_invoices
-      return Invoice.search(@query)
+      Invoice.search(@query)
     end
 
     def search_invoice_items
-      return InvoiceItem.search(@query)
+      InvoiceItem.search(@query)
     end
   end
 end

@@ -25,106 +25,104 @@ module Tang
     routes { Tang::Engine.routes }
 
     login_admin
-    
+
     # This should return the minimal set of attributes required to create a valid
     # Customer. As you add validations to Customer, be sure to
     # adjust the attributes here as well.
-    let(:valid_attributes) {
-      # skip("Add a hash of attributes valid for your model")
+    let(:valid_attributes) do
+      # skip('Add a hash of attributes valid for your model')
       FactoryBot.attributes_for(:customer, stripe_id: SecureRandom.uuid)
-    }
+    end
 
-    let(:invalid_attributes) {
-      # skip("Add a hash of attributes invalid for your model")
+    let(:invalid_attributes) do
+      # skip('Add a hash of attributes invalid for your model')
       FactoryBot.attributes_for(:customer, email: nil)
-    }
+    end
 
     # This should return the minimal set of values that should be in the session
     # in order to pass any filters (e.g. authentication) defined in
     # CustomersController. Be sure to keep this updated too.
     let(:valid_session) { {} }
 
-    describe "GET #index" do
-      it "assigns all customers as @customers" do
+    describe 'GET #index' do
+      it 'assigns all customers as @customers' do
         customer = FactoryBot.create(:customer, valid_attributes)
         get :index, params: {}, session: valid_session
         expect(assigns(:customers)).to eq([customer])
       end
     end
 
-    describe "GET #show" do
-      it "assigns the requested customer as @customer" do
+    describe 'GET #show' do
+      it 'assigns the requested customer as @customer' do
         customer = User.create! valid_attributes
-        get :show, params: {id: customer.to_param}, session: valid_session
+        get :show, params: { id: customer.to_param }, session: valid_session
         expect(assigns(:customer)).to eq(customer)
       end
     end
 
-    describe "GET #edit" do
-      it "assigns the requested customer as @customer" do
+    describe 'GET #edit' do
+      it 'assigns the requested customer as @customer' do
         customer = User.create! valid_attributes
-        get :edit, params: {id: customer.to_param}, session: valid_session
+        get :edit, params: { id: customer.to_param }, session: valid_session
         expect(assigns(:customer)).to eq(customer)
       end
     end
 
-    describe "PUT #update" do
-      context "with valid params" do
-        let(:new_attributes) {
-          # skip("Add a hash of attributes valid for your model")
+    describe 'PUT #update' do
+      context 'with valid params' do
+        let(:new_attributes) do
+          # skip('Add a hash of attributes valid for your model')
           FactoryBot.attributes_for(:customer, email: 'new@email.com')
-        }
+        end
 
-        it "updates the requested customer" do
+        it 'updates the requested customer' do
           customer = User.create! valid_attributes
-          put :update, params: {id: customer.to_param, user: new_attributes}, session: valid_session
+          put :update, params: { id: customer.to_param, user: new_attributes }, session: valid_session
           customer.reload
-          # skip("Add assertions for updated state")
+          # skip('Add assertions for updated state')
           expect(customer.email).to eq('new@email.com')
         end
 
-        it "assigns the requested customer as @customer" do
+        it 'assigns the requested customer as @customer' do
           customer = User.create! valid_attributes
-          put :update, params: {id: customer.to_param, user: valid_attributes}, session: valid_session
+          put :update, params: { id: customer.to_param, user: valid_attributes }, session: valid_session
           expect(assigns(:customer)).to eq(customer)
         end
 
-        it "redirects to the customer" do
+        it 'redirects to the customer' do
           customer = User.create! valid_attributes
-          put :update, params: {id: customer.to_param, user: valid_attributes}, session: valid_session
+          put :update, params: { id: customer.to_param, user: valid_attributes }, session: valid_session
           expect(response).to redirect_to(admin_customer_url(customer))
         end
       end
 
-      context "with invalid params" do
-        it "assigns the customer as @customer" do
+      context 'with invalid params' do
+        it 'assigns the customer as @customer' do
           customer = User.create! valid_attributes
-          put :update, params: {id: customer.to_param, user: invalid_attributes}, session: valid_session
+          put :update, params: { id: customer.to_param, user: invalid_attributes }, session: valid_session
           expect(assigns(:customer)).to eq(customer)
         end
 
         it "re-renders the 'edit' template" do
           customer = User.create! valid_attributes
-          put :update, params: {id: customer.to_param, user: invalid_attributes}, session: valid_session
-          expect(response).to render_template("edit")
+          put :update, params: { id: customer.to_param, user: invalid_attributes }, session: valid_session
+          expect(response).to render_template('edit')
         end
       end
     end
 
-    describe "DELETE #destroy" do
-      it "destroys the requested customer" do
+    describe 'DELETE #destroy' do
+      it 'destroys the requested customer' do
         customer = User.create! valid_attributes
-        expect {
-          delete :destroy, params: {id: customer.to_param}, session: valid_session
-        }.to change(User, :count).by(-1)
+        expect { delete :destroy, params: { id: customer.to_param }, session: valid_session }
+          .to change(User, :count).by(-1)
       end
 
-      it "redirects to the customers list" do
+      it 'redirects to the customers list' do
         customer = User.create! valid_attributes
-        delete :destroy, params: {id: customer.to_param}, session: valid_session
+        delete :destroy, params: { id: customer.to_param }, session: valid_session
         expect(response).to redirect_to(admin_customers_url)
       end
     end
-
   end
 end

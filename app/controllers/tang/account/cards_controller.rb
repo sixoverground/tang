@@ -1,13 +1,13 @@
-require_dependency "tang/application_controller"
+require_dependency 'tang/application_controller'
 
 module Tang
   class Account::CardsController < Account::ApplicationController
     before_action :set_card, only: [:show, :destroy]
 
     def show
-      @can_delete_card = current_customer.stripe_id.present? && 
-          current_customer.subscription.nil? &&
-          @card.present?
+      @can_delete_card = current_customer.stripe_id.present? &&
+                         current_customer.subscription.nil? &&
+                         @card.present?
     end
 
     def new
@@ -44,17 +44,16 @@ module Tang
 
     def destroy
       if current_customer.subscription.nil?
-        @card.destroy 
+        @card.destroy
         redirect_to account_card_url, notice: 'Card was successfully removed.'
       else
-        redirect_to account_card_url, notice: 'You cannot remove your card with an active subscription.'        
+        redirect_to account_card_url, notice: 'You cannot remove your card with an active subscription.'
       end
     end
 
     private
 
     def set_card
-      logger.debug "SET CARD CALLED"
       @card = current_customer.card
     end
   end

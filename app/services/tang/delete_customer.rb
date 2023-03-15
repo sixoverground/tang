@@ -9,7 +9,7 @@ module Tang
           customer.errors.add(:base, :invalid, message: e.message)
         end
       end
-      return customer
+      customer
     end
   end
 end

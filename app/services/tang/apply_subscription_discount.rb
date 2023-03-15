@@ -17,7 +17,7 @@ module Tang
         subscription.errors.add(:base, :invalid, message: e.message)
       end
 
-      return subscription
+      subscription
     end
   end
 end

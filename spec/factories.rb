@@ -53,7 +53,7 @@ FactoryBot.define do
     last4 { '0002' }
     exp_month { 12 }
     exp_year { 2017 }
-    address_zip { "90210" }
+    address_zip { '90210' }
   end
 
   factory :subscription, class: 'Tang::Subscription' do
@@ -82,15 +82,15 @@ FactoryBot.define do
   factory :invoice_item, class: 'Tang::InvoiceItem' do
     stripe_id { SecureRandom.uuid }
     amount { 1 }
-    currency { "usd" }
+    currency { 'usd' }
     invoice
-    period_start { "2016-11-14 13:16:51" }
-    period_end { "2016-11-14 13:16:51" }
+    period_start { '2016-11-14 13:16:51' }
+    period_end { '2016-11-14 13:16:51' }
     plan
     proration { false }
     quantity { 1 }
     subscription
-    description { "MyString" }
+    description { 'MyString' }
   end
 
   factory :charge, class: 'Tang::Charge' do

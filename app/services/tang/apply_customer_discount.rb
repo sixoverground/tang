@@ -15,7 +15,7 @@ module Tang
         end
       end
 
-      return customer
+      customer
     end
   end
 end

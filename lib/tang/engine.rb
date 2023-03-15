@@ -13,7 +13,7 @@ module Tang
     end
 
     config.to_prepare do
-      Rails.application.config.assets.precompile += %w( tang/pdf.css )
+      Rails.application.config.assets.precompile += %w[tang/pdf.css]
     end
   end
 end

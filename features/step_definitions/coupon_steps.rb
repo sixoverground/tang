@@ -25,7 +25,7 @@ When(/^I create a new coupon with:$/) do |table|
       fill_in field, with: value
     end
   end
-  click_on "Create Coupon"
+  click_on 'Create Coupon'
 end
 
 When(/^I remove the coupon$/) do
@@ -40,15 +40,15 @@ Then(/^I should see a reduced charge amount$/) do
 end
 
 Then(/^I should see a coupon created success message$/) do
-  expect(page).to have_content "Coupon was successfully created."
+  expect(page).to have_content 'Coupon was successfully created.'
 end
 
 Then(/^I should see the following coupon:$/) do |table|
-  table.rows_hash.each do |field, value|
+  table.rows_hash.each do |_field, value|
     expect(page).to have_content value
   end
 end
 
 Then(/^I should see the full charge amount$/) do
-  expect(page).to have_selector(:link_or_button, "Apply discount")
+  expect(page).to have_selector(:link_or_button, 'Apply discount')
 end

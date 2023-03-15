@@ -1,4 +1,4 @@
-require_dependency "tang/application_controller"
+require_dependency 'tang/application_controller'
 
 module Tang
   class Admin::PlansController < Admin::ApplicationController
@@ -6,14 +6,13 @@ module Tang
 
     # GET /plans
     def index
-      @plans = Plan.all.
-                    paginate(page: params[:page]).
-                    order(:name)
+      @plans = Plan.all
+                   .paginate(page: params[:page])
+                   .order(:name)
     end
 
     # GET /plans/1
-    def show
-    end
+    def show; end
 
     # GET /plans/new
     def new
@@ -21,8 +20,7 @@ module Tang
     end
 
     # GET /plans/1/edit
-    def edit
-    end
+    def edit; end
 
     # POST /plans
     def create
@@ -51,18 +49,22 @@ module Tang
     end
 
     private
-      # Use callbacks to share common setup or constraints between actions.
-      def set_plan
-        @plan = Plan.find(params[:id])
-      end
 
-      # Only allow a trusted parameter "white list" through.
-      def plan_create_params
-        params.require(:plan).permit(:stripe_id, :amount, :currency, :interval, :interval_count, :name, :statement_descriptor, :trial_period_days, :order, :highlight, :features, :description, :group)
-      end
+    # Use callbacks to share common setup or constraints between actions.
+    def set_plan
+      @plan = Plan.find(params[:id])
+    end
 
-      def plan_update_params
-        params.require(:plan).permit(:name, :order, :highlight, :features, :description, :group)
-      end
+    # Only allow a trusted parameter "white list" through.
+    def plan_create_params
+      params.require(:plan).permit(
+        :stripe_id, :amount, :currency, :interval, :interval_count, :name,
+        :statement_descriptor, :trial_period_days, :order, :highlight, :features, :description, :group
+      )
+    end
+
+    def plan_update_params
+      params.require(:plan).permit(:name, :order, :highlight, :features, :description, :group)
+    end
   end
 end

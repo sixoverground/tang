@@ -6,18 +6,14 @@ module Tang
       # Do something later
       stripe_charges = Stripe::Charge.list(limit: 100, starting_after: starting_after)
       stripe_charges.each do |stripe_charge|
-
         invoice = Invoice.find_by(stripe_id: stripe_charge.invoice)
 
-        if invoice.present?
-          Charge.from_stripe(stripe_charge, invoice)
-        end
-
+        Charge.from_stripe(stripe_charge, invoice) if invoice.present?
       end
 
-      if stripe_charges.has_more
-        Tang::ImportChargesJob.perform_now(stripe_charges.data.last.id)
-      end
+      return unless stripe_charges.has_more
+
+      Tang::ImportChargesJob.perform_now(stripe_charges.data.last.id)
     end
   end
 end

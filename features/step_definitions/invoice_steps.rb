@@ -7,5 +7,5 @@ When(/^I view my receipts$/) do
 end
 
 Then(/^I should see a list of receipts with download buttons$/) do
-  expect(page).to have_content "Download PDF"
+  expect(page).to have_content 'Download PDF'
 end

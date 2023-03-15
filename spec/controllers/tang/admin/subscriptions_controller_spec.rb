@@ -25,27 +25,27 @@ module Tang
     routes { Tang::Engine.routes }
 
     login_admin
-    
+
     # This should return the minimal set of attributes required to create a valid
     # Subscription. As you add validations to Subscription, be sure to
     # adjust the attributes here as well.
-    let(:valid_attributes) {
-      # skip("Add a hash of attributes valid for your model")
+    let(:valid_attributes) do
+      # skip('Add a hash of attributes valid for your model')
       FactoryBot.attributes_for(:subscription)
-    }
+    end
 
-    let(:invalid_attributes) {
-      # skip("Add a hash of attributes invalid for your model")
+    let(:invalid_attributes) do
+      # skip('Add a hash of attributes invalid for your model')
       FactoryBot.attributes_for(:subscription, plan_id: nil)
-    }
+    end
 
     # This should return the minimal set of values that should be in the session
     # in order to pass any filters (e.g. authentication) defined in
     # SubscriptionsController. Be sure to keep this updated too.
     let(:valid_session) { {} }
 
-    describe "GET #index" do
-      it "assigns all subscriptions as @subscriptions" do
+    describe 'GET #index' do
+      it 'assigns all subscriptions as @subscriptions' do
         # subscription = Subscription.create! valid_attributes
         subscription = FactoryBot.create(:subscription)
         get :index, params: {}, session: valid_session
@@ -53,88 +53,86 @@ module Tang
       end
     end
 
-    describe "GET #show" do
-      it "assigns the requested subscription as @subscription" do
+    describe 'GET #show' do
+      it 'assigns the requested subscription as @subscription' do
         # subscription = Subscription.create! valid_attributes
         subscription = FactoryBot.create(:subscription)
-        get :show, params: {id: subscription.to_param}, session: valid_session
+        get :show, params: { id: subscription.to_param }, session: valid_session
         expect(assigns(:subscription)).to eq(subscription)
       end
     end
 
-    describe "GET #edit" do
-      it "assigns the requested subscription as @subscription" do
+    describe 'GET #edit' do
+      it 'assigns the requested subscription as @subscription' do
         # subscription = Subscription.create! valid_attributes
         subscription = FactoryBot.create(:subscription)
-        get :edit, params: {id: subscription.to_param}, session: valid_session
+        get :edit, params: { id: subscription.to_param }, session: valid_session
         expect(assigns(:subscription)).to eq(subscription)
       end
     end
 
-    describe "PUT #update" do
-      context "with valid params" do
-        let(:new_attributes) {
-          # skip("Add a hash of attributes valid for your model")
+    describe 'PUT #update' do
+      context 'with valid params' do
+        let(:new_attributes) do
+          # skip('Add a hash of attributes valid for your model')
           FactoryBot.attributes_for(:subscription, quantity: 2)
-        }
+        end
 
-        it "updates the requested subscription" do
+        it 'updates the requested subscription' do
           # subscription = Subscription.create! valid_attributes
           subscription = FactoryBot.create(:subscription)
-          put :update, params: {id: subscription.to_param, subscription: new_attributes}, session: valid_session
+          put :update, params: { id: subscription.to_param, subscription: new_attributes }, session: valid_session
           subscription.reload
-          # skip("Add assertions for updated state")
+          # skip('Add assertions for updated state')
           expect(subscription.quantity).to eq(2)
         end
 
-        it "assigns the requested subscription as @subscription" do
+        it 'assigns the requested subscription as @subscription' do
           # subscription = Subscription.create! valid_attributes
           subscription = FactoryBot.create(:subscription)
-          put :update, params: {id: subscription.to_param, subscription: valid_attributes}, session: valid_session
+          put :update, params: { id: subscription.to_param, subscription: valid_attributes }, session: valid_session
           expect(assigns(:subscription)).to eq(subscription)
         end
 
-        it "redirects to the subscription" do
+        it 'redirects to the subscription' do
           # subscription = Subscription.create! valid_attributes
           subscription = FactoryBot.create(:subscription)
-          put :update, params: {id: subscription.to_param, subscription: valid_attributes}, session: valid_session
+          put :update, params: { id: subscription.to_param, subscription: valid_attributes }, session: valid_session
           expect(response).to redirect_to(admin_subscription_url(subscription))
         end
       end
 
-      context "with invalid params" do
-        it "assigns the subscription as @subscription" do
+      context 'with invalid params' do
+        it 'assigns the subscription as @subscription' do
           # subscription = Subscription.create! valid_attributes
           subscription = FactoryBot.create(:subscription)
-          put :update, params: {id: subscription.to_param, subscription: invalid_attributes}, session: valid_session
+          put :update, params: { id: subscription.to_param, subscription: invalid_attributes }, session: valid_session
           expect(assigns(:subscription)).to eq(subscription)
         end
 
         it "re-renders the 'edit' template" do
           # subscription = Subscription.create! valid_attributes
           subscription = FactoryBot.create(:subscription)
-          put :update, params: {id: subscription.to_param, subscription: invalid_attributes}, session: valid_session
-          expect(response).to render_template("edit")
+          put :update, params: { id: subscription.to_param, subscription: invalid_attributes }, session: valid_session
+          expect(response).to render_template('edit')
         end
       end
     end
 
-    describe "DELETE #destroy" do
-      it "destroys the requested subscription" do
+    describe 'DELETE #destroy' do
+      it 'destroys the requested subscription' do
         # subscription = Subscription.create! valid_attributes
         subscription = FactoryBot.create(:subscription)
-        expect {
-          delete :destroy, params: {id: subscription.to_param}, session: valid_session
-        }.to change(Subscription.where.not(status: :canceled), :count).by(-1)
+        expect { delete :destroy, params: { id: subscription.to_param }, session: valid_session }
+          .to change(Subscription.where.not(status: :canceled), :count).by(-1)
       end
 
-      it "redirects to the subscriptions list" do
+      it 'redirects to the subscriptions list' do
         # subscription = Subscription.create! valid_attributes
         subscription = FactoryBot.create(:subscription)
-        delete :destroy, params: {id: subscription.to_param}, session: valid_session
+        delete :destroy, params: { id: subscription.to_param }, session: valid_session
         expect(response).to redirect_to(admin_subscriptions_url)
       end
     end
-
   end
 end

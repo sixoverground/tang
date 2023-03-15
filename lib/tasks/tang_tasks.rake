@@ -4,12 +4,12 @@
 # end
 
 task :rails_best_practices do
-  path = File.expand_path("../../../", __FILE__)
+  path = File.expand_path('../../../', __FILE__)
   sh "rails_best_practices #{path}"
 end
 
 task :brakeman do
-  sh "brakeman -q -z"
+  sh 'brakeman -q -z'
 end
 
 task :check do
