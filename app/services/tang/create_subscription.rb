@@ -8,9 +8,10 @@ module Tang
       )
       return subscription if plan.nil? || customer.nil?
 
-      # TODO: Check for token presence.
+      # Check for token presence.
       # A nil token will throw an error when calling create_stripe_subscription
       # because the customer does not have a payment method.
+      return subscription if token.nil?
 
       begin
         if customer.stripe_id.blank?

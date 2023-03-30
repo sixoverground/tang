@@ -29,6 +29,7 @@ module Tang
     end
 
     def create
+      # TODO: check how it's possible to get here without a stripe_token
       plan = Plan.find(subscription_params[:plan])
       @subscription = CreateSubscription.call(
         plan,
