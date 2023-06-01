@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_27_001523) do
+ActiveRecord::Schema.define(version: 2023_05_30_172604) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -214,6 +214,8 @@ ActiveRecord::Schema.define(version: 2020_08_27_001523) do
     t.datetime "coupon_start"
     t.integer "subscription_coupon_id"
     t.string "role"
+    t.boolean "enable_customer_payment_success_emails", default: true, null: false
+    t.boolean "enable_customer_payment_failed_emails", default: true, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

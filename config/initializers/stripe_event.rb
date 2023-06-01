@@ -37,13 +37,24 @@ StripeEvent.configure do |events|
     invoice = event.data.object
     charge = Tang::PayInvoice.call(invoice)
     if charge.present?
-      if Tang.delayed_email
+      if Tang.delayed_email && charge.customer.enable_customer_payment_success_emails
         Tang::StripeMailer.customer_payment_succeeded(charge).deliver_later
-        Tang::StripeMailer.admin_payment_succeeded(charge).deliver_later if Tang.admin_payment_succeeded_enabled
-      else
+        elsif !Tang.delayed_email && charge.customer.enable_customer_payment_success_emails
         Tang::StripeMailer.customer_payment_succeeded(charge).deliver_now
-        Tang::StripeMailer.admin_payment_succeeded(charge).deliver_now if Tang.admin_payment_succeeded_enabled
       end
+      
+      if Tang.delayed_email
+        Tang::StripeMailer.admin_payment_succeeded(charge).deliver_later if Tang.admin_payment_succeeded_enabled
+        else
+          Tang::StripeMailer.admin_payment_succeeded(charge).deliver_now if Tang.admin_payment_succeeded_enabled
+      end
+      # if Tang.delayed_email
+      #   Tang::StripeMailer.customer_payment_succeeded(charge).deliver_later
+      #   Tang::StripeMailer.admin_payment_succeeded(charge).deliver_later if Tang.admin_payment_succeeded_enabled
+      # else
+      #   Tang::StripeMailer.customer_payment_succeeded(charge).deliver_now
+      #   Tang::StripeMailer.admin_payment_succeeded(charge).deliver_now if Tang.admin_payment_succeeded_enabled
+      # end
     end
   end
 
@@ -53,13 +64,23 @@ StripeEvent.configure do |events|
     invoice = event.data.object
     charge = Tang::FailInvoice.call(invoice)
     if charge.present?
-      if Tang.delayed_email
+      # if Tang.delayed_email
+      #   Tang::StripeMailer.customer_payment_failed(charge).deliver_later
+      #   Tang::StripeMailer.admin_payment_failed(charge).deliver_later if Tang.admin_payment_failed_enabled
+      # else
+      #   Tang::StripeMailer.customer_payment_failed(charge).deliver_now
+      #   Tang::StripeMailer.admin_payment_failed(charge).deliver_now if Tang.admin_payment_failed_enabled
+      # end
+      if Tang.delayed_email && charge.customer.enable_customer_payment_failed_emails 
         Tang::StripeMailer.customer_payment_failed(charge).deliver_later
-        Tang::StripeMailer.admin_payment_failed(charge).deliver_later if Tang.admin_payment_failed_enabled
-      else
+        elsif !Tang.delayed_email && charge.customer.enable_customer_payment_failed_emails
         Tang::StripeMailer.customer_payment_failed(charge).deliver_now
-        Tang::StripeMailer.admin_payment_failed(charge).deliver_now if Tang.admin_payment_failed_enabled
       end
+        if Tang.delayed_email
+          Tang::StripeMailer.admin_payment_failed(charge).deliver_later if Tang.admin_payment_failed_enabled
+          else
+          Tang::StripeMailer.admin_payment_failed(charge).deliver_now if Tang.admin_payment_failed_enabled
+        end
     end
   end
 
