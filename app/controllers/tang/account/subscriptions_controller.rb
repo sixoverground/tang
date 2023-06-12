@@ -10,9 +10,11 @@ module Tang
       @plans = Plan.where(interval: 'month').order(:order)
 
       if @subscription.present? && @subscription.plan.present?
+        puts "subscription present and plan present"
         @next_plan = @plans.where('tang_plans.order > ?', @subscription.plan.order).first
         @previous_plan = @plans.where('tang_plans.order < ?', @subscription.plan.order).last
       else
+        puts "subscription not present or plan not present"
         @next_plan = @plans.first
         @previous_plan = nil
       end
@@ -77,6 +79,7 @@ module Tang
 
     def set_subscription
       @subscription = current_customer.subscription
+      puts "set_subscription: #{@subscription}"
     end
 
     def subscription_params
