@@ -1,6 +1,7 @@
 module Tang
   class CreateSubscription
     def self.call(plan, customer, token)
+      puts "CreateSubscription.call(#{plan}, #{customer}, #{token})"
       subscription = Subscription.new(
         plan: plan,
         customer: customer,
@@ -46,6 +47,7 @@ module Tang
     end
 
     def self.create_stripe_customer(customer, token)
+      puts "create_stripe_customer(#{customer}, #{token})"
       if customer.coupon.present?
         Stripe::Customer.create(
           source: token,
@@ -61,6 +63,7 @@ module Tang
     end
 
     def self.update_stripe_customer(customer, token)
+      puts "update_stripe_customer(#{customer}, #{token})"
       # Update the payment method
       stripe_customer = Stripe::Customer.retrieve(customer.stripe_id)
       if token.present?
@@ -71,6 +74,7 @@ module Tang
     end
 
     def self.create_stripe_subscription(customer, plan)
+      puts "create_stripe_subscription(#{customer}, #{plan})"
       if customer.subscription_coupon.present?
         Stripe::Subscription.create(
           customer: customer.stripe_id,
@@ -86,6 +90,7 @@ module Tang
     end
 
     def self.finalize_customer(customer, subscription, stripe_card)
+      puts "finalize_customer(#{customer}, #{subscription}, #{stripe_card})"
       # Remove temporary coupon
       customer.subscription_coupon = nil
       # Save subscription data to customer
