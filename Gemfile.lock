@@ -94,7 +94,7 @@ GEM
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
     cliver (0.3.2)
-    code_analyzer (0.5.2)
+    code_analyzer (0.5.5)
       sexp_processor
     codeclimate-test-reporter (1.0.9)
       simplecov (<= 0.13)
@@ -167,7 +167,7 @@ GEM
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     io-wait (0.3.0)
-    json (2.3.1)
+    json (2.6.3)
     loofah (2.20.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -252,9 +252,9 @@ GEM
     rails_12factor (0.0.3)
       rails_serve_static_assets
       rails_stdout_logging
-    rails_best_practices (1.20.0)
+    rails_best_practices (1.23.2)
       activesupport
-      code_analyzer (>= 0.5.1)
+      code_analyzer (~> 0.5.5)
       erubis
       i18n
       json
@@ -306,7 +306,7 @@ GEM
       unicode-display_width (>= 1.4.0, < 3.0)
     rubocop-ast (1.17.0)
       parser (>= 3.1.1.0)
-    ruby-progressbar (1.10.1)
+    ruby-progressbar (1.13.0)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.4.0)
@@ -318,7 +318,7 @@ GEM
       sprockets-rails
       tilt
     semantic_range (3.0.0)
-    sexp_processor (4.15.1)
+    sexp_processor (4.16.1)
     simplecov (0.13.0)
       docile (~> 1.1.0)
       json (>= 1.8, < 3)
