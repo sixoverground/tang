@@ -37,9 +37,9 @@ StripeEvent.configure do |events|
     invoice = event.data.object
     charge = Tang::PayInvoice.call(invoice)
     if charge.present?
-      if Tang.delayed_email && charge.customer.enable_customer_payment_success_emails
+      if Tang.delayed_email && charge.customer.customer_payment_success_emails_enabled
         Tang::StripeMailer.customer_payment_succeeded(charge).deliver_later
-        elsif !Tang.delayed_email && charge.customer.enable_customer_payment_success_emails
+        elsif !Tang.delayed_email && charge.customer.customer_payment_success_emails_enabled
         Tang::StripeMailer.customer_payment_succeeded(charge).deliver_now
       end
       
@@ -71,9 +71,9 @@ StripeEvent.configure do |events|
       #   Tang::StripeMailer.customer_payment_failed(charge).deliver_now
       #   Tang::StripeMailer.admin_payment_failed(charge).deliver_now if Tang.admin_payment_failed_enabled
       # end
-      if Tang.delayed_email && charge.customer.enable_customer_payment_failed_emails 
+      if Tang.delayed_email && charge.customer.customer_payment_failed_emails_enabled 
         Tang::StripeMailer.customer_payment_failed(charge).deliver_later
-        elsif !Tang.delayed_email && charge.customer.enable_customer_payment_failed_emails
+        elsif !Tang.delayed_email && charge.customer.customer_payment_failed_emails_enabled
         Tang::StripeMailer.customer_payment_failed(charge).deliver_now
       end
         if Tang.delayed_email
