@@ -44,8 +44,12 @@ module Tang
 
     def destroy
       if current_customer.subscription.nil?
-        @card.destroy
-        redirect_to account_card_url, notice: 'Card was successfully removed.'
+        if @card.present?
+          @card.destroy
+          redirect_to account_card_url, notice: 'Card was successfully removed.'
+        else
+          redirect_to account_card_url, notice: 'We could not find a card to remove.'
+        end
       else
         redirect_to account_card_url, notice: 'You cannot remove your card with an active subscription.'
       end
