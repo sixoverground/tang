@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'rails', '>= 6', '< 8'
   s.add_dependency 'stripe', '~> 5.55'
   s.add_dependency 'stripe_event', '~> 2.3'
-  s.add_dependency 'will_paginate', '~> 3.1'
+  s.add_dependency 'will_paginate', '>= 3.1', '< 5.0'
 
   s.add_development_dependency 'brakeman', '~> 5.4'
   s.add_development_dependency 'rails_best_practices', '~> 1.17'
