@@ -31,7 +31,7 @@ group :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'poltergeist'
-  gem 'rspec-rails', '~> 6.0.1'
+  gem 'rspec-rails', '~> 6.0.3'
   gem 'stripe-ruby-mock', '~> 3.0.1', require: 'stripe_mock'
 
   # assigns is deprecated - TODO: move to request specs
