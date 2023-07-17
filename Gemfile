@@ -18,7 +18,7 @@ ruby '2.5.8'
 gem 'bootstrap', '~> 5.2'
 gem 'devise', '~> 4.9'
 gem 'dotenv-rails', '~> 2.8', require: 'dotenv/rails-now'
-gem 'pg', '~> 1.4'
+gem 'pg', '~> 1.5'
 gem 'puma'
 gem 'rails_12factor', group: :production
 gem 'rubocop', require: false
