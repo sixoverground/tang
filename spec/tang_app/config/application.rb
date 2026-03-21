@@ -1,4 +1,4 @@
-require File.expand_path('../boot', __FILE__)
+require File.expand_path('boot', __dir__)
 
 # Pick the frameworks you want:
 require 'active_record/railtie'
@@ -11,7 +11,7 @@ require 'sass-rails'
 Bundler.require(*Rails.groups)
 
 require 'dotenv'
-Dotenv.load(File.expand_path('../../../../.env', __FILE__))
+Dotenv.load(File.expand_path('../../../.env', __dir__))
 
 require 'tang'
 
@@ -32,6 +32,6 @@ module TangApp
     # Do not swallow errors in after_commit/after_rollback callbacks.
     # config.active_record.raise_in_transactional_callbacks = true
 
-    config.action_mailer.preview_path = File.expand_path('../../../../spec/mailers/previews', __FILE__)
+    config.action_mailer.preview_paths << File.expand_path('../../../spec/mailers/previews', __dir__)
   end
 end
