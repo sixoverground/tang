@@ -13,7 +13,7 @@ gemspec
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
 
-ruby '2.5.8'
+ruby '3.2.0'
 
 gem 'bootstrap', '~> 5.2'
 gem 'devise', '~> 4.9'
@@ -32,7 +32,7 @@ group :test do
   gem 'factory_bot_rails'
   gem 'poltergeist'
   gem 'rspec-rails', '~> 6.0.1'
-  gem 'stripe-ruby-mock', '~> 3.0.1', require: 'stripe_mock'
+  gem 'stripe-ruby-mock', '~> 3.1.0', require: 'stripe_mock'
 
   # assigns is deprecated - TODO: move to request specs
   # see https://stackoverflow.com/questions/42001517/rspec-rails-controller-testing-with-assertions-and-assigns
