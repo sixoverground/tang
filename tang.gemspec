@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,db,lib}/**/*', 'LICENSE', 'Rakefile', 'README.md']
 
   s.add_dependency 'aasm', '>= 4.11', '< 6.0'
-  s.add_dependency 'paper_trail', '~> 12.0'
+  s.add_dependency 'paper_trail', '>= 12', '< 17'
   s.add_dependency 'rails', '>= 6', '< 8'
   s.add_dependency 'stripe', '~> 5.55'
   s.add_dependency 'stripe_event', '~> 2.3'
